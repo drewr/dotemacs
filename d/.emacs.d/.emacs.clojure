@@ -1,0 +1,156 @@
+; -*- emacs-lisp -*-
+(add-to-list 'load-path (expand-file-name "~/elisp/slime"))
+(add-to-list 'load-path (expand-file-name "~/elisp/slime/contrib"))
+(require 'slime)
+(slime-setup '(slime-repl))
+
+(add-to-list 'load-path (expand-file-name "~/elisp/clojure-mode"))
+(add-to-list 'load-path (expand-file-name "~/elisp/swank-clojure"))
+(require 'clojure-mode)
+(add-hook 'clojure-mode-hook 'aar/lispy-parens)
+(load "swank-clojure")
+(setq slime-net-coding-system 'utf-8-unix)
+(setq auto-mode-alist
+      (cons '("\\.clj$" . clojure-mode)
+            auto-mode-alist))
+
+(defun classpathize (paths)
+  (mapconcat 'expand-file-name paths ":"))
+
+(defun make-jar-path (x)
+  (let ((path (expand-file-name (concat "~/tmp/src/jar-" x))))
+    (concat "JAR_HOME=" path)))
+
+(progn
+  (setq slime-lisp-implementations '())
+  (setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
+  (setq swank-clojure-classpath (expand-file-name "~/.clojure"))
+  ;;(require 'swank-clojure-autoload)
+  (add-to-list 'slime-lisp-implementations
+               `(hbase
+                 ("env"
+                  ,(concat "CLASSPATH=" (classpathize '("~/src/nmd/query/clojure/src/clj"
+                                                        "~/elisp/swank-clojure/src")))
+                  ,(make-jar-path "hbase")
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(telephus
+                 ("env"
+                  ,(concat "CLASSPATH=" (classpathize '("~/elisp/swank-clojure/src"
+                                                        "~/src/telephus/src/clj"
+                                                        "~/src/nmd/missive/src/clj"
+                                                        "~/src/nmd/missive/lib/clojure-json-20090430b.jar"
+                                                        "~/src/nmd/missive/lib/clojure-1.1.0-alpha-SNAPSHOT.jar"
+                                                        "~/src/nmd/missive/lib/clojure-contrib-20090831113321+39618b6.jar"
+                                                        "~/tmp/src/cassandra/build/classes"
+                                                        "~/tmp/src/cassandra/lib/*"
+                                                        "~/tmp/src/hbase/build/*")))
+                  ,(concat "PROPS=" "-Dstorage-config=/Users/aar/tmp/src/cassandra/conf")
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(missive
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/src/nmd/missive/lib/clojure-1.1.0-alpha-SNAPSHOT.jar"
+                                           "~/src/nmd/missive/lib/clojure-contrib-20090831113321+39618b6.jar"
+                                           "~/src/nmd/missive/lib/clojure-json-20090430b.jar"
+                                           "~/src/nmd/missive/lib/clojure-csv-20091208183446+4f23d87.jar"
+                                           "~/src/nmd/missive/lib/commons-logging-1.1.jar"
+                                           "~/src/nmd/missive/lib/commons-lang-2.4.jar"
+                                           "~/src/nmd/missive/lib/cron4j-2.1.1.jar"
+                                           "~/src/nmd/missive/lib/joda-time-1.6.jar"
+                                           "~/src/nmd/missive/lib/jtds-1.2.2.jar"
+                                           "~/src/nmd/missive/lib/log4j-1.2.13.jar"
+                                           "~/src/nmd/missive/lib/poi-3.1-FINAL.jar"
+                                           "~/src/nmd/missive/lib/postgresql-8.3-603.jdbc3.jar"
+                                           "~/src/nmd/missive/lib/proxool-0.9.1.jar"
+                                           "~/src/nmd/missive/lib/proxool-cglib-0.9.1.jar"
+                                           "~/src/nmd/missive/lib/postal-20090910173513+efb1ba8.jar"
+                                           "~/src/nmd/missive/lib/mail-1.4.2.jar"
+                                           "~/src/nmd/missive/lib/supercsv-1.52.jar"
+                                           "~/src/nmd/missive/src/clj"
+                                           "~/tmp/src/hbase/lib/*"
+                                           "~/tmp/src/hbase/build/*"
+                                           "~/tmp/src/hbase/conf"
+                                           "~/tmp/src/clojureql/src"
+;;; "~/tmp/src/clojure-contrib/src"
+                                           "~/src/clot/src")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(spready
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/src/spready/lib/*"
+                                           "~/src/spready/src/clj")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(scour
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/src/nmd/scour/lib/*")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(floyd
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/src/nmd/floyd/lib/*"
+                                           "~/src/nmd/floyd/src"
+                                           "~/src/nmd/floyd/test")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(cljdev
+                 ("env"
+                  ,(concat "CLASSPATH=" (classpathize '("~/elisp/swank-clojure/src"
+                                                        "~/tmp/src/clojure/classes"
+                                                        "~/tmp/src/clojure/src/clj"
+                                                        "~/tmp/src/clojure-contrib/src")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(clot
+                 ("env"
+                  ,(concat "CLASSPATH=" (classpathize '("~/elisp/swank-clojure/src"
+                                                        "~/src/clot/src"
+                                                        "~/src/clot/lib/*")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(incanter
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/tmp/src/incanter/incanter.jar"
+                                           "~/tmp/src/incanter/src"
+                                           "~/tmp/src/incanter/lib/*"
+                                           "~/tmp/src/incanter/lib/processing/*")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t)
+
+  (add-to-list 'slime-lisp-implementations
+               `(enlive
+                 ("env"
+                  ,(concat "CLASSPATH="
+                           (classpathize '("~/elisp/swank-clojure/src"
+                                           "~/tmp/src/clojure/clojure-1.1.0-alpha-SNAPSHOT-20090929232127+1ca9c8b.jar"
+                                           "~/tmp/src/enlive/enlive.jar"
+                                           "~/tmp/src/enlive/lib/*")))
+                  ,(expand-file-name "~/bin/clojure"))
+                 :init swank-clojure-init) t))

@@ -1,0 +1,49 @@
+; -*- emacs-lisp -*-
+
+(autoload 'circe "circe" "Connect to an IRC server" t)
+
+(when (file-directory-p "~/elisp/circe")
+  (add-to-list 'load-path "~/elisp/circe"))
+
+;; This defines the password variables below
+(when (file-exists-p "~/.private.el")
+  (load-file "~/.private.el"))
+
+(setq circe-default-nick "drewr"
+      circe-default-realname "Drew Raines"
+      circe-default-user "drew"
+      circe-ignore-list nil
+      circe-format-self-say "<{nick}> {body}"
+      circe-server-coding-system '(latin-1 . undecided)
+      circe-server-auto-join-channels
+        (list (cons "^freenode$" aar-favorite-freenode-chans))
+      circe-nickserv-passwords
+        `(("freenode" "carmex")))
+
+(setq lui-max-buffer-size 30000)
+
+(eval-after-load "circe"
+  '(progn
+     (require 'lui-irc-colors)
+     (add-to-list 'lui-pre-output-hook 'lui-irc-colors)))
+
+(defun irc ()
+  "Connect to IRC."
+  (interactive)
+  (circe "irc.us.freenode.net" "6667" "freenode"))
+
+(defun chat ()
+  "Connect to Bitlbee."
+  (interactive)
+  (let ((bb "#bitlbee")
+        (login "identify bitlbee"))
+    (setq circe-server-buffer "localhost:6667")
+    (if (get-buffer bb)
+        (save-excursion
+          (switch-to-buffer bb)
+          (circe-reconnect)
+          (circe-server-send login))
+      (circe "localhost" "6667")
+      (switch-to-buffer bb)
+      (circe-server-send login))))
+

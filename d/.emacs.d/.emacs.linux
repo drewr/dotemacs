@@ -1,0 +1,231 @@
+; -*- emacs-lisp -*-
+;
+; $Id: .emacs.linux 566 2005-11-11 19:57:25Z drewr $
+
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/bbdb/lisp"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/jde/lisp"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/cedet/common"))
+;;;;;;;  (load-file (expand-file-name "~/elisp/cedet/common/cedet.el"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/elib"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/gnus/lisp"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/nxml-mode"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/auctex"))
+;;;;;;;  (add-to-list 'load-path (expand-file-name "~/elisp/dictionary"))
+;;;;;;;  (require 'w3m-load)
+;;;;;;;  (require 'bbdb-autoloads)
+;;;;;;;  (require 'ledger)
+;;;;;;;  (require 'jde)
+;;;;;;;  (load (concat
+;;;;;;;         (expand-file-name "~/elisp/nxml-mode") "/rng-auto"))
+;;;;;;;  (require 'nxml-mode)
+;;;;;;;  (require 'css-mode)
+;;;;;;;  (require 'info)
+;;;;;;;  (setq Info-directory-list
+;;;;;;;        (cons "~/info"
+;;;;;;;  	    (cons "~/elisp/bbdb/texinfo"
+;;;;;;;  		  (cons "~/elisp/gnus/texi" Info-default-directory-list))))
+;;;;;;;
+;;;;;;;  ;; (defvar inactive-elisp-files '(...))
+;;;;;;;  ;; (mapc
+;;;;;;;  ;;  (lambda (x)
+;;;;;;;  ;;    (if (not (member x inactive-elisp-files)) (load x)))
+;;;;;;;  ;;  (directory-files "~/elisp"))
+;;;;;;;
+;;;;;;;  (setq initial-frame-alist
+;;;;;;;        '((top . 15) (left . 0) (width . 90) (height . 35)))
+;;;;;;;  (setq gnus-other-frame-parameters
+;;;;;;;        '((top . 15) (left . 75) (width . 83) (height . 45)))
+;;;;;;;
+;;;;;;;  (require 'gnus-load)
+;;;;;;;  (require 'darcsum)
+;;;;;;;  (require 'h4x0r)
+;;;;;;;  (require 'winring) (winring-initialize)
+;;;;;;;  (require 'font-lock)
+;;;;;;;  (require 'iso-insert)
+;;;;;;;  ;(require 'html-helper-mode)
+;;;;;;;  (require 'filladapt) (add-hook 'message-mode-hook 'turn-on-filladapt-mode)
+;;;;;;;
+;;;;;;;  (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+;;;;;;;
+;;;;;;;  (setq browse-url-browser-function 'browse-url-mozilla
+;;;;;;;        browse-url-mozilla-new-window-is-tab t
+;;;;;;;        browse-url-mozilla-program "firefox")
+;;;;;;;
+;;;;;;;  (setq lpr-command "lp")
+;;;;;;;  ;;(setq lpr-switches '("-dITS_Sysadmin"))
+;;;;;;;  (setq ps-print-header t)
+;;;;;;;  (setq a2ps-switches '("-E" "-2"))
+;;;;;;;  (setq ps-print-color-p nil)
+;;;;;;;
+;;;;;;;  (setq semanticdb-default-save-directory (expand-file-name "~/.semantic"))
+;;;;;;;  (setq global-senator-minor-mode t)
+;;;;;;;
+;;;;;;;  ;; mp3player configuration ------------------------------------------------
+;;;;;;;  ;; (setq load-path (cons (expand-file-name "~/elisp/mp3player") load-path))
+;;;;;;;  ;; (require 'mp3player)
+;;;;;;;  ;; (require 'mp3player-scores)
+;;;;;;;  ;; (require 'mp3player-lang)
+;;;;;;;  ;; (require 'ogg-comment)
+;;;;;;;  ;; (setq mp3player-path "/music/."
+;;;;;;;  ;;       mp3player-use-scoring t)
+;;;;;;;  ;; mp3player end ----------------------------------------------------------
+;;;;;;;
+;;;;;;;  ;; mpg123 configuration ---------------------------------------------------
+;;;;;;;  (setq mpg123-default-dir "/music/"
+;;;;;;;        mpg123-startup-volume 60)
+;;;;;;;  ;; mpg123 end -------------------------------------------------------------
+;;;;;;;
+;;;;;;;  ; ecb setup
+;;;;;;;  ;;(require 'ecb)
+;;;;;;;  ;;(eval-after-load "ecb-layout" '(setq ecb-windows-width 0.23))
+;;;;;;;  ; end ecb setup
+;;;;;;;
+;;;;;;;  ;; emms configuration -----------------------------------------------------
+;;;;;;;  (setq load-path (cons (expand-file-name "~/elisp/emms") load-path))
+;;;;;;;  (require 'emms)
+;;;;;;;  (require 'emms-player-simple)
+;;;;;;;  (require 'emms-source-file)
+;;;;;;;  (require 'emms-info)
+;;;;;;;  (require 'emms-info-mp3info)
+;;;;;;;  (require 'emms-info-ogg)
+;;;;;;;  (require 'emms-score)
+;;;;;;;  (require 'emms-pbi)
+;;;;;;;  (require 'emms-pbi-mark) (emms-pbi-mark 1)
+;;;;;;;  (require 'emms-tageditor) (emms-tageditor-pbi-mode 1)
+;;;;;;;                            (emms-tageditor-pbi-mark-mode 1)
+;;;;;;;  (setq emms-player-list '(emms-player-mplayer)
+;;;;;;;        emms-source-file-default-directory "/music/"
+;;;;;;;        emms-source-list '((emms-source-directory-tree "/music/"))
+;;;;;;;        emms-score-file (expand-file-name "~/.emms/scores")
+;;;;;;;        emms-show-format "NP: %s"
+;;;;;;;        emms-track-description-function 'emms-info-file-info-song-artist)
+;;;;;;;
+;;;;;;;
+;;;;;;;  (define-emms-info-method emms-info-mp3info
+;;;;;;;    :providep 'emms-info-mp3info-providep
+;;;;;;;    :get 'emms-info-mp3info-get
+;;;;;;;    :set 'emms-info-mp3info-set)
+;;;;;;;  (define-emms-info-method emms-info-ogg-comment
+;;;;;;;    :providep 'emms-info-ogg-comment-providep
+;;;;;;;    :get 'emms-info-ogg-comment-get)
+;;;;;;;  ;  :set 'emms-info-ogg-comment-set)
+;;;;;;;  (add-to-list 'emms-info-methods-list 'emms-info-ogg-comment)
+;;;;;;;  (add-to-list 'emms-info-methods-list 'emms-info-mp3info)
+;;;;;;;  ;; emms end ---------------------------------------------------------------
+;;;;;;;
+;;;;;;;  ;; CPerl, please ----------------------------------------------------------
+;;;;;;;  (while (let ((pm (rassoc 'perl-mode auto-mode-alist)))
+;;;;;;;           (and pm (setcdr pm 'cperl-mode))))
+;;;;;;;  (while (let ((pm (rassoc 'perl-mode interpreter-mode-alist)))
+;;;;;;;           (and pm (setcdr pm 'cperl-mode))))
+;;;;;;;  (setq cperl-indent-level 2)
+;;;;;;;  (setq-default indent-tabs-mode nil)
+;;;;;;;  ;; NXML, please ----------------------------------------------------------
+;;;;;;;  (fset 'xml-mode 'nxml-mode)
+;;;;;;;
+;;;;;;;  (require 'cl)
+;;;;;;;  (require 'multi-mode)
+;;;;;;;  (defun jsp-mode () (interactive)
+;;;;;;;    (multi-mode 1
+;;;;;;;                'html-mode
+;;;;;;;                '("<%--" indented-text-mode)
+;;;;;;;                '("<%@" indented-text-mode)
+;;;;;;;                '("<%=" html-mode)
+;;;;;;;                '("<%" java-mode)
+;;;;;;;                '("%>" html-mode)))
+;;;;;;;  (setq auto-mode-alist (append '( ("\\.jsp\\'" . jsp-mode)) auto-mode-alist))
+;;;;;;;
+;;;;;;;  (require 'color-theme)
+;;;;;;;  ;(color-theme-dark-blue2)
+;;;;;;;  ;(color-theme-classic)
+;;;;;;;  ;(color-theme-comidia)
+;;;;;;;  ;(color-theme-clarity)
+;;;;;;;  ;(color-theme-robin-hood)
+;;;;;;;  ;(color-theme-lawrence)
+;;;;;;;  ;(color-theme-charcoal-black)
+;;;;;;;  ;(set-frame-font "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso8859-1")
+;;;;;;;  ;(set-frame-font "-xos4-terminus-medium-r-normal--14-140-72-72-c-80-iso8859-1")
+;;;;;;;  ;(set-frame-font "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso8859-1")
+;;;;;;;  ;(set-frame-font "-jis-fixed-medium-r-normal--18-180-72-72-c-180-jisx0208.1983-0")
+;;;;;;;  ;(set-frame-font "-dec-terminal-medium-r-normal--14-140-75-75-c-80-iso8859-1")
+;;;;;;;  ;(set-frame-font "-etl-fixed-medium-r-normal--18-180-72-72-c-90-iso8859-1")
+;;;;;;;  ;(set-frame-font "-adobe-courier-medium-r-normal--*-140-*-*-*-*-iso8859-1")
+;;;;;;;
+;;;;;;;  (global-font-lock-mode 1)
+;;;;;;;  (server-start)
+;;;;;;;
+;;;;;;;  ;; custom functions
+;;;;;;;  (defmacro incr (var)
+;;;;;;;    "Add one to the named variable."
+;;;;;;;    `(setq ,var (+ ,var 1)))
+;;;;;;;
+;;;;;;;  (defun aar-replace-string-increment (str num)
+;;;;;;;    "Incrementally replace text in a buffer."
+;;;;;;;    (interactive "sSearch string: \nnStart integer: ")
+;;;;;;;    (save-excursion
+;;;;;;;      (save-restriction
+;;;;;;;        (save-match-data
+;;;;;;;          (widen)
+;;;;;;;          (goto-char (point-min))
+;;;;;;;          (while (re-search-forward (concat "\\(" str "\\)"))
+;;;;;;;            (replace-match (number-to-string num) t t nil 1)
+;;;;;;;            (message (number-to-string num))
+;;;;;;;            (incr num))))))
+;;;;;;;
+;;;;;;;  (defun aar-go-wls ()
+;;;;;;;    "Play WLS stream."
+;;;;;;;    (interactive)
+;;;;;;;    (emms-play-url "http://abcrad.sc.llnwd.net:12015"))
+;;;;;;;
+;;;;;;;  (defun aar-go-wgst ()
+;;;;;;;    "Play WGST stream."
+;;;;;;;    (interactive)
+;;;;;;;    (emms-play-url "http://ccri.eonstreams.com/ccri_ga_atlanta_wgst_am.asf"))
+;;;;;;;
+;;;;;;;  (defun aar-go-radioparadise ()
+;;;;;;;    "Play Radio Paradise stream."
+;;;;;;;    (interactive)
+;;;;;;;    (emms-play-url "http://64.236.34.67:80/stream/2001"))
+;;;;;;;
+;;;;;;;  (defun aar-go-liberty ()
+;;;;;;;    "Play Liberty Broadcasting stream."
+;;;;;;;    (interactive)
+;;;;;;;    (emms-play-url "http://63.223.15.82/libertybroadcasting"))
+;;;;;;;
+;;;;;;;  (defun aar-volume-change (num)
+;;;;;;;    "Take a integer as prefix and increase or decrease volume by that
+;;;;;;;  amount."
+;;;;;;;    (interactive "p")
+;;;;;;;    (let ((change (if (>= num 0)
+;;;;;;;                      (concat "+" (number-to-string num))
+;;;;;;;                    (number-to-string num))))
+;;;;;;;      (shell-command (concat "aumix -w" change))
+;;;;;;;      (message (concat "Volume: " change))))
+;;;;;;;
+;;;;;;;  (defun aar-acpi-view ()
+;;;;;;;    "Display the remaining battery life."
+;;;;;;;    (interactive)
+;;;;;;;    (shell-command "acpi"))
+;;;;;;;
+;;;;;;;  (global-set-key (kbd "<f5>") (lambda () (interactive) (aar-acpi-view)))
+;;;;;;;  (global-set-key (kbd "<f10>") (lambda () (interactive) (emms-pbi 1)))
+;;;;;;;  (global-set-key (kbd "<f11>") (lambda () (interactive) (aar-volume-change -5)))
+;;;;;;;  (global-set-key (kbd "<f12>") (lambda () (interactive) (aar-volume-change 5)))
+;;;;;;;
+;;;;;;;  ;; dictionary-el
+;;;;;;;  (autoload 'dictionary-search "dictionary"
+;;;;;;;    "Ask for a word and search it in all dictionaries" t)
+;;;;;;;  (autoload 'dictionary-match-words "dictionary"
+;;;;;;;    "Ask for a word and search all matching words in the dictionaries" t)
+;;;;;;;  (autoload 'dictionary-lookup-definition "dictionary"
+;;;;;;;    "Unconditionally lookup the word at point." t)
+;;;;;;;  (autoload 'dictionary "dictionary"
+;;;;;;;    "Create a new dictionary buffer" t)
+;;;;;;;  (autoload 'dictionary-mouse-popup-matching-words "dictionary"
+;;;;;;;    "Display entries matching the word at the cursor" t)
+;;;;;;;  (autoload 'dictionary-popup-matching-words "dictionary"
+;;;;;;;    "Display entries matching the word at the point" t)
+;;;;;;;  (autoload 'dictionary-tooltip-mode "dictionary"
+;;;;;;;    "Display tooltips for the current word" t)
+;;;;;;;  (autoload 'global-dictionary-tooltip-mode "dictionary"
+;;;;;;;    "Enable/disable dictionary-tooltip-mode for all buffers" t)

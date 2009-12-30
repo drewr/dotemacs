@@ -1,0 +1,44 @@
+; -*- emacs-lisp -*-
+
+(add-to-list 'load-path (expand-file-name "~/elisp/slime"))
+(add-to-list 'load-path (expand-file-name "~/elisp/slime/contrib"))
+(require 'slime)
+(slime-setup '(slime-repl))
+
+(setenv "SBCL_HOME" "/usr/local/pkgs/sbcl/lib/sbcl")
+(setq common-lisp-hyperspec-root
+   (concat "file://" (expand-file-name "~/tmp/lisp/HyperSpec/")))
+
+(add-hook 'lisp-mode-hook 'aar/lispy-parens)
+(add-hook 'lisp-mode-hook (lambda ()
+                            (setq browse-url-browser-function 'w3m-browse-url)))
+
+(add-to-list 'slime-lisp-implementations '(sbcl ("sbcl" "--noinform")))
+(add-to-list 'slime-lisp-implementations '(openmcl ("openmcl")))
+(add-to-list 'slime-lisp-implementations '(clisp  ("clisp" "-K full")))
+
+;; start openmcl with its own inferior-lisp buffer
+(defun slime-openmcl ()
+  (interactive)
+  (apply #'slime-start
+         (list* :buffer "*inferior-lisp-openmcl*"
+                (slime-lookup-lisp-implementation slime-lisp-implementations
+                                                  'openmcl))))
+
+;; start clisp with its own inferior-lisp buffer
+(defun slime-clisp ()
+  (interactive)
+  (apply #'slime-start
+         (list* :buffer "*inferior-lisp-clisp*"
+                (slime-lookup-lisp-implementation slime-lisp-implementations
+                                                  'clisp))))
+
+;; sbcl with its own inferior-lisp buffer
+(defun slime-sbcl ()
+  (interactive)
+  (apply #'slime-start
+         (list* :buffer "*inferior-lisp-sbcl*"
+                (slime-lookup-lisp-implementation slime-lisp-implementations
+                                                  'sbcl))))
+
+

@@ -1,0 +1,54 @@
+; -*- emacs-lisp -*-
+;
+; $Id: .emacs.mac 1144 2006-12-27 18:39:43Z drewr $
+
+; For darwinports
+(add-to-list 'exec-path "/opt/local/bin")
+(add-to-list 'exec-path "/opt/local/sbin")
+; For fink
+(add-to-list 'exec-path "/sw/bin")
+(add-to-list 'exec-path "/sw/sbin")
+; For ledger.el
+(add-to-list 'exec-path "/usr/local/bin")
+
+; ledger stuff
+(setenv "LEDGER" (expand-file-name "~/.ledger"))
+(setenv "LEDGER_FILE" (getenv "LEDGER"))
+(setenv "LEDGER_CACHE" (concat (getenv "LEDGER") "-cache"))
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setq ledger-binary-path (executable-find "ledger"))
+(require 'ledger)
+
+; w3m stuff
+(setq browse-url-browser-function 'browse-url-default-macosx-browser
+      browse-url-mozilla-new-window-is-tab t)
+
+; user-managed package info
+(require 'info)
+(setq Info-directory-list
+      (cons "~/info"
+            (cons "~/elisp/bbdb/texinfo" Info-default-directory-list)))
+
+(setq ispell-program-name "aspell")
+
+;(set-default-font "-apple-courier-medium-r-normal--16-*-*-*-m-0-mac-roman")
+;(set-default-font "-apple-bitstream vera sans mono-medium-r-normal--12-*-*-*-m-0-mac-roman")
+;(set-default-font "-apple-lucida sans typewriter-medium-r-normal--14-*-*-*-m-0-mac-roman")
+
+(add-to-list 'default-frame-alist
+             '(font . "-apple-bitstream vera sans mono-medium-r-normal--12-*-*-*-m-0-mac-roman"))
+
+; Is there a better way to get Fink stuff in PATH
+; so that shell-command can call netpbm progs?
+(setenv "PATH" (concat "/sw/bin:" (getenv "PATH")))
+
+; This fixes "svn: can't recode string" crap
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_CTYPE" "en_US.UTF-8")
+
+; For Leopard+Emacs 22.3
+(when (functionp 'clipboard-yank)
+  (global-set-key "\C-w" 'clipboard-kill-region)
+  (global-set-key "\M-w" 'clipboard-kill-ring-save)
+  (global-set-key "\C-y" 'clipboard-yank))
+

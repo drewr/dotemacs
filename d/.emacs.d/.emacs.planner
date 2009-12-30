@@ -1,0 +1,33 @@
+(add-to-list 'load-path (expand-file-name "~/elisp/muse/lisp"))
+(add-to-list 'load-path (expand-file-name "~/elisp/planner-muse"))
+(add-to-list 'load-path (expand-file-name "~/elisp/remember"))
+(require 'muse)
+(require 'muse-mode)
+(require 'muse-html)
+(require 'muse-latex)
+(require 'muse-texinfo)
+(require 'muse-docbook)
+(require 'remember)
+(require 'remember-planner)
+(require 'planner-auto)
+(planner-option-customized 'planner-directory
+                  (expand-file-name "~/Plan"))
+(planner-option-customized 'planner-publishing-directory
+                  (expand-file-name "~/html/plan"))
+(planner-install-extra-task-keybindings)
+(planner-gnus-insinuate)
+(global-set-key (kbd "<f9> t") 'planner-create-task-from-buffer)
+(global-set-key (kbd "<f9> <f9>") 'planner-goto-today)
+(setq planner-project "Plan"
+      planner-carry-tasks-forward t
+      remember-handler-functions '(remember-planner-append)
+      remember-annotation-functions planner-annotation-functions)
+(setq muse-project-alist
+      `(("Plan"
+         ("~/Plan/"
+          :default "TaskPool"
+          :major-mode planner-mode
+          :visit-link planner-visit-link)
+         (:base "xhtml"
+                :path "~/html/plan"))))
+

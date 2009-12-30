@@ -1,0 +1,7 @@
+; -*- emacs-lisp -*-
+
+(require 'erlang-start)
+
+(add-to-list 'load-path (expand-file-name "~/elisp/distel/elisp"))
+(require 'distel)
+(distel-setup)

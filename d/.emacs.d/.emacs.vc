@@ -1,0 +1,8 @@
+; -*- emacs-lisp -*-
+
+(require 'darcsum)
+
+(add-to-list 'load-path (expand-file-name "~/elisp/magit"))
+(require 'magit)
+
+(global-set-key "\C-xg" 'magit-status)

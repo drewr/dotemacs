@@ -1,0 +1,23 @@
+; -*- emacs-lisp -*-
+;
+; $Id: .emacs.win32 723 2005-12-27 18:36:27Z drewr $
+
+(add-to-list 'exec-path "c:/pkgs/gnutls")
+(add-to-list 'exec-path "c:/cygwin/usr/local/pkgs/ledger-2/bin")
+(require 'ledger)
+
+(setq
+ printer-name "\\\\prt1\\q-hill_256_1"
+ ps-printer-name "\\\\prt1\\q-hill_256_1"
+ default-frame-alist '((top . 15) (left . 0) (width . 90) (height . 37))
+ ispell-program-name "aspell")
+(set-frame-font "-outline-Courier New-normal-r-normal-normal-*-*-96-96-c-*-iso8859-1")
+
+(add-to-list 'load-path (expand-file-name "~/elisp/cedet/common"))
+(load (expand-file-name "~/elisp/cedet/common/cedet"))
+(setq semanticdb-default-save-directory (expand-file-name "~/.semantic"))
+
+(add-to-list 'load-path (expand-file-name "~/elisp/elib"))
+
+(add-to-list 'load-path (expand-file-name "~/elisp/jde/lisp"))
+(require 'jde)

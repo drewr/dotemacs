@@ -1,0 +1,55 @@
+; -*- emacs-lisp -*-
+
+(require 'ledger)
+
+(setq ledger-clear-whole-entries t)
+
+(setq ledger-reports
+      '("ledger -p this --effective reg Expenses:Home"
+        "ledger -p this --effective reg Expenses:Food"
+        "ledger -p this --effective reg Expenses:Food:Groceries"
+        "ledger -p this --effective reg Expenses:Food:Out"
+        "ledger -p this --effective reg Expenses:Gift"
+        "ledger reg ing:urb"
+        "ledger reg ness:urb"))
+
+(defun ledger-reports-compile ()
+  (mapcar
+   (lambda (str)
+     (let ((out (shell-command-to-string str)))
+       (if (equal out "")
+           (concat "No data yet for \"" str ".\"\n")
+         out)))
+   ledger-reports))
+
+(defun ledger-reports-assemble-for-print ()
+  (mapcar (lambda (report)
+          (insert report)
+          (insert "\n--------------------------------------------------------------------------------\n\n"))
+        (ledger-reports-compile)))
+
+(defun ledger-reports-mail ()
+  (interactive)
+  (save-window-excursion
+    (message-mail
+     (concat user-mail-address ", scraines@gmail.com")
+     "Budget report!")
+    (message-goto-body)
+    (ledger-reports-assemble-for-print)
+    (insert (concat "Report generated " (current-time-string) "."))
+    (newline)
+    (message-send-and-exit)))
+
+(defun aar/join-lines-and-kill ()
+  "Take buffer, strip newlines, and kill result."
+  (interactive)
+  (save-excursion
+    (kill-ring-save (point-min) (point-max))
+    (with-temp-buffer
+      (yank)
+      (goto-char 0)
+      (while (not (= (point) (point-max)))
+        (join-line)
+        (goto-char (point-at-bol))
+        (forward-line)
+        (kill-ring-save (point-min) (point-max))))))

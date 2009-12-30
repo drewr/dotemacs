@@ -1,0 +1,10 @@
+; -*- emacs-lisp -*-
+
+; Gmane admin
+(require 'cl)
+(push "~/gmadmin" load-path)
+(setq gnus-summary-mode-hook '(gmane-setup-summary))
+(push '("gmane.conf" . gmane-mode) auto-mode-alist)
+(autoload 'gmane-setup-summary "gmane")
+(autoload 'gmane-mode "gmane")
+

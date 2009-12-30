@@ -1,0 +1,23 @@
+; -*- emacs-lisp -*-
+
+(add-to-list 'load-path (expand-file-name "~/elisp/emacs-w3m"))
+(require 'w3m)
+(global-set-key (kbd "<f4>") 'w3m-view-url-with-external-browser)
+(setq w3m-display-inline-image nil
+      w3m-use-cookies t
+      w3m-use-toolbar nil
+      w3m-use-symbol t
+      w3m-fill-column 75)
+(standard-display-ascii ?\205 [?\.?\.?\.])
+(standard-display-ascii ?\221 [?:])
+(standard-display-ascii ?\222 [?\'])
+(standard-display-ascii ?\223 [?\"])
+(standard-display-ascii ?\224 [?\"])
+(standard-display-ascii ?\225 [?+])
+(standard-display-ascii ?\226 [?-?-])
+(standard-display-ascii ?\227 [? ?-?-? ])
+(standard-display-ascii ?\240 [])
+(standard-display-ascii ?\302 [? ?-?-? ])
+(setq w3m-home-page "http://raines.ws/home")
+(setq w3-default-homepage "http://raines.ws/home")
+

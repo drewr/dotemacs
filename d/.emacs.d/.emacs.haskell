@@ -1,0 +1,8 @@
+; -*- emacs-lisp -*-
+(add-to-list 'load-path (expand-file-name "~/elisp/haskell-mode"))
+(require 'haskell-mode)
+(require 'inf-haskell)
+(setq auto-mode-alist (cons '("\\.hs$" . haskell-mode) auto-mode-alist)
+      haskell-program-name "/usr/bin/ghci")
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-ghci)
