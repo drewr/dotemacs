@@ -9,7 +9,8 @@
 (define-key global-map "\C-ca" 'org-agenda)
 (define-key global-map [(control meta ?r)] 'org-remember)
 (setq org-directory "~/.org"
-      org-agenda-files (quote ("~/.org/WORK.org" "~/.org/PERSONAL.org"))
+      org-agenda-files (quote ("~/.org/PERSONAL.org"
+                               "~/.org/clients"))
       org-log-done t
       org-agenda-show-all-dates t
       org-agenda-ndays 7
