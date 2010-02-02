@@ -13,6 +13,7 @@
 (setq auto-mode-alist
       (cons '("\\.clj$" . clojure-mode)
             auto-mode-alist))
+(setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
 
 (defun classpathize (paths)
   (mapconcat 'expand-file-name paths ":"))
@@ -21,11 +22,27 @@
   (let ((path (expand-file-name (concat "~/tmp/src/jar-" x))))
     (concat "JAR_HOME=" path)))
 
+(defmacro add-clojure-project (project path)
+  (let* ((fullpath (expand-file-name path))
+         (classpaths (mapcar
+                      (lambda (p)
+                        (concat fullpath p))
+                      '("/lib/*"
+                        "/src/clj"
+                        "/classes")))
+         (clj (expand-file-name "~/bin/clojure")))
+    `(add-to-list 'slime-lisp-implementations
+                  (backquote
+                   (,project
+                    ("env"
+                     ,(concat "CLASSPATH=" (classpathize classpaths))
+                     ,clj)
+                    :init swank-clojure-init)) t)))
+
 (progn
   (setq slime-lisp-implementations '())
-  (setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
-  (setq swank-clojure-classpath (expand-file-name "~/.clojure"))
-  ;;(require 'swank-clojure-autoload)
+  (add-clojure-project fleetdb "~/src/fleetdb")
+  (add-clojure-project dispatchr "~/src/dispatchr")
   (add-to-list 'slime-lisp-implementations
                `(hbase
                  ("env"
