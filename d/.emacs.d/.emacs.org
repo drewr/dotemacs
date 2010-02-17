@@ -25,9 +25,10 @@
 
 (setq org-default-notes-file "~/.org/NOTES.org")
 
-(setq org-remember-templates '(("Personal task" 112 "* TODO %?\n  %u" "~/.org/PERSONAL.org" "Tasks")
-                               ("Work task" 119 "* TODO %?\n  %u" "~/.org/WORK.org" "Tasks")
-                               ("Note" 110 "* %u %?" "~/.org/notes.org" "Notes")))
+(setq org-remember-templates '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org" 'top)
+                               ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org" 'top)
+                               ("Trinity" 116 "* TODO %?\n  %u" "clients/CHURCH.org" 'top)
+                               ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
 ; '(org-agenda-custom-commands (quote (("d" todo #("DELEGATED" 0 9 (face org-warning)) nil) ("c" todo #("DONE|DEFERRED|CANCELED" 0 23 (face org-warning)) nil) ("w" todo #("WAITING" 0 7 (face org-warning)) nil) ("W" agenda "" ((org-agenda-ndays 21))) ("A" agenda "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]"))) (org-agenda-ndays 1) (org-agenda-overriding-header "Today's Priority #A tasks: "))) ("u" alltodo "" ((org-agenda-skip-function (lambda nil (org-agenda-skip-entry-if (quote scheduled) (quote deadline) (quote regexp) "<[^>
 ;]+>"))) (org-agenda-overriding-header "Unscheduled TODO entries: "))))))
