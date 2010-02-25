@@ -28,8 +28,7 @@
                       (lambda (p)
                         (concat fullpath p))
                       '("/lib/*"
-                        "/src/clj"
-                        "/classes")))
+                        "/src/clj")))
          (clj (expand-file-name "~/bin/clojure")))
     `(add-to-list 'slime-lisp-implementations
                   (backquote
