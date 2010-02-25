@@ -43,6 +43,7 @@
   (setq slime-lisp-implementations '())
   (add-clojure-project fleetdb "~/src/fleetdb")
   (add-clojure-project dispatchr "~/src/dispatchr")
+  (add-clojure-project missive "~/src/nmd/missive")
   (add-to-list 'slime-lisp-implementations
                `(hbase
                  ("env"
@@ -65,38 +66,6 @@
                                                         "~/tmp/src/cassandra/lib/*"
                                                         "~/tmp/src/hbase/build/*")))
                   ,(concat "PROPS=" "-Dstorage-config=/Users/aar/tmp/src/cassandra/conf")
-                  ,(expand-file-name "~/bin/clojure"))
-                 :init swank-clojure-init) t)
-
-  (add-to-list 'slime-lisp-implementations
-               `(missive
-                 ("env"
-                  ,(concat "CLASSPATH="
-                           (classpathize '("~/elisp/swank-clojure/src"
-                                           "~/src/nmd/missive/lib/clojure-1.1.0-alpha-SNAPSHOT.jar"
-                                           "~/src/nmd/missive/lib/clojure-contrib-20090831113321+39618b6.jar"
-                                           "~/src/nmd/missive/lib/clojure-json-20090430b.jar"
-                                           "~/src/nmd/missive/lib/clojure-csv-20091208183446+4f23d87.jar"
-                                           "~/src/nmd/missive/lib/commons-logging-1.1.jar"
-                                           "~/src/nmd/missive/lib/commons-lang-2.4.jar"
-                                           "~/src/nmd/missive/lib/cron4j-2.1.1.jar"
-                                           "~/src/nmd/missive/lib/joda-time-1.6.jar"
-                                           "~/src/nmd/missive/lib/jtds-1.2.2.jar"
-                                           "~/src/nmd/missive/lib/log4j-1.2.13.jar"
-                                           "~/src/nmd/missive/lib/poi-3.1-FINAL.jar"
-                                           "~/src/nmd/missive/lib/postgresql-8.3-603.jdbc3.jar"
-                                           "~/src/nmd/missive/lib/proxool-0.9.1.jar"
-                                           "~/src/nmd/missive/lib/proxool-cglib-0.9.1.jar"
-                                           "~/src/nmd/missive/lib/postal-20090910173513+efb1ba8.jar"
-                                           "~/src/nmd/missive/lib/mail-1.4.2.jar"
-                                           "~/src/nmd/missive/lib/supercsv-1.52.jar"
-                                           "~/src/nmd/missive/src/clj"
-                                           "~/tmp/src/hbase/lib/*"
-                                           "~/tmp/src/hbase/build/*"
-                                           "~/tmp/src/hbase/conf"
-                                           "~/tmp/src/clojureql/src"
-;;; "~/tmp/src/clojure-contrib/src"
-                                           "~/src/clot/src")))
                   ,(expand-file-name "~/bin/clojure"))
                  :init swank-clojure-init) t)
 
