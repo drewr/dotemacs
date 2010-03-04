@@ -43,6 +43,7 @@
   (add-clojure-project fleetdb "~/src/fleetdb")
   (add-clojure-project dispatchr "~/src/dispatchr")
   (add-clojure-project missive "~/src/nmd/missive")
+  (add-clojure-project brite "~/src/brite")
   (add-to-list 'slime-lisp-implementations
                `(hbase
                  ("env"
