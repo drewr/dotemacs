@@ -53,6 +53,17 @@
 
 ;; clojure
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/slime"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/clojure-mode"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/swank-clojure"))
+(require 'slime)
+(slime-setup '(slime-repl))
+(require 'clojure-mode)
+(require 'clojure-test-mode)
+(load "swank-clojure")
+(setq slime-net-coding-system 'utf-8-unix)
+(setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
+(require 'assoc)  ;; swank-clojure-project fails without
 
 ;; org
 
