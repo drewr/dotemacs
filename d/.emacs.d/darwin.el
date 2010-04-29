@@ -10,9 +10,9 @@
 
   ;; or:
 
-  ;; (custom-set-variables
-  ;;  '(ns-alternate-modifier (quote super))
-  ;;  '(ns-command-modifier (quote meta)))
+  (custom-set-variables
+   '(ns-alternate-modifier (quote super))
+   '(ns-command-modifier (quote meta)))
 
   ;; Or do neither of these and switch CMD/OPT in OS X keyboard prefs
 
