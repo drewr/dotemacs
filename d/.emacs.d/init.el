@@ -31,6 +31,7 @@
 (display-time)
 (prefer-coding-system 'utf-8)
 
+(setenv "PAGER" "cat")
 
 ;; magit
 
