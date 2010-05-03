@@ -21,10 +21,10 @@
        gnus-treat-hide-citation t
        message-cite-function 'message-cite-original-without-signature
        message-dont-reply-to-names
-          (concat "\\(aaraines\\|aa\\|drew\\|\\.raines\\|me\\|draines\\)@"
-                  "\\(d?raines\\|pobox\\|[Vv]and\\|gmail\\|prov\\|pwm"
-                  "\\|vt\\.\\|cabedge\\)"
-                  "\\|\\(draines@notifymd\\)")
+       (concat "\\(aaraines\\|aa\\|drew\\|\\.raines\\|me\\|draines\\)@"
+               "\\(d?raines\\|pobox\\|[Vv]and\\|gmail\\|prov\\|pwm"
+               "\\|vt\\.\\|cabedge\\)"
+               "\\|\\(draines@notifymd\\)")
        message-from-style 'angles
        message-forward-as-mime nil
        message-make-forward-subject-function 'message-forward-subject-fwd
@@ -47,7 +47,7 @@
 
 (if (eq system-type 'windows-nt)
     (setq imap-ssl-program
-	  '("c:\\cygwin\\bin\\openssl s_client -quiet -ssl3 -connect %s:%p")))
+          '("c:\\cygwin\\bin\\openssl s_client -quiet -ssl3 -connect %s:%p")))
 
 ;;(setq message-generate-headers-first t)
 
@@ -61,7 +61,7 @@
 (setq nnmail-extra-headers gnus-extra-headers)
 
 ;; Better to use wget so nnrss works all the time.
-;(setq mm-url-use-external t)
+                                        ;(setq mm-url-use-external t)
 
 (setq gnus-ignored-from-addresses
       (concat "\\(\\(aa\\|drew\\|me\\)[^@]*@d?raines\\)"
@@ -84,17 +84,17 @@
               (nnir-search-engine swish-e)
               (nnir-swish-e-remove-prefix "/home/aar/Mail/")
               (nnir-swish-e-index-file "/home/aar/Mail/index.swish-e"))
-	(nnfolder "mboxes"
-		  (nnfolder-directory   "~/Mail/mboxes")
-		  (nnfolder-active-file "~/Mail/mboxes/active")
-		  (nnfolder-get-new-mail nil)
-		  (nnfolder-inhibit-expiry nil))
-;;         (nnimap "gmail"
-;;                 (nnimap-address "imap.gmail.com")
-;;                 (nnimap-stream ssl))
+        (nnfolder "mboxes"
+                  (nnfolder-directory   "~/Mail/mboxes")
+                  (nnfolder-active-file "~/Mail/mboxes/active")
+                  (nnfolder-get-new-mail nil)
+                  (nnfolder-inhibit-expiry nil))
+        ;;         (nnimap "gmail"
+        ;;                 (nnimap-address "imap.gmail.com")
+        ;;                 (nnimap-stream ssl))
         (nnimap "notifymd"
                 (nnimap-address "imap.notifymd"))
-	(nntp "news.gmane.org"
+        (nntp "news.gmane.org"
               (nntp-marks-is-evil t))
         (nntp "news.individual.net"
               (nntp-marks-is-evil t))))
@@ -117,24 +117,24 @@
 
 (setq gnus-message-archive-method
       '(nnfolder "archive"
-		 (nnfolder-directory   "~/Mail/archive")
-		 (nnfolder-active-file "~/Mail/archive/active")
-		 (nnfolder-get-new-mail nil)
-		 (nnfolder-inhibit-expiry t)
+                 (nnfolder-directory   "~/Mail/archive")
+                 (nnfolder-active-file "~/Mail/archive/active")
+                 (nnfolder-get-new-mail nil)
+                 (nnfolder-inhibit-expiry t)
                  (nnir-search-engine swish-e)))
 
 (defun aar-gnus-outgoing-message-group ()
   (let ((archive "nnfolder+archive:mail.outbox.all")
-	(outbox "nnml:mail.outbox"))
+        (outbox "nnml:mail.outbox"))
     (cond ((and (message-news-p)
-		(not (string-match "\\.test" gnus-newsgroup-name)))
-	   outbox)
-	  ((and gnus-newsgroup-name
-		(stringp gnus-newsgroup-name)
-		(string-match "^\\(nnml:mail\\)\\|nnimap" gnus-newsgroup-name)
-		(not (string-match "\\.list\\." gnus-newsgroup-name))
-		(not (string-match "[a-z.]+\\.its\\." gnus-newsgroup-name)))
-	   (list gnus-newsgroup-name archive)))))
+                (not (string-match "\\.test" gnus-newsgroup-name)))
+           outbox)
+          ((and gnus-newsgroup-name
+                (stringp gnus-newsgroup-name)
+                (string-match "^\\(nnml:mail\\)\\|nnimap" gnus-newsgroup-name)
+                (not (string-match "\\.list\\." gnus-newsgroup-name))
+                (not (string-match "[a-z.]+\\.its\\." gnus-newsgroup-name)))
+           (list gnus-newsgroup-name archive)))))
 (setq gnus-outgoing-message-group 'aar-gnus-outgoing-message-group)
 
 (defun passwd-from-authinfo (machine port)
@@ -144,14 +144,14 @@
 
 (setq mail-sources
       '(;(pop :server "mail.draines.com"
-        ;                  :user "me@draines.com"
-        ;                  :password (passwd-from-authinfo "mail.draines.com"))
-        ;(imap :server "imap.gmail.com"
-        ;      :port 993
-        ;      :user "aaraines"
-        ;      :password (passwd-from-authinfo "imap.gmail.com" 993)
-        ;      :stream ssl
-        ;      :fetchflag "\\Seen")
+                                        ;                  :user "me@draines.com"
+                                        ;                  :password (passwd-from-authinfo "mail.draines.com"))
+                                        ;(imap :server "imap.gmail.com"
+                                        ;      :port 993
+                                        ;      :user "aaraines"
+                                        ;      :password (passwd-from-authinfo "imap.gmail.com" 993)
+                                        ;      :stream ssl
+                                        ;      :fetchflag "\\Seen")
         ))
 (setq nnmail-crosspost nil)
 (setq nnmail-split-methods
@@ -235,17 +235,17 @@
 (defun gnus-demon-scan-mail-and-update ()
   "Scan for new mail, updating the *Group* buffer."
   (gnus-demon-scan-mail-or-news-and-update 2))
-;(gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 5 t)
+                                        ;(gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 5 t)
 ;;
 ;; level 3: mail and local news groups are scanned.
 (defun gnus-demon-scan-news-and-update ()
   "Scan for new mail, updating the *Group* buffer."
   (gnus-demon-scan-mail-or-news-and-update 3))
-;(gnus-demon-add-handler 'gnus-demon-scan-news-and-update 30 t)
+                                        ;(gnus-demon-add-handler 'gnus-demon-scan-news-and-update 30 t)
 
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
-;(setq gnus-group-line-format "%M%S%6R%5U%5y: %(%-35,35G%)(%2T%2i) %ud %2L %-2I\n")
+                                        ;(setq gnus-group-line-format "%M%S%6R%5U%5y: %(%-35,35G%)(%2T%2i) %ud %2L %-2I\n")
 (setq gnus-group-line-format "%7L%12ud %M%S%5U%6y: %(%G%):%-6R\n")
 (defun gnus-user-format-function-d (headers)
   (let ((time (gnus-group-timestamp gnus-tmp-group)))
@@ -253,7 +253,7 @@
 
 (setq gnus-user-date-format-alist
       '(((gnus-seconds-today) . "%H:%M")
-	((gnus-seconds-year) . "%b %d") (t . "%y%m%d")))
+        ((gnus-seconds-year) . "%b %d") (t . "%y%m%d")))
 
 (defun aar-alter-summary-line-format ()
   "My alter summary line format."
@@ -276,7 +276,7 @@
              "%s\n")))))
 (add-hook 'gnus-summary-mode-hook 'aar-alter-summary-line-format)
 
-; Tired of sending messages before I'm ready...
+                                        ; Tired of sending messages before I'm ready...
 (defun aar/delay-send (prefix)
   "Dang, C-c C-c is easy to hit."
   (interactive "p")
@@ -300,45 +300,45 @@
           (beginning-of-line nil)
           (insert "Face: ")
           (insert-file (expand-file-name file)))))))
-;(add-hook 'message-send-hook 'message-insert-face)
+                                        ;(add-hook 'message-send-hook 'message-insert-face)
 
 (defun aar-start-tunnels ()
   "Make sure SSH Tunnel Manager is running."
   (interactive)
   (shell-command "osascript ~/bin/start-tunnels.applescript"))
-;(add-hook 'message-send-hook 'aar-start-tunnels)
+                                        ;(add-hook 'message-send-hook 'aar-start-tunnels)
 
 ;;; Hm, let's try the regex in the manual first.
-;(add-hook 'message-sent-hook 'gnus-score-followup-thread)
+                                        ;(add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
 ;;; Insert the Face: *after* sending
 (setq message-required-news-headers
       '(From Newsgroups Subject Date Message-ID
-	     (optional . Organization)
-	     (optional . User-Agent))
+             (optional . Organization)
+             (optional . User-Agent))
       message-required-mail-headers
       '(From Subject Date
-	     (optional . In-Reply-To)
-	     Message-ID
-	     (optional . User-Agent)))
+             (optional . In-Reply-To)
+             Message-ID
+             (optional . User-Agent)))
 (setq message-required-news-headers
       (nconc message-required-news-headers
-	     (list '(Face . (lambda ()
-			      (gnus-face-from-file "~/.face.jpg"))))))
+             (list '(Face . (lambda ()
+                              (gnus-face-from-file "~/.face.jpg"))))))
 ;; (setq message-required-mail-headers
 ;;       (nconc message-required-mail-headers
-;; 	     (list '(Face . (lambda ()
-;; 			      (gnus-face-from-file "~/.face.jpg"))))))
+;;           (list '(Face . (lambda ()
+;;                            (gnus-face-from-file "~/.face.jpg"))))))
 (setq message-field-fillers
       `((Face ignore)
-	(To message-fill-field-address)
-	(Cc message-fill-field-address)
-	(From message-fill-field-address)))
+        (To message-fill-field-address)
+        (Cc message-fill-field-address)
+        (From message-fill-field-address)))
 
 (setq gnus-posting-styles
       '((".*"
-	 ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
-	 (signature nil))
+         ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
+         (signature nil))
         ("nnml.*list\\."
          (address "aaraines@gmail.com"))
         ("nashdl"
@@ -350,38 +350,38 @@
         ("providence"
          (address "draines@pwministries.net")
          (bcc "draines@pwministries.net"))
-	("\\.*\\(^vu\\.\\|university\\|vanderbilt\\|vampire\\|vuexchange\\)"
-	 (signature-file "~/.sig-vandy")
-	 ("X-PGP-Key" "http://people.vanderbilt.edu/~drew.raines/pubkey.asc")
-	 (address "drew.raines@vanderbilt.edu"))
-	("INBOX\\.personal.*"
-	 (signature nil))
+        ("\\.*\\(^vu\\.\\|university\\|vanderbilt\\|vampire\\|vuexchange\\)"
+         (signature-file "~/.sig-vandy")
+         ("X-PGP-Key" "http://people.vanderbilt.edu/~drew.raines/pubkey.asc")
+         (address "drew.raines@vanderbilt.edu"))
+        ("INBOX\\.personal.*"
+         (signature nil))
         ("gmane\\.discuss\\.subscribe"
          (signature "Drew Raines <http://gmane.org>"))
-	("INBOX\\.class\\.vt.*"
+        ("INBOX\\.class\\.vt.*"
          (address "aaraines@VT.EDU")
-	 (signature nil))
-	(message-this-is-news
+         (signature nil))
+        (message-this-is-news
          (address "aaraines@gmail.com")
          (reply-to nil)
-	 ("Mail-Copies-To" "never"))
-	("alt\\.test"
-	 (name "Jim JIMMERSON")
-	 (address "jimmy@jimmerson.dom")
-	 ("Organization" "Jimmersonian Institute")
-	 (signature "http://jim.jimmerson.dom")
+         ("Mail-Copies-To" "never"))
+        ("alt\\.test"
+         (name "Jim JIMMERSON")
+         (address "jimmy@jimmerson.dom")
+         ("Organization" "Jimmersonian Institute")
+         (signature "http://jim.jimmerson.dom")
          ("X-PGP-Key" "I hate encryption"))
-	("\\.hcoop"
-	 (name "Drew Raines")
-	 (address "drewr@hcoop.net")
+        ("\\.hcoop"
+         (name "Drew Raines")
+         (address "drewr@hcoop.net")
          (signature nil))
-	("nnml.*\\.belmont"
-	 (name "Andrew Raines")
-	 (address "rainesa@pop.belmont.edu")
+        ("nnml.*\\.belmont"
+         (name "Andrew Raines")
+         (address "rainesa@pop.belmont.edu")
          (signature nil))
-	("nnml.*\\.loveinc"
-	 (name "Andrew Raines")
-	 (reply-to "aaraines@nashvilleloveinc.org")
+        ("nnml.*\\.loveinc"
+         (name "Andrew Raines")
+         (reply-to "aaraines@nashvilleloveinc.org")
          (signature "http://nashvilleloveinc.org"))
         ("nnml.*\\.cabedge"
          (name "Drew Raines")
@@ -392,7 +392,7 @@
          (name "Drew Raines")
          (address "draines@notifymd.com")
          (reply-to nil)
-         ; (signature "draines@notifymd.com * http://notifymd.com * 615-778-6730")
+                                        ; (signature "draines@notifymd.com * http://notifymd.com * 615-778-6730")
          (signature nil))))
 
 (defun aar-message-from-only-name (fromline)
@@ -490,13 +490,13 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
 (defadvice mm-url-insert (after DE-convert-atom-to-rss () )
   "Converts atom to RSS by calling xsltproc."
   (when (re-search-forward "xmlns=\"http://www.w3.org/.*/Atom\""
-			   nil t)
+                           nil t)
     (goto-char (point-min))
     (message "Converting Atom to RSS... ")
     (call-process-region (point-min) (point-max)
-			 "xsltproc"
-			 t t nil
-			 (expand-file-name "~/elisp/atom2rss.xsl") "-")
+                         "xsltproc"
+                         t t nil
+                         (expand-file-name "~/elisp/atom2rss.xsl") "-")
     (goto-char (point-min))
     (message "Converting Atom to RSS... done")))
 
