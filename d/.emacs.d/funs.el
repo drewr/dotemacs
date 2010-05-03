@@ -43,8 +43,8 @@ Symbols matching the text at point are put first in the completion list."
 (defun cleanup-buffer ()
   "Perform a bunch of operations on the whitespace content of a buffer."
   (interactive)
-  (indent-buffer)
-  (untabify-buffer)
+  (indent-region (point-min) (point-max) nil)
+  (untabify (point-min) (point-max))
   (delete-trailing-whitespace))
 
 (defun recentf-ido-find-file ()
