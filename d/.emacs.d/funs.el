@@ -40,7 +40,7 @@ Symbols matching the text at point are put first in the completion list."
            (position (cdr (assoc selected-symbol name-and-pos))))
       (goto-char position))))
 
-(defun cleanup-buffer ()
+(defun clean-up-buffer ()
   "Perform a bunch of operations on the whitespace content of a buffer."
   (interactive)
   (indent-region (point-min) (point-max) nil)
