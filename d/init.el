@@ -12,6 +12,7 @@
    ('gnu/linux "linux")
    ('windows-nt "win32")))
 (load-custom "funs")
+(load-custom "sonian")
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
