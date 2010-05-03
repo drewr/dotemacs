@@ -14,11 +14,15 @@
 (load-custom "funs")
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
 (add-to-list 'default-frame-alist '(width . 103))
 (add-to-list 'default-frame-alist '(height . 35))
 
+(require 'ffap)
+(require 'package)
+(package-initialize)
 (toggle-uniquify-buffer-names)
 (recentf-mode 1)
 (ido-mode t)
