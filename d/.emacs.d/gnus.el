@@ -143,15 +143,16 @@
     (netrc-get y "password")))
 
 (setq mail-sources
-      '(;(pop :server "mail.draines.com"
-                                        ;                  :user "me@draines.com"
-                                        ;                  :password (passwd-from-authinfo "mail.draines.com"))
-                                        ;(imap :server "imap.gmail.com"
-                                        ;      :port 993
-                                        ;      :user "aaraines"
-                                        ;      :password (passwd-from-authinfo "imap.gmail.com" 993)
-                                        ;      :stream ssl
-                                        ;      :fetchflag "\\Seen")
+      '(
+;;; (pop :server "mail.draines.com"
+;;;  :user "me@draines.com"
+;;;                  :password (passwd-from-authinfo "mail.draines.com"))
+;;;(imap :server "imap.gmail.com"
+;;;      :port 993
+;;;      :user "aaraines"
+;;;      :password (passwd-from-authinfo "imap.gmail.com" 993)
+;;;      :stream ssl
+;;;      :fetchflag "\\Seen")
         ))
 (setq nnmail-crosspost nil)
 (setq nnmail-split-methods
@@ -235,17 +236,17 @@
 (defun gnus-demon-scan-mail-and-update ()
   "Scan for new mail, updating the *Group* buffer."
   (gnus-demon-scan-mail-or-news-and-update 2))
-                                        ;(gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 5 t)
+;;;(gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 5 t)
 ;;
 ;; level 3: mail and local news groups are scanned.
 (defun gnus-demon-scan-news-and-update ()
   "Scan for new mail, updating the *Group* buffer."
   (gnus-demon-scan-mail-or-news-and-update 3))
-                                        ;(gnus-demon-add-handler 'gnus-demon-scan-news-and-update 30 t)
+;;;(gnus-demon-add-handler 'gnus-demon-scan-news-and-update 30 t)
 
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
-                                        ;(setq gnus-group-line-format "%M%S%6R%5U%5y: %(%-35,35G%)(%2T%2i) %ud %2L %-2I\n")
+;;;(setq gnus-group-line-format "%M%S%6R%5U%5y: %(%-35,35G%)(%2T%2i) %ud %2L %-2I\n")
 (setq gnus-group-line-format "%7L%12ud %M%S%5U%6y: %(%G%):%-6R\n")
 (defun gnus-user-format-function-d (headers)
   (let ((time (gnus-group-timestamp gnus-tmp-group)))
@@ -276,7 +277,7 @@
              "%s\n")))))
 (add-hook 'gnus-summary-mode-hook 'aar-alter-summary-line-format)
 
-                                        ; Tired of sending messages before I'm ready...
+;;; Tired of sending messages before I'm ready...
 (defun aar/delay-send (prefix)
   "Dang, C-c C-c is easy to hit."
   (interactive "p")
@@ -300,16 +301,16 @@
           (beginning-of-line nil)
           (insert "Face: ")
           (insert-file (expand-file-name file)))))))
-                                        ;(add-hook 'message-send-hook 'message-insert-face)
+;;;(add-hook 'message-send-hook 'message-insert-face)
 
 (defun aar-start-tunnels ()
   "Make sure SSH Tunnel Manager is running."
   (interactive)
   (shell-command "osascript ~/bin/start-tunnels.applescript"))
-                                        ;(add-hook 'message-send-hook 'aar-start-tunnels)
+;; (add-hook 'message-send-hook 'aar-start-tunnels)
 
 ;;; Hm, let's try the regex in the manual first.
-                                        ;(add-hook 'message-sent-hook 'gnus-score-followup-thread)
+;; (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
 ;;; Insert the Face: *after* sending
 (setq message-required-news-headers
@@ -392,7 +393,7 @@
          (name "Drew Raines")
          (address "draines@notifymd.com")
          (reply-to nil)
-                                        ; (signature "draines@notifymd.com * http://notifymd.com * 615-778-6730")
+         ;; (signature "draines@notifymd.com * http://notifymd.com * 615-778-6730")
          (signature nil))))
 
 (defun aar-message-from-only-name (fromline)
