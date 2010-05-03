@@ -1,6 +1,9 @@
 #!/bin/sh
 
-( cd d; tar cf - . \
+DEST=/www/htdocs/draines/emacs
+
+( cd d; tar cf - . --exclude=\*.elc \
 | ssh draines \
-  mkdir -p /www/htdocs/draines/emacs; \
+  mkdir -p $DEST\; \
+  cd $DEST\; \
   tar xvf - )
