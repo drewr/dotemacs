@@ -11,6 +11,7 @@
    ('darwin "darwin")
    ('gnu/linux "linux")
    ('windows-nt "win32")))
+(load-custom "funs")
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -19,38 +20,62 @@
 (add-to-list 'default-frame-alist '(height . 35))
 
 (toggle-uniquify-buffer-names)
-(iswitchb-mode 1)
-(global-set-key (kbd "C-x b") 'iswitchb-buffer)
-(setq iswitchb-buffer-ignore '("^ " "*Buffer" " *Mini"))
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-
+(recentf-mode 1)
+(ido-mode t)
 (column-number-mode 1)
 (setq display-time t
       display-time-24hr-format t)
 (display-time)
 (prefer-coding-system 'utf-8)
 
-(setenv "PAGER" "cat")
+(global-set-key (kbd "C-x C-i") 'ido-imenu)
+(global-set-key (kbd "C-c C-n") 'cleanup-buffer)
+(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
+(global-set-key (kbd "C-M-h") 'backward-kill-word)
+(global-set-key (kbd "C-c y") 'bury-buffer)
+(global-set-key (kbd "C-c r") 'revert-buffer)
+(global-set-key (kbd "C-x O")
+                (lambda ()
+                  (interactive) (other-window -1))) ;; back one
+(global-set-key (kbd "C-x C-o")
+                (lambda ()
+                  (interactive) (other-window 2))) ;; forward two
+(global-set-key (kbd "C-x m") 'eshell)
+(global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
+(global-set-key (kbd "C-x M-m") 'shell)
+
+(when (equalp "DUMB" (getenv "TERM"))
+  (setenv "PAGER" "cat"))
+
+(eval-after-load 'diff-mode
+  '(progn (set-face-foreground 'diff-added "green4")
+          (set-face-foreground 'diff-removed "red3")))
 
 ;; magit
 
 (require 'magit)
 (global-set-key "\C-xg" 'magit-status)
+(eval-after-load 'magit
+  '(progn (set-face-background 'magit-item-highlight "white")
+          (set-face-foreground 'magit-diff-add "green3")
+          (set-face-foreground 'magit-diff-del "red3")))
 
 
 ;; lisp
+
+(define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
 
 (defun aar/lispy-parens ()
   "Set up parens for lispish modes."
   (require 'paredit)
   (paredit-mode 1)
-  (make-variable-buffer-local 'show-paren-mode)
-  (show-paren-mode 1)
-  (setq show-trailing-whitespace t))
+  (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
+  (define-key paredit-mode-map (kbd "M-(") 'paredit-forward-barf-sexp)
+  (show-paren-mode 1))
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
+(add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
 (add-hook 'clojure-mode-hook 'aar/lispy-parens)
-
+(add-hook 'clojure-mode-hook 'whitespace-mode)
 
 ;; clojure
 
@@ -85,15 +110,17 @@
       org-reverse-note-order t
       org-clock-modeline-total 'current)
 (setq org-todo-keywords
-      '((sequence "TODO" "WAITING" "DEFERRED" "|" "DONE" "DELEGATED" "CANCELED")))
+      '((sequence "TODO" "WAITING" "DEFERRED"
+                  "|" "DONE" "DELEGATED" "CANCELED")))
 
 (setq org-default-notes-file "~/.org/notes.org")
 
-(setq org-remember-templates '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org" 'top)
-                               ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org" 'top)
-                               ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org" 'top)
-                               ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org" 'top)
-                               ("Note" 110 "* %u %?" "notes.org" 'bottom)))
+(setq org-remember-templates
+      '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org" 'top)
+        ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org" 'top)
+        ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org" 'top)
+        ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org" 'top)
+        ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
 ;; ledger
 
@@ -103,10 +130,10 @@
 ;; Customize
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(blink-cursor-mode nil)
  '(calc-float-format (quote (fix 2)) t)
  '(canlock-password "9a765f623398f9e6a768c158f2fca8588d732be7")
@@ -128,7 +155,11 @@
  '(show-paren-mode nil)
  '(tool-bar-mode nil nil (tool-bar))
  '(transient-mark-mode nil)
- '(truncate-lines nil))
+ '(truncate-lines nil)
+ '(require-final-newline t)
+ '(whitespace-style '(trailing lines space-before-tab
+                                indentation space-after-tab))
+ '(whitespace-line-column 80))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
