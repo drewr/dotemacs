@@ -2,7 +2,7 @@
 
 DEST=/www/htdocs/draines/emacs
 
-( cd d; tar cf - . --exclude=\*.elc \
+( cd d; tar cf - . --exclude=\*.elc --xform 's,$,.txt,' \
 | ssh draines \
   mkdir -p $DEST\; \
   cd $DEST\; \
