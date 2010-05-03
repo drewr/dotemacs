@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEST=$HOME/.emacs.d
+
+( cd d; tar cf - . ) \
+| ( mkdir -p $DEST; \
+    cd $DEST; \
+    tar xvf - )
