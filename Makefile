@@ -7,3 +7,5 @@ install:
 clean:
 	find . -name \*.elc | xargs rm
 
+publish:
+	bin/publish

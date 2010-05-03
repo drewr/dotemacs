@@ -1,0 +1,6 @@
+#!/bin/sh
+
+( cd d; tar cf - . \
+| ssh draines \
+  mkdir -p /www/htdocs/draines/emacs; \
+  tar xvf - )
