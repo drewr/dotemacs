@@ -1,4 +1,6 @@
 ;; -*- emacs-lisp -*-
+;;
+;; This file was started 10 years ago and has only been added to.  Just sayin.
 
 (setq  user-full-name "Drew Raines"
        user-mail-address "aaraines@gmail.com"
