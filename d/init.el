@@ -133,6 +133,42 @@
 (require 'ledger)
 
 
+;; erc
+
+(require 'erc)
+(add-to-list 'erc-modules 'log)
+
+(setq  erc-server "irc.us.freenode.net"
+       erc-port 6667
+       erc-nick "drewr"
+       erc-user-full-name "Drew Raines"
+       erc-email-userid "drew"       ; for when ident is not activated
+       erc-fill-column 80
+       erc-fill-prefix "   "
+       erc-auto-query 'window-noselect
+       erc-prompt-for-nickserv-password nil
+       erc-nickserv-passwords nil
+       erc-auto-discard-away t
+       erc-autoaway-idle-seconds 600
+       erc-log-insert-log-on-open nil
+       erc-log-channels-directory "~/tmp/irc/log"
+       erc-kill-queries-on-quit nil
+       erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
+                                 "NAMES" "324" "329" "332" "333" "353" "477")
+       erc-encoding-coding-alist '(("#emacs" . utf-8))
+       erc-current-nick-highlight-type 'nick
+       erc-ignore-list '("^xah_?" "^jordanb_?")
+       erc-max-buffer-size 100000
+       erc-join-buffer 'bury
+       erc-server-send-ping-interval 45
+       erc-server-send-ping-timeout 86400)
+
+(load "~/.erc-auth")
+(defun aar/erc ()
+  (interactive)
+  (erc :server "valve" :port 11001 :nick "drewr" :password erc-pass)
+  (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass))
+
 ;; Customize
 
 (custom-set-variables
