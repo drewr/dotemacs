@@ -97,6 +97,28 @@
 (setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
 (require 'assoc)  ;; swank-clojure-project fails without
 
+(defun classpathize (paths)
+  (mapconcat 'expand-file-name paths ":"))
+
+(defmacro add-clojure-project (project path)
+  (let* ((fullpath (expand-file-name path))
+         (classpaths (mapcar
+                      (lambda (p)
+                        (concat fullpath p))
+                      '("/lib/*")))
+         (clj (expand-file-name "~/bin/clojure")))
+    `(add-to-list 'slime-lisp-implementations
+                  (backquote
+                   (,project
+                    ("env"
+                     ,(concat "CLASSPATH=" (classpathize classpaths))
+                     ,clj)
+                    :init swank-clojure-init)) t)))
+
+(progn
+  (setq slime-lisp-implementations '())
+  (add-clojure-project clojure "~/src/scratch"))
+
 ;; org
 
 (org-remember-insinuate)
