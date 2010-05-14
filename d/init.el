@@ -5,6 +5,10 @@
    `(load-file
      (concat ,(expand-file-name "~/.emacs.d/") ,f ".el")))
 
+(defmacro add-lisp-dir (d)
+  "Add dir to load-path."
+  `(add-to-list 'load-path (concat ,(expand-file-name "~/.emacs.d/lisp/") ,d)))
+
 (require 'cl) ; need this for (case)
 (load-custom
   (case system-type
