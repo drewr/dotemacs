@@ -125,6 +125,11 @@
   (setq slime-lisp-implementations '())
   (add-clojure-project clojure "~/src/scratch"))
 
+;; erlang
+
+(add-lisp-dir "erlang")
+(require 'erlang-start)
+
 ;; org
 
 (org-remember-insinuate)
