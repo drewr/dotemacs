@@ -90,9 +90,9 @@
 
 ;; clojure
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/slime"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/clojure-mode"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/swank-clojure"))
+(add-lisp-dir "slime")
+(add-lisp-dir "clojure-mode")
+(add-lisp-dir "swank-clojure")
 (require 'slime)
 (slime-setup '(slime-repl))
 (require 'clojure-mode)
