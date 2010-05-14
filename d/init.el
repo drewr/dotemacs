@@ -21,6 +21,7 @@
 (add-to-list 'default-frame-alist '(width . 103))
 (add-to-list 'default-frame-alist '(height . 35))
 
+(when (>= emacs-version 23) (server-start))
 (require 'ffap)
 (require 'package)
 (package-initialize)
