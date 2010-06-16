@@ -163,6 +163,8 @@
         ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org" 'top)
         ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
+(add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
+
 ;; ledger
 
 (require 'ledger)
@@ -178,7 +180,7 @@
        erc-nick "drewr"
        erc-user-full-name "Drew Raines"
        erc-email-userid "drew"       ; for when ident is not activated
-       erc-fill-column 80
+       erc-fill-column 93
        erc-fill-prefix "   "
        erc-auto-query 'window-noselect
        erc-prompt-for-nickserv-password nil
