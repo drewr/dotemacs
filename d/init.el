@@ -54,6 +54,7 @@
 (global-set-key (kbd "C-x m") 'eshell)
 (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 (global-set-key (kbd "C-x M-m") 'shell)
+(global-set-key (kbd "C-x 4 t") 'transpose-windows)
 
 (when (equalp "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))
