@@ -1,5 +1,11 @@
 #!/bin/sh
 
+if [ `uname -s` == "Darwin" ]; then
+  EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+else
+  EMACS=emacs
+fi
+
 for i in `find . -name \*.el`; do
-  emacs --batch --eval "(byte-compile-file \"$i\")"
+  $EMACS --batch --eval "(byte-compile-file \"$i\")"
 done
