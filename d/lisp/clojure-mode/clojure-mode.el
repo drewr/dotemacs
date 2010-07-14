@@ -1,12 +1,12 @@
 ;;; clojure-mode.el --- Major mode for Clojure code
 
-;; Copyright (C) 2007, 2008, 2009 Jeffrey Chu, Lennart Staflin, Phil Hagelberg
+;; Copyright (C) 2007-2010 Jeffrey Chu, Lennart Staflin, Phil Hagelberg
 ;;
 ;; Authors: Jeffrey Chu <jochu0@gmail.com>
 ;;          Lennart Staflin <lenst@lysator.liu.se>
 ;;          Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/ClojureMode
-;; Version: 1.6
+;; Version: 1.7.1
 ;; Keywords: languages, lisp
 
 ;; This file is not part of GNU Emacs.
@@ -108,6 +108,7 @@ Clojure to load that file."
     (define-key map "\C-c\C-r" 'lisp-eval-region)
     (define-key map "\C-c\C-z" 'run-lisp)
     (define-key map (kbd "RET") 'reindent-then-newline-and-indent)
+    (define-key map (kbd "C-c t") 'clojure-jump-to-test)
     map)
   "Keymap for Clojure mode. Inherits from `lisp-mode-shared-map'.")
 
@@ -135,6 +136,15 @@ describing the last `clojure-load-file' or `clojure-compile-file' command.")
 
 (defvar clojure-def-regexp "^\\s *\\((def\\S *\\s +\\(\[^ \n\t\]+\\)\\)"
   "A regular expression to match any top-level definitions.")
+
+(defvar clojure-test-ns-segment-position -1
+  "Which segment of the ns is \"test\" inserted in your test name convention.
+
+Customize this depending on your project's conventions. Negative
+numbers count from the end:
+
+  leiningen.compile -> leiningen.test.compile (uses 1)
+  clojure.http.client -> clojure.http.test.client (uses -1)")
 
 ;;;###autoload
 (defun clojure-mode ()
@@ -164,7 +174,6 @@ if that value is non-nil."
        'clojure-indent-function)
   (set (make-local-variable 'lisp-doc-string-elt-property)
        'clojure-doc-string-elt)
-  (set (make-local-variable 'font-lock-multiline) t)
 
   (setq lisp-imenu-generic-expression
         `((nil ,clojure-def-regexp 2)))
@@ -172,6 +181,33 @@ if that value is non-nil."
         (lambda ()
           (imenu--generic-function lisp-imenu-generic-expression)))
 
+  (clojure-mode-font-lock-setup)
+
+  (run-mode-hooks 'clojure-mode-hook)
+
+  ;; Enable curly braces when paredit is enabled in clojure-mode-hook
+  (when (and (featurep 'paredit) paredit-mode (>= paredit-version 21))
+    (define-key clojure-mode-map "{" 'paredit-open-curly)
+    (define-key clojure-mode-map "}" 'paredit-close-curly)))
+
+(defun clojure-load-file (file-name)
+  "Load a Lisp file into the inferior Lisp process."
+  (interactive (comint-get-source "Load Clojure file: "
+                                  clojure-prev-l/c-dir/file
+                                  '(clojure-mode) t))
+  (comint-check-source file-name) ; Check to see if buffer needs saved.
+  (setq clojure-prev-l/c-dir/file (cons (file-name-directory file-name)
+                                        (file-name-nondirectory file-name)))
+  (comint-send-string (inferior-lisp-proc)
+                      (format clojure-mode-load-command file-name))
+  (switch-to-lisp t))
+
+
+
+(defun clojure-mode-font-lock-setup ()
+  "Configures font-lock for editing Clojure code."
+  (interactive)
+  (set (make-local-variable 'font-lock-multiline) t)
   (add-to-list 'font-lock-extend-region-functions
                'clojure-font-lock-extend-region-def t)
 
@@ -190,17 +226,7 @@ if that value is non-nil."
           nil
           (font-lock-mark-block-function . mark-defun)
           (font-lock-syntactic-face-function
-           . lisp-font-lock-syntactic-face-function)))
-
-  (run-mode-hooks 'clojure-mode-hook)
-
-  ;; Enable curly braces when paredit is enabled in clojure-mode-hook
-  (when (and (featurep 'paredit) paredit-mode (>= paredit-version 21))
-    (define-key clojure-mode-map "{" 'paredit-open-curly)
-    (define-key clojure-mode-map "}" 'paredit-close-curly)))
-
-;; (define-key clojure-mode-map "{" 'self-insert-command)
-;; (define-key clojure-mode-map "}" 'self-insert-command)
+           . lisp-font-lock-syntactic-face-function))))
 
 (defun clojure-font-lock-def-at-point (point)
   "Find the position range between the top-most def* and the
@@ -366,8 +392,9 @@ elements of a def* forms."
         "doc" "dorun" "doseq" "dosync" "dotimes"
         "doto" "double" "double-array" "doubles" "drop"
         "drop-last" "drop-while" "empty" "empty?" "ensure"
-        "enumeration-seq" "eval" "even?" "every?" "false?"
-        "ffirst" "file-seq" "filter" "find" "find-doc"
+        "enumeration-seq" "eval" "even?" "every?"
+        "extend" "extend-protocol" "extend-type" "extends?" "extenders"
+        "false?" "ffirst" "file-seq" "filter" "find" "find-doc"
         "find-ns" "find-var" "first" "float" "float-array"
         "float?" "floats" "flush" "fn" "fn?"
         "fnext" "for" "force" "format" "future"
@@ -410,7 +437,7 @@ elements of a def* forms."
         "repeat" "repeatedly" "replace" "replicate"
         "require" "reset!" "reset-meta!" "resolve" "rest"
         "resultset-seq" "reverse" "reversible?" "rseq" "rsubseq"
-        "second" "select-keys" "send" "send-off" "seq"
+        "satisfies?" "second" "select-keys" "send" "send-off" "seq"
         "seq?" "seque" "sequence" "sequential?" "set"
         "set-validator!" "set?" "short" "short-array" "shorts"
         "shutdown-agents" "slurp" "some" "sort" "sort-by"
@@ -493,17 +520,7 @@ elements of a def* forms."
 (put 'defmulti 'clojure-doc-string-elt 2)
 (put 'defmacro 'clojure-doc-string-elt 2)
 
-(defun clojure-load-file (file-name)
-  "Load a Lisp file into the inferior Lisp process."
-  (interactive (comint-get-source "Load Clojure file: "
-                                  clojure-prev-l/c-dir/file
-                                  '(clojure-mode) t))
-  (comint-check-source file-name) ; Check to see if buffer needs saved.
-  (setq clojure-prev-l/c-dir/file (cons (file-name-directory file-name)
-                                        (file-name-nondirectory file-name)))
-  (comint-send-string (inferior-lisp-proc)
-                      (format clojure-mode-load-command file-name))
-  (switch-to-lisp t))
+
 
 (defun clojure-indent-function (indent-point state)
   "This function is the normal value of the variable `lisp-indent-function'.
@@ -640,6 +657,7 @@ check for contextual indenting."
   (if-not 1)
   (condp 2)
   (when 1)
+  (while 1)
   (when-not 1)
   (do 0)
   (comment 0)
@@ -652,6 +670,9 @@ check for contextual indenting."
   (deftype 'defun)
   (defrecord 'defun)
   (defprotocol 'defun)
+  (extend 1)
+  (extend-protocol 1)
+  (extend-type 1)
 
   (try 0)
   (catch 2)
@@ -672,7 +693,7 @@ check for contextual indenting."
   (struct-map 1)
   (assoc 1)
 
-  (defmethod 2)
+  (defmethod 'defun)
 
   ;; clojure.test
   (testing 1)
@@ -680,18 +701,60 @@ check for contextual indenting."
 
   ;; contrib
   (handler-case 1)
-  (handle 1))
+  (handle 1)
+  (dotrace 1))
 
+
+
+;; A little bit of SLIME help:
+;; swank-clojure.el should now only be needed if you want to launch from Emacs
+
+(defun clojure-find-package ()
+  (let ((regexp "^(\\(clojure.core/\\)?\\(in-\\)?ns\\+?[ \t\n\r]+\\(#\\^{[^}]+}[ \t\n\r]+\\)?[:']?\\([^()\" \t\n]+\\>\\)"))
+    (save-excursion
+      (when (or (re-search-backward regexp nil t)
+                (re-search-forward regexp nil t))
+        (match-string-no-properties 4)))))
+
+(defun clojure-enable-slime ()
+  (slime-mode t)
+  (set (make-local-variable 'slime-find-buffer-package-function)
+       'clojure-find-package))
+
+;;;###autoload
 (defun clojure-enable-slime-on-existing-buffers ()
   (interactive)
-  (add-hook 'clojure-mode-hook 'swank-clojure-slime-mode-hook)
+  (add-hook 'clojure-mode-hook 'clojure-enable-slime)
   (save-window-excursion
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
-        (if (equal major-mode 'clojure-mode)
-            (swank-clojure-slime-mode-hook))))))
+        (when (eq major-mode 'clojure-mode)
+          (clojure-enable-slime))))))
 
+;; Test navigation:
+
+(defun clojure-underscores-for-hyphens (namespace)
+  (replace-regexp-in-string "-" "_" namespace))
+
+(defun clojure-test-for (namespace)
+  (let* ((namespace (clojure-underscores-for-hyphens namespace))
+         (segments (split-string namespace "\\."))
+         (before (subseq segments 0 clojure-test-ns-segment-position))
+         (after (subseq segments clojure-test-ns-segment-position))
+         (test-segments (append before (list "test") after)))
+    (mapconcat 'identity test-segments "/")))
+
+(defun clojure-jump-to-test ()
+  "Jump from implementation file to test."
+  (interactive)
+  (find-file (format "%s/test/%s.clj"
+                     (locate-dominating-file buffer-file-name "src/")
+                     (clojure-test-for (clojure-find-package)))))
+
+;;;###autoload
 (add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
+
+
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
