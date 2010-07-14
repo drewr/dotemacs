@@ -16,7 +16,8 @@
 
   ;; Or do neither of these and switch CMD/OPT in OS X keyboard prefs
 
-  (set-face-font 'default
-		 "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
-  (global-set-key "\M-`" 'other-frame))
+  (when window-system
+    (set-face-font 'default
+		   "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
+    (global-set-key "\M-`" 'other-frame)))
 
