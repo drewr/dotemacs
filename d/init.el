@@ -217,6 +217,16 @@
   (erc :server "valve" :port 11001 :nick "drewr" :password erc-pass)
   (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass))
 
+
+;; yasnippet
+
+(add-lisp-dir "yasnippet")
+(require 'yasnippet)
+(yas/initialize)
+(yas/load-directory "~/.emacs.d/lisp/yasnippet/snippets")
+(yas/load-directory "~/.emacs.d/yasnippets")
+
+
 ;; Customize
 
 (custom-set-variables
