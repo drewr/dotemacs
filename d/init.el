@@ -25,7 +25,9 @@
 (add-to-list 'default-frame-alist '(width . 103))
 (add-to-list 'default-frame-alist '(height . 35))
 
-(when (>= (string-to-number emacs-version) 23) (server-start))
+(when (and (>= (string-to-number emacs-version) 23)
+           (fboundp 'server-running-p))
+  (server-start))
 (require 'ffap)
 (require 'package)
 (package-initialize)
