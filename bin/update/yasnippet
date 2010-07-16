@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DEST=d/lisp/yasnippet
+
+[[ -d $DEST ]] && rm -rf $DEST
+mkdir -p $DEST
+( cd ~/src/yasnippet
+  find . -name \*.el | xargs tar cf - snippets ) \
+ | ( cd $DEST && tar xvf - )
