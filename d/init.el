@@ -225,7 +225,13 @@
 (yas/initialize)
 (yas/load-directory "~/.emacs.d/lisp/yasnippet/snippets")
 (yas/load-directory "~/.emacs.d/yasnippets")
-
+(require 'dropdown-list)
+(setq yas/prompt-functions '(yas/ido-prompt
+                             yas/completing-prompt))
+(add-hook 'org-mode-hook
+          (lambda ()
+            (org-set-local 'yas/trigger-key [tab])
+            (define-key yas/keymap [tab] 'yas/next-field-group)))
 
 ;; Customize
 
