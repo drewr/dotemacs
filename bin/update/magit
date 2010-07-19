@@ -1,0 +1,15 @@
+#!/bin/sh
+
+SRC=$HOME/src/magit
+DEST=d/lisp
+
+die() {
+  echo $1
+  exit 1
+}
+
+[ -d $SRC ] || die "$SRC not found"
+[ -d $DEST ] && rm -rf $DEST
+mkdir -p $DEST
+( cd $SRC && tar cf - magit.el ) \
+   | ( cd $DEST && tar xvf - )
