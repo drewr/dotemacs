@@ -175,6 +175,7 @@
         ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;; ledger
 
