@@ -6,3 +6,8 @@ DEST=$HOME/.emacs.d
 | ( mkdir -p $DEST; \
     cd $DEST; \
     tar xvf - )
+
+( cd $HOME
+  rm .gnus.el
+  ln -s .emacs.d/gnus.el .gnus.el )
+
