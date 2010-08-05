@@ -19,7 +19,6 @@
 (load-custom "sonian")
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
 (add-to-list 'default-frame-alist '(width . 103))
