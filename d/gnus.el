@@ -1,8 +1,11 @@
 (setq gnus-select-method '(nnnil ""))
 
 (setq gnus-secondary-select-methods
-      '((nnimap "aaraines@gmail.com"
-                (nnimap-address "localhost")
+      '((nnimap "aaraines"
+                (nnimap-address "imap.aaraines")
+                (nnimap-authenticator login))
+        (nnimap "testdroid1000"
+                (nnimap-address "imap.testdroid1000")
                 (nnimap-authenticator login))
         (nnml ""
               (nnir-search-engine swish-e)
