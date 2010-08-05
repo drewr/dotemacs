@@ -65,3 +65,14 @@ Symbols matching the text at point are put first in the completion list."
         (set-window-buffer (funcall selector) this-win)
         (select-window (funcall selector)))
       (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
+
+(defun aar/transpose-windows (arg)
+  "Transpose the buffers shown in two windows."
+  (interactive "p")
+  (message (number-to-string arg))
+  (let ((this-win (window-buffer))
+        (next-win (window-buffer (next-window))))
+    (set-window-buffer (selected-window) next-win)
+    (set-window-buffer (next-window) this-win)
+    (when (= arg 1)
+      (select-window (next-window)))))
