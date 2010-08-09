@@ -180,3 +180,20 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
              (define-key gnus-group-mode-map "GG"
                'aar/inject-queue)))
 
+(defun aar/message-from-only-name (fromline)
+  "Return the name on a From: line, or the email
+address if only it was present."
+  (let* ((parsed (mail-header-parse-address fromline))
+         (addr (car parsed))
+         (name (cdr parsed)))
+    (or name addr)))
+
+(defun aar/message-insert-citation-line ()
+  "Insert a simple Drew-ized citation line."
+  (when message-reply-headers
+    (insert
+     (aar/message-from-only-name (mail-header-from message-reply-headers))
+     " wrote:\n\n")))
+
+(setq message-citation-line-function 'aar/message-insert-citation-line)
+
