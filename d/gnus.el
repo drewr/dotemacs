@@ -45,7 +45,11 @@
          "^X-Delivery-Agent:"
          "^X-Spambayes-Classification:" "^X-Spambayes-Trained:"
          "^X-Bogosity:" "^X-Gnus-Delayed:"
-         "^Content-Type:"))
+         "^Content-Type:")
+       gnus-agent-go-online t
+       gnus-agent-synchronize-flags t
+       gnus-agent-long-article 1500
+       gnus-agent-short-article 1000)
 
 (setq gnus-select-method '(nnnil ""))
 
@@ -150,3 +154,29 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
              "%10{%B%}"
              "%s\n")))))
 (add-hook 'gnus-summary-mode-hook 'aar/alter-summary-line-format)
+
+(defun aar/get-new-news-and-disconnect (&optional arg)
+  "Plug in, send, receive, plug out."
+  (interactive "P")
+  (gnus-save-newsrc-file)
+  (gnus-agent-toggle-plugged t)
+  (gnus-group-send-queue)
+  (gnus-group-get-new-news arg)
+  (gnus-agent-fetch-session)
+  (gnus-save-newsrc-file)
+  (gnus-agent-toggle-plugged nil))
+
+(defun aar/inject-queue ()
+  "Plug in, send the queue, and plug out."
+  (interactive)
+  (gnus-agent-toggle-plugged t)
+  (gnus-group-send-queue)
+  (gnus-agent-toggle-plugged nil))
+
+(add-hook 'gnus-group-mode-hook
+          '(lambda ()
+             (define-key gnus-group-mode-map "g"
+               'aar/get-new-news-and-disconnect)
+             (define-key gnus-group-mode-map "GG"
+               'aar/inject-queue)))
+
