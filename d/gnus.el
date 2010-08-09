@@ -68,13 +68,13 @@
         (nntp "news.gmane.org"
               (nntp-marks-is-evil t))))
 
-(defun aar-message-mode-setup ()
+(defun aar/message-mode-setup ()
   (setq fill-column 69)
   (turn-on-auto-fill)
   (require 'footnote)
   (flyspell-mode))
 
-(add-hook 'message-mode-hook 'aar-message-mode-setup)
+(add-hook 'message-mode-hook 'aar/message-mode-setup)
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
 (add-hook 'gnus-select-group-hook 'gnus-group-set-timestamp)
 
@@ -129,3 +129,24 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
      ((string-match "^multipart" ctype) "@")
      (t " "))))
 
+(defun aar/alter-summary-line-format ()
+  "My alter summary line format."
+  (if (string-match ".*mail\\.outbox.*" gnus-newsgroup-name)
+      (setq gnus-summary-line-format "%U%R%z %d %4L:%I%(%[%-25,25f%]%) %s\n")
+    (if (string-match "nnrss:.*" gnus-newsgroup-name)
+        (setq gnus-summary-line-format
+              "%U %6&user-date;:%I%(%[%-15,15f%]%) %s\n")
+      (setq gnus-summary-line-format
+            (concat
+             "%0{%U%R%z%}"
+             "%10{│%}"
+             "%6&user-date;"
+             "%10{│%}%*"
+             "%9{%u&@;%}"
+             "%(%-15,15f%) "
+             "%10{│%}"
+             "%4k"
+             "%10{│%}"
+             "%10{%B%}"
+             "%s\n")))))
+(add-hook 'gnus-summary-mode-hook 'aar/alter-summary-line-format)
