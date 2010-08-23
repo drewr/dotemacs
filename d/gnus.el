@@ -26,8 +26,7 @@
        message-subject-trailing-was-query nil
        message-wash-forwarded-subjects t
        gnus-auto-select-next 'almost-quietly
-       gnus-use-full-window nil ;; trying this while I keep org in the
-                                ;; other half of the screen
+       gnus-use-full-window t
        gnus-inhibit-mime-unbuttonizing t
        nntp-marks-is-evil nil
        nnml-marks-is-evil nil
