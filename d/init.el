@@ -233,7 +233,10 @@
  '(cursor-in-non-selected-windows nil)
  '(dired-recursive-deletes (quote top))
  '(enable-recursive-minibuffers t)
- '(enable-local-variables t)
+ '(safe-local-variable-values
+   (quote
+    ((prompt-to-byte-compile)
+     (before-save-hook (delete-trailing-whitespace)))))
  '(global-font-lock-mode t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-echo-area-message t)
