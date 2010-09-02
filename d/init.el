@@ -236,7 +236,7 @@
  '(safe-local-variable-values
    (quote
     ((prompt-to-byte-compile)
-     (before-save-hook (delete-trailing-whitespace)))))
+     (before-save-hook delete-trailing-whitespace))))
  '(global-font-lock-mode t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-echo-area-message t)
@@ -244,7 +244,6 @@
  '(make-backup-files nil)
  '(menu-bar-mode nil nil (menu-bar))
  '(mouse-wheel-scroll-amount (quote (1 ((shift) . 1) ((control)))))
- '(safe-local-variable-values (quote ((prompt-to-byte-compile))))
  '(scroll-bar-mode nil)
  '(sh-indentation 2)
  '(show-paren-mode nil)
