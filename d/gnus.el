@@ -55,10 +55,12 @@
 (setq gnus-secondary-select-methods
       '((nnimap "aaraines"
                 (nnimap-address "imap.aaraines")
-                (nnimap-authenticator login))
+                (nnimap-authenticator login)
+                (nnimap-stream 'network))
         (nnimap "testdroid1000"
                 (nnimap-address "imap.testdroid1000")
-                (nnimap-authenticator login))
+                (nnimap-authenticator login)
+                (nnimap-stream 'network))
         (nnml ""
               (nnir-search-engine swish-e)
               (nnir-swish-e-remove-prefix "/home/aar/Mail/")
