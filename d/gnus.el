@@ -48,7 +48,21 @@
        gnus-agent-go-online t
        gnus-agent-synchronize-flags t
        gnus-agent-long-article 1500
-       gnus-agent-short-article 1000)
+       gnus-agent-short-article 1000
+       gnus-score-over-mark ?↑          ; ↑ ☀
+       gnus-score-below-mark ?↓         ; ↓ ☂
+       gnus-ticked-mark ?⚑
+       gnus-dormant-mark ?⚐
+       gnus-expirable-mark ?♻
+       gnus-read-mark ?✓
+       gnus-del-mark ?✗
+       gnus-killed-mark ?☠
+       gnus-replied-mark ?⟲
+       gnus-forwarded-mark ?⤳
+       gnus-cached-mark ?☍
+       gnus-recent-mark ?★
+       gnus-unseen-mark ?✩
+       gnus-unread-mark ?✉)
 
 (setq gnus-select-method '(nnnil ""))
 
