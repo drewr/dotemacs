@@ -50,6 +50,16 @@
       gnus-agent-long-article 1500
       gnus-agent-short-article 1000)
 
+(setq starttls-use-gnutls nil
+      send-mail-function 'smtpmail-send-it
+      message-send-mail-function 'message-send-mail-with-sendmail ;; 'message-smtpmail-send-it
+      smtpmail-debug-info nil
+      smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)
+                                      ("mail.hcoop.net" 26 nil nil))
+      smtpmail-local-domain "draines.com")
+
 (setq gnus-select-method '(nnnil ""))
 
 (setq gnus-secondary-select-methods
