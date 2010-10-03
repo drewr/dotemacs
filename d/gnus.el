@@ -207,3 +207,12 @@ address if only it was present."
 
 (setq message-citation-line-function 'aar/message-insert-citation-line)
 
+(defun aar/delay-send (prefix)
+  "Dang, C-c C-c is easy to hit."
+  (interactive "p")
+  (if (= 1 prefix)
+      (message "Prefix with C-u to send...")
+    (message-send-and-exit)))
+(define-key message-mode-map "\C-c\C-c" 'aar/delay-send)
+(define-key message-mode-map "\C-c\C-s" 'aar/delay-send)
+
