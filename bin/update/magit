@@ -9,7 +9,6 @@ die() {
 }
 
 [ -d $SRC ] || die "$SRC not found"
-[ -d $DEST ] && rm -rf $DEST
-mkdir -p $DEST
+[ -d $DEST ] || mkdir -p $DEST
 ( cd $SRC && tar cf - magit.el ) \
    | ( cd $DEST && tar xvf - )
