@@ -67,6 +67,7 @@
 
 ;; magit
 
+(add-lisp-dir "magit")
 (require 'magit)
 (global-set-key "\C-xg" 'magit-status)
 (eval-after-load 'magit
