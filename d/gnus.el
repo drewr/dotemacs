@@ -80,6 +80,8 @@
                   (nnfolder-get-new-mail nil)
                   (nnfolder-inhibit-expiry nil))
         (nntp "news.gmane.org"
+              (nntp-marks-is-evil t))
+        (nntp "news.gwene.org"
               (nntp-marks-is-evil t))))
 
 (defun aar/message-mode-setup ()
