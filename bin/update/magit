@@ -1,7 +1,7 @@
 #!/bin/sh
 
 SRC=$HOME/src/magit
-DEST=d/lisp
+DEST=d/lisp/magit
 
 die() {
   echo $1
@@ -9,6 +9,7 @@ die() {
 }
 
 [ -d $SRC ] || die "$SRC not found"
-[ -d $DEST ] || mkdir -p $DEST
-( cd $SRC && tar cf - magit.el ) \
+[ -d $DEST ] && rm -rf $DEST
+mkdir -p $DEST
+( cd $SRC && find . -name \*.el | xargs tar cf - ) \
    | ( cd $DEST && tar xvf - )
