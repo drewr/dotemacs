@@ -167,15 +167,21 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
              "%s\n")))))
 (add-hook 'gnus-summary-mode-hook 'aar/alter-summary-line-format)
 
+(defun aar/sync-imap ()
+  (interactive)
+  (save-excursion
+    (shell-command "$HOME/bin/offlineimap" "*offlineimap*" "*offlineimap*")))
+
 (defun aar/get-new-news-and-disconnect (&optional arg)
   "Plug in, send, receive, plug out."
   (interactive "P")
-  (gnus-save-newsrc-file)
+  (gnus-group-save-newsrc)
+  (aar/sync-imap)
   (gnus-agent-toggle-plugged t)
   (gnus-group-send-queue)
   (gnus-group-get-new-news arg)
   (gnus-agent-fetch-session)
-  (gnus-save-newsrc-file)
+  (gnus-group-save-newsrc)
   (gnus-agent-toggle-plugged nil))
 
 (defun aar/inject-queue ()
