@@ -1,0 +1,15 @@
+#!/bin/sh
+
+SRC=$HOME/src/swank-clojure
+DEST=d/lisp/swank-clojure
+
+die() {
+  echo $1
+  exit 1
+}
+
+[ -d $SRC ] || die "$SRC not found"
+[ -d $DEST ] && rm -rf $DEST
+mkdir -p $DEST
+( cd $SRC && find . -name \*.el | xargs tar cf - ) \
+   | ( cd $DEST && tar xvf - )
