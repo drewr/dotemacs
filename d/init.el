@@ -117,7 +117,7 @@
                       (lambda (p)
                         (concat fullpath p))
                       '("/lib/*"
-                        "/lib/swank-clojure")))
+                        "/src")))
          (clj (expand-file-name "~/bin/clojure")))
     `(add-to-list 'slime-lisp-implementations
                   (backquote
