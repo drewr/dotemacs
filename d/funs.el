@@ -76,3 +76,7 @@ Symbols matching the text at point are put first in the completion list."
     (set-window-buffer (next-window) this-win)
     (when (= arg 1)
       (select-window (next-window)))))
+
+(defun eshell/cds ()
+  "Change directory to the project's root."
+  (eshell/cd (locate-dominating-file default-directory "src")))
