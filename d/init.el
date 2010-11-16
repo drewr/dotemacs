@@ -103,7 +103,7 @@
 (require 'clojure-test-mode)
 (load "swank-clojure")
 (setq slime-net-coding-system 'utf-8-unix)
-;;(setq slime-protocol-version 'ignore)
+(setq slime-protocol-version 'ignore)
 
 (setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
 (require 'assoc)  ;; swank-clojure-project fails without
