@@ -165,7 +165,9 @@
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-reverse-note-order t
-      org-clock-modeline-total 'current)
+      org-clock-modeline-total 'current
+      org-mobile-directory "~/Dropbox/MobileOrg"
+      org-mobile-inbox-for-pull "~/.org/mobile-inbox.org")
 (setq org-todo-keywords
       '((sequence "TODO" "WAITING" "DEFERRED"
                   "|" "DONE" "DELEGATED" "CANCELED")))
