@@ -192,7 +192,9 @@
 ;; erc
 
 (require 'erc)
+(require 'erc-highlight-nicknames)
 (add-to-list 'erc-modules 'log)
+(add-to-list 'erc-modules 'highlight-nicknames)
 
 (setq  erc-server "irc.us.freenode.net"
        erc-port 6667
