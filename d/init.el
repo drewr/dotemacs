@@ -2,8 +2,7 @@
 
 (defmacro load-custom (f)
   "Load a local configuration file in ~/.emacs.d/."
-   `(load-file
-     (concat ,(expand-file-name "~/.emacs.d/") ,f ".el")))
+   `(load (concat ,(expand-file-name "~/.emacs.d/") ,f)))
 
 (defmacro add-lisp-dir (d)
   "Add dir to load-path."
