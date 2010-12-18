@@ -147,6 +147,9 @@
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
+;; nxhtml
+(load-custom "lisp/nxhtml/autostart")
+
 ;; org
 
 (org-remember-insinuate)
