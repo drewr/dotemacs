@@ -150,6 +150,9 @@
 ;; nxhtml
 (load-custom "lisp/nxhtml/autostart")
 
+;; go
+(require 'go-mode-load)
+
 ;; org
 
 (org-remember-insinuate)
