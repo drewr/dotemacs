@@ -266,8 +266,8 @@
  '(transient-mark-mode nil)
  '(truncate-lines nil)
  '(require-final-newline t)
- '(whitespace-style '(trailing lines space-before-tab
-                                indentation space-after-tab))
+ '(whitespace-style '(face trailing lines space-before-tab
+                           indentation space-after-tab))
  '(whitespace-line-column 80))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
