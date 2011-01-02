@@ -1,0 +1,32 @@
+#!/bin/sh
+
+SRC=$HOME/src/emacs-w3m
+DEST=d/lisp/emacs-w3m
+EMACSD=$HOME/.emacs.d
+
+die() {
+  echo $1
+  exit 1
+}
+
+if [[ $OS == "Darwin" ]]; then
+  EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+else
+  EMACS=emacs
+fi
+
+[ -d $SRC ] || die "$SRC not found"
+[ -d $DEST ] && rm -rf $DEST
+mkdir -p $DEST
+( cd $SRC && \
+  autoconf && \
+  ./configure \
+    --prefix=$EMACSD/pkg/emacs-w3m \
+    --with-emacs=$EMACS && \
+  make && make install
+)
+
+# May want these later:
+#     --with-lispdir=$EMACSD/lisp/emacs-w3m \
+#     --with-infodir=$EMACSD/info \
+#     --with-icondir=$EMACSD/icons/emacs-w3m && \
