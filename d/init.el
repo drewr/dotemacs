@@ -224,7 +224,8 @@
        erc-max-buffer-size 100000
        erc-join-buffer 'bury
        erc-server-send-ping-interval 45
-       erc-server-send-ping-timeout 86400)
+       erc-server-send-ping-timeout 86400
+       erc-server-reconnect-timeout 60)
 
 (load "~/.erc-auth")
 (defun aar/erc ()
