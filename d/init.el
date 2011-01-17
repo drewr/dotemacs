@@ -153,6 +153,10 @@
 ;; go
 (require 'go-mode-load)
 
+;; groovy
+(require 'groovy-mode)
+(setq auto-mode-alist (cons '("\\.groovy$" . groovy-mode) auto-mode-alist))
+
 ;; org
 
 (org-remember-insinuate)
