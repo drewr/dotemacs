@@ -157,6 +157,13 @@
 (require 'groovy-mode)
 (setq auto-mode-alist (cons '("\\.groovy$" . groovy-mode) auto-mode-alist))
 
+;; perl
+(add-lisp-dir "sepia")
+(setq sepia-perl5lib (list
+                      (expand-file-name "~/.emacs.d/lisp/sepia/lib")))
+(defalias 'perl-mode 'sepia-mode)
+(require 'sepia)
+
 ;; org
 
 (org-remember-insinuate)
