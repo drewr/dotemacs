@@ -152,7 +152,7 @@
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
 ;; nxhtml
-(load-custom "lisp/nxhtml/autostart")
+;;(load-custom "lisp/nxhtml/autostart") please no debug-on-error
 
 ;; go
 (require 'go-mode-load)
