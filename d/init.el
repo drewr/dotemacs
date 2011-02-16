@@ -246,7 +246,8 @@
 (defun aar/erc ()
   (interactive)
   (erc :server "valve" :port 11001 :nick "drewr" :password erc-pass)
-  (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass))
+  (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass)
+  (erc :server "valve" :port 11003 :nick "drewr" :password erc-pass))
 
 
 ;; Customize
