@@ -1,0 +1,25 @@
+#!/bin/sh
+
+SRC=$HOME/src/geiser
+ELISP=d/lisp/geiser
+SCM=d/share/geiser/scheme
+EMACSD=$HOME/.emacs.d
+
+die() {
+  echo $1
+  exit 1
+}
+
+if [[ $OS == "Darwin" ]]; then
+  EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+else
+  EMACS=emacs
+fi
+
+[ -d $SRC ] || die "$SRC not found"
+[ -d $ELISP ] && rm -rf $ELISP
+[ -d $SCM ] && rm -rf $SCM
+mkdir -p $ELISP $SCM
+( cd $SRC/elisp; find . -name \*.el | xargs tar cf -  ) \
+  | ( cd $ELISP; tar xvf - )
+( cd $SRC/scheme; tar cf - . ) | ( cd $SCM; tar xvf - )
