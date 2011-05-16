@@ -136,7 +136,9 @@
 
 ;; geiser
 (add-lisp-dir "geiser")
-(setq geiser-scheme-dir (expand-file-name "~/.emacs.d/share/geiser/scheme"))
+(eval-after-load 'geiser
+  '(setq geiser-scheme-dir
+        (expand-file-name "~/.emacs.d/share/geiser/scheme")))
 (require 'geiser)
 
 ;; haskell
