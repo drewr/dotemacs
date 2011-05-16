@@ -134,6 +134,11 @@
 (setenv "PATH" (concat (expand-file-name "~/bin") ":"
                        (getenv "PATH")))
 
+;; geiser
+(add-lisp-dir "geiser")
+(setq geiser-scheme-dir (expand-file-name "~/.emacs.d/share/geiser/scheme"))
+(require 'geiser)
+
 ;; haskell
 
 (load "~/.emacs.d/lisp/haskell-mode/haskell-site-file")
