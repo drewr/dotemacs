@@ -1,8 +1,9 @@
 (require 'assoc)
+(eval-when-compile (require 'cl))
 
 (defvar magit-key-mode-key-maps '()
   "This will be filled lazily with proper `define-key' built
-  keymaps as they're reqeusted.")
+  keymaps as they're requested.")
 
 (defvar magit-key-mode-buf-name "*magit-key*"
   "Name of the buffer.")
@@ -20,14 +21,16 @@
   '((logging
      (man-page "git-log")
      (actions
-      ("l" "Short" magit-log)
+      ("l" "Short" magit-display-log)
       ("L" "Long" magit-log-long)
       ("h" "Reflog" magit-reflog)
-      ("H" "Reflog on head" magit-reflog-head))
+      ("rl" "Ranged short" magit-display-log-ranged)
+      ("rL" "Ranged long" magit-log-long-ranged)
+      ("rh" "Ranged reflog" magit-reflog-ranged))
      (switches
       ("-m" "Only merge commits" "--merges")
       ("-f" "First parent" "--first-parent")
-      ("-i" "Case insesnitive patterns" "-i")
+      ("-i" "Case insensitive patterns" "-i")
       ("-pr" "Pickaxe regex" "--pickaxe-regex")
       ("-n" "Name only" "--name-only")
       ("-am" "All match" "--all-match")
@@ -44,19 +47,23 @@
     (running
      (actions
       ("!" "Command from root" magit-shell-command)
-      (":" "Git command" magit-git-command)))
+      (":" "Git command" magit-git-command)
+      ("g" "git gui" magit-run-git-gui)
+      ("k" "gitk" magit-run-gitk)))
 
     (fetching
      (man-page "git-fetch")
      (actions
       ("f" "Current" magit-fetch-current)
       ("a" "All" magit-remote-update)
-      ("o" "Other" magit-fetch)))
+      ("o" "Other" magit-fetch))
+     (switches
+      ("-p" "Prune" "--prune")))
 
     (pushing
      (man-page "git-push")
      (actions
-      ("p" "Push" magit-push)
+      ("P" "Push" magit-push)
       ("t" "Push tags" magit-push-tags))
      (switches
       ("-f" "Force" "--force")
@@ -65,32 +72,33 @@
     (pulling
      (man-page "git-pull")
      (actions
-      ("p" "Pull" magit-pull))
+      ("F" "Pull" magit-pull))
      (switches
       ("-r" "Rebase" "--rebase")))
 
     (branching
      (man-page "git-branch")
      (actions
-      ("V" "Branch manager" magit-show-branches)
-      ("B" "Create" magit-create-branch)
+      ("v" "Branch manager" magit-show-branches)
+      ("n" "New" magit-create-branch)
       ("m" "Move" magit-move-branch)
       ("d" "Delete" magit-delete-branch)
-      ("c" "Checkout" magit-checkout)))
+      ("D" "Force Delete" magit-delete-branch-forced)
+      ("b" "Checkout" magit-checkout)))
 
     (tagging
      (man-page "git-tag")
      (actions
       ("t" "Lightweight" magit-tag)
-      ("T" "Annotated" magit-annotated-tag))
+      ("a" "Annotated" magit-annotated-tag))
      (switches
       ("-f" "Force" "-f")))
 
     (stashing
      (man-page "git-stash")
      (actions
-      ("s" "Save" magit-stash)
-      ("S" "Snapshot" magit-stash-snapshot))
+      ("z" "Save" magit-stash)
+      ("s" "Snapshot" magit-stash-snapshot))
      (switches
       ("-k" "Keep index" "--keep-index")))
 
@@ -99,6 +107,7 @@
      (actions
       ("m" "Merge" magit-merge))
      (switches
+      ("-ff" "Fast-forward only" "--ff-only")
       ("-nf" "No fast-forward" "--no-ff")
       ("-nc" "No commit" "--no-commit")
       ("-sq" "Squash" "--squash"))
@@ -112,22 +121,71 @@
       ("a" "Abort" magit-rewrite-abort)
       ("f" "Finish" magit-rewrite-finish)
       ("*" "Set unused" magit-rewrite-set-unused)
-      ("." "Set used" magit-rewrite-set-used))))
+      ("." "Set used" magit-rewrite-set-used)))
+
+    (submodule
+     (man-page "git-submodule")
+     (actions
+      ("u" "Update" magit-submodule-update)
+      ("b" "Both update and init" magit-submodule-update-init)
+      ("i" "Init" magit-submodule-init)
+      ("s" "Sync" magit-submodule-sync)))
+
+    (bisecting
+     (man-page "git-bisect")
+     (actions
+      ("b" "Bad" magit-bisect-bad)
+      ("g" "Good" magit-bisect-good)
+      ("k" "Skip" magit-bisect-skip)
+      ("l" "Log" magit-bisect-log)
+      ("r" "Reset" magit-bisect-reset)
+      ("s" "Start" magit-bisect-start)
+      ("u" "Run" magit-bisect-run)
+      ("v" "Visualize" magit-bisect-visualize))))
   "Holds the key, help, function mapping for the log-mode. If you
   modify this make sure you reset `magit-key-mode-key-maps' to
   nil.")
 
-(defun magit-key-mode-add-group (name)
-  "Add a new group to `magit-key-mode-key-maps'."
-  (unless (assoc name magit-key-mode-groups)
-    (push (list name '(actions)) magit-key-mode-groups)))
+(defun magit-key-mode-delete-group (group)
+  "Delete a group from `magit-key-mode-key-maps'."
+  (let ((items (assoc group magit-key-mode-groups)))
+    (when items
+      ;; reset the cache
+      (setq magit-key-mode-key-maps nil)
+      ;; delete the whole group
+      (setq magit-key-mode-groups
+            (delq items magit-key-mode-groups))
+      ;; unbind the defun
+      (magit-key-mode-de-generate group))
+    magit-key-mode-groups))
+
+(defun magit-key-mode-add-group (group)
+  "Add a new group to `magit-key-mode-key-maps'. If there's
+already a group of that name then this will completely remove it
+and put in its place an empty one of the same name."
+  (when (assoc group magit-key-mode-groups)
+    (magit-key-mode-delete-group group))
+  (setq magit-key-mode-groups
+        (cons (list group '(actions)) magit-key-mode-groups)))
+
+(defun magit-key-mode-key-defined-p (for-group key)
+  "If KEY is defined as any of switch, argument or action within
+FOR-GROUP then return t"
+  (catch 'result
+    (let ((options (magit-key-mode-options-for-group for-group)))
+      (dolist (type '(actions switches arguments))
+        (when (assoc key (assoc type options))
+          (throw 'result t))))))
 
 (defun magit-key-mode-update-group (for-group thing &rest args)
   "Abstraction for setting values in `magit-key-mode-key-maps'."
   (let* ((options (magit-key-mode-options-for-group for-group))
-         (things (assoc thing options)))
+         (things (assoc thing options))
+         (key (car args)))
     (if (cdr things)
-        (setcdr (cdr things) (cons args (cddr things)))
+        (if (magit-key-mode-key-defined-p for-group key)
+            (error "%s is already defined in the %s group." key for-group)
+          (setcdr (cdr things) (cons args (cddr things))))
       (setcdr things (list args)))
     (setq magit-key-mode-key-maps nil)
     things))
@@ -140,7 +198,7 @@ be a brief description of the binding."
 
 (defun magit-key-mode-insert-switch (for-group key desc switch)
   "Add a new binding (KEY) in FOR-GROUP which will add SWITCH to git's
-commandline when it runs. DESC should be a brief description of
+command line when it runs. DESC should be a brief description of
 the binding."
   (magit-key-mode-update-group for-group 'switches key desc switch))
 
@@ -159,15 +217,22 @@ the group FOR-GROUP."
   "Provide help for a key (which the user is prompted for) within
 FOR-GROUP."
   (let* ((opts (magit-key-mode-options-for-group for-group))
-         (seq (read-key-sequence "Enter command prefix: "))
+         (man-page (cadr (assoc 'man-page opts)))
+         (seq (read-key-sequence
+               (format "Enter command prefix%s: "
+                       (if man-page
+                         (format ", `?' for man `%s'" man-page)
+                         ""))))
          (actions (cdr (assoc 'actions opts))))
-    ;; is it an action? If so popup the help for the to-be-run
-    ;; function
-    (if (assoc seq actions)
-        (describe-function (nth 2 (assoc seq actions)))
-      ;; otherwise give the user a man page
-      (man (or (cadr (assoc 'man-page opts))
-               (error "No help associated with %s" seq))))))
+    (cond
+      ;; if it is an action popup the help for the to-be-run function
+      ((assoc seq actions) (describe-function (nth 2 (assoc seq actions))))
+      ;; if there is "?" show a man page if there is one
+      ((equal seq "?")
+       (if man-page
+         (man man-page)
+         (error "No man page associated with `%s'" for-group)))
+      (t (error "No help associated with `%s'" seq)))))
 
 (defun magit-key-mode-exec-at-point ()
   "Run action/args/option at point."
@@ -183,42 +248,45 @@ put it in magit-key-mode-key-maps for fast lookup."
   (let* ((options (magit-key-mode-options-for-group for-group))
          (actions (cdr (assoc 'actions options)))
          (switches (cdr (assoc 'switches options)))
-         (arguments (cdr (assoc 'arguments options))))
-    (let ((map (make-sparse-keymap)))
-      ;; ret dwim
-      (define-key map (kbd "RET") 'magit-key-mode-exec-at-point)
+         (arguments (cdr (assoc 'arguments options)))
+         (map (make-sparse-keymap)))
+    ;; ret dwim
+    (define-key map (kbd "RET") 'magit-key-mode-exec-at-point)
 
-      ;; all maps should 'quit' with C-g
-      (define-key map (kbd "C-g") (lambda ()
-                                    (interactive)
-                                    (magit-key-mode-command nil)))
-      ;; run help
-      (define-key map (kbd "?") `(lambda ()
-                                  (interactive)
-                                  (magit-key-mode-help ',for-group)))
+    ;; all maps should `quit' with `C-g' or `q'
+    (define-key map (kbd "C-g") `(lambda ()
+                                   (interactive)
+                                   (magit-key-mode-command nil)))
+    (define-key map (kbd "q")   `(lambda ()
+                                   (interactive)
+                                   (magit-key-mode-command nil)))
+    ;; run help
+    (define-key map (kbd "?") `(lambda ()
+                                 (interactive)
+                                 (magit-key-mode-help ',for-group)))
 
+    (flet ((defkey (k action)
+             (when (and (lookup-key map (car k))
+                        (not (numberp (lookup-key map (car k)))))
+               (message "Warning: overriding binding for `%s' in %S"
+                        (car k) for-group)
+               (ding)
+               (sit-for 2))
+             (define-key map (car k)
+               `(lambda () (interactive) ,action))))
       (when actions
         (dolist (k actions)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-command ',(nth 2 k))))))
+          (defkey k `(magit-key-mode-command ',(nth 2 k)))))
       (when switches
         (dolist (k switches)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-add-option
-                                      ',for-group
-                                      ,(nth 2 k))))))
+          (defkey k `(magit-key-mode-add-option ',for-group ,(nth 2 k)))))
       (when arguments
         (dolist (k arguments)
-          (define-key map (car k) `(lambda ()
-                                     (interactive)
-                                     (magit-key-mode-add-argument
-                                      ',for-group
-                                      ,(nth 2 k)
-                                      ',(nth 3 k))))))
-      (aput 'magit-key-mode-key-maps for-group map)
-      map)))
+          (defkey k `(magit-key-mode-add-argument
+                      ',for-group ,(nth 2 k) ',(nth 3 k))))))
+
+    (aput 'magit-key-mode-key-maps for-group map)
+    map))
 
 (defun magit-key-mode-command (func)
   (let ((args '()))
@@ -264,7 +332,7 @@ put it in magit-key-mode-key-maps for fast lookup."
 (defun magit-key-mode (for-group &optional original-opts)
   "Mode for magit key selection. All commands, switches and
 options can be toggled/actioned with the key combination
-highlighed before the description."
+highlighted before the description."
   (interactive)
   ;; save the window config to restore it as was (no need to make this
   ;; buffer local)
@@ -284,7 +352,10 @@ highlighed before the description."
           'magit-key-mode-current-args)
          (make-hash-table))
     (magit-key-mode-redraw for-group))
-  (message "Bindings prefixing options action them. '?' for help"))
+  (message
+   (concat
+    "Type a prefix key to toggle it. Run 'actions' with their prefixes. "
+    "'?' for more help.")))
 
 (defun magit-key-mode-get-key-map (for-group)
   "Get or build the keymap for FOR-GROUP."
@@ -400,16 +471,22 @@ item on one line."
          (actions (cdr (assoc 'actions options))))
     (magit-key-mode-draw-switches switches)
     (magit-key-mode-draw-args arguments)
-    (magit-key-mode-draw-actions actions)))
+    (magit-key-mode-draw-actions actions)
+    (insert "\n")))
 
-(defun magit-key-mode-generate (sym)
-  "Generate the key-group menu for SYM"
-  (let ((opts (magit-key-mode-options-for-group sym)))
+(defun magit-key-mode-de-generate (group)
+  "Unbind the function for GROUP."
+  (fmakunbound
+   (intern (concat "magit-key-mode-popup-" (symbol-name group)))))
+
+(defun magit-key-mode-generate (group)
+  "Generate the key-group menu for GROUP"
+  (let ((opts (magit-key-mode-options-for-group group)))
     (eval
-     `(defun ,(intern  (concat "magit-key-mode-popup-" (symbol-name sym))) nil
-        ,(concat "Key menu for " (symbol-name sym))
+     `(defun ,(intern (concat "magit-key-mode-popup-" (symbol-name group))) nil
+        ,(concat "Key menu for " (symbol-name group))
         (interactive)
-        (magit-key-mode (quote ,sym))))))
+        (magit-key-mode (quote ,group))))))
 
 ;; create the interactive functions for the key mode popups (which are
 ;; applied in the top-level key maps)
