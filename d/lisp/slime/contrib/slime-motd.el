@@ -11,18 +11,19 @@
 (require 'slime-banner)
 
 (defcustom slime-motd-pathname nil
-  "The local pathname the motd is read from."
+  "The local pathnamethe motd is read from."
   :group 'slime-mode
   :type '(file :must-match t))
 
 (defun slime-insert-motd ()
-  (slime-eval-async `(swank::read-motd ,slime-motd-pathname)
+  (slime-eval-async `(cl:progn
+                      (swank:swank-require :swank-motd)
+                      (swank::read-motd ,slime-motd-pathname))
                     (lambda (motd)
                       (when motd
                         (slime-repl-insert-result (list :values motd))))))
 
 (defun slime-motd-init ()
-  (swank:swank-require :swank-motd)
   (add-hook 'slime-connected-hook 'slime-insert-motd))
 
 (provide 'slime-motd)

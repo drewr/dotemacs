@@ -26,9 +26,7 @@
       (block nil
 	(while (re-search-forward slime-defpackage-regexp nil t)
 	  (when (slime-package-equal package (slime-sexp-at-point))
-            (backward-sexp)
-	    (return (make-slime-file-location (buffer-file-name)
-                                              (1- (point))))))))))
+	    (return (make-slime-file-location (buffer-file-name) (point)))))))))
 
 (defun slime-package-equal (designator1 designator2)
   ;; First try to be lucky and compare the strings themselves (for the
@@ -78,15 +76,6 @@ places the cursor at the start of the DEFPACKAGE form."
 		 (slime-find-package-definition-regexp package))))
 	(error "Couldn't find source definition of package: %s" package))))
 
-(defun slime-at-expression-p (pattern)
-  (when (ignore-errors
-          ;; at a list?
-          (= (point) (progn (down-list 1)
-                            (backward-up-list 1)
-                            (point))))
-    (save-excursion
-      (down-list 1)
-      (slime-in-expression-p pattern))))
 
 (defun slime-goto-next-export-clause ()
   ;; Assumes we're inside the beginning of a DEFPACKAGE form.
@@ -94,7 +83,7 @@ places the cursor at the start of the DEFPACKAGE form."
     (save-excursion
       (block nil
 	(while (ignore-errors (slime-forward-sexp) t)
-          (skip-chars-forward " \n\t")
+	  (slime-forward-blanks)
 	  (when (slime-at-expression-p '(:export *))
 	    (setq point (point))
 	    (return)))))
@@ -105,17 +94,14 @@ places the cursor at the start of the DEFPACKAGE form."
 (defun slime-search-exports-in-defpackage (symbol-name)
   "Look if `symbol-name' is mentioned in one of the :EXPORT clauses."
   ;; Assumes we're inside the beginning of a DEFPACKAGE form.
-  (flet ((target-symbol-p (symbol)
-           (string-match-p (format "^\\(\\(#:\\)\\|:\\)?%s$"
-                                   (regexp-quote symbol-name))
-                           symbol)))
-    (save-excursion
-      (block nil
-        (while (ignore-errors (slime-goto-next-export-clause) t)
-          (let ((clause-end (save-excursion (forward-sexp) (point))))
-            (when (and (search-forward symbol-name clause-end t)
-                       (target-symbol-p (slime-symbol-at-point)))
-              (return (point)))))))))
+  (save-excursion
+    (block nil
+      (while (ignore-errors (slime-goto-next-export-clause) t)
+	(let ((clause-end (save-excursion (forward-sexp) (point))))
+	  (when (and (search-forward symbol-name clause-end t)
+		     (equal (slime-symbol-at-point) symbol-name))
+	    (return (point))))))))
+
 
 (defun slime-frob-defpackage-form (current-package do-what symbol)
   "Adds/removes `symbol' from the DEFPACKAGE form of `current-package'

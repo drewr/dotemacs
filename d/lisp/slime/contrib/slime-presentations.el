@@ -13,9 +13,6 @@
 ;;   (add-hook 'slime-load-hook (lambda () (require 'slime-presentations)))
 ;;
 
-(unless (featurep 'slime-repl)
-  (error "slime-presentations requires slime-repl contrib"))
-
 (defface slime-repl-output-mouseover-face
   (if (featurep 'xemacs)
       '((t (:bold t)))
@@ -348,22 +345,15 @@ Also return the start position, end position, and buffer of the presentation."
         (unless presentation
           (error "No presentation at click"))
         (values presentation start end (current-buffer))))))
-
-(defun slime-check-presentation (from to buffer presentation)
-  (unless (slime-eval `(cl:nth-value 1 (swank:lookup-presented-object
-                                        ',(slime-presentation-id presentation))))
-    (with-current-buffer buffer
-      (slime-remove-presentation-properties from to presentation))))
-
+          
 (defun slime-copy-or-inspect-presentation-at-mouse (event)
   (interactive "e") ; no "@" -- we don't want to select the clicked-at window
   (multiple-value-bind (presentation start end buffer)
       (slime-presentation-around-click event)
-    (slime-check-presentation start end buffer presentation)
     (if (with-current-buffer buffer
           (eq major-mode 'slime-repl-mode))
         (slime-copy-presentation-at-mouse-to-repl event)
-        (slime-inspect-presentation-at-mouse event))))
+      (slime-inspect-presentation-at-mouse event))))
 
 (defun slime-inspect-presentation (presentation start end buffer)
   (let ((reset-p 
@@ -389,7 +379,7 @@ Also return the start position, end position, and buffer of the presentation."
   (let* ((id (slime-presentation-id presentation))
 	 (presentation-string (format "Presentation %s" id))
 	 (location (slime-eval `(swank:find-definition-for-thing
-				 (swank:lookup-presented-object
+				 (swank::lookup-presented-object
 				  ',(slime-presentation-id presentation))))))
     (slime-edit-definition-cont
      (and location (list (make-slime-xref :dspec `(,presentation-string)
@@ -425,11 +415,12 @@ Also return the start position, end position, and buffer of the presentation."
     (unless (eql major-mode 'slime-repl-mode)
       (slime-switch-to-output-buffer))
     (flet ((do-insertion ()
-	     (unless (looking-back "\\s-")
-	       (insert " "))
-	     (insert presentation-text)
-	     (unless (or (eolp) (looking-at "\\s-"))
-	       (insert " "))))
+			 (when (not (string-match "\\s-"
+						  (buffer-substring (1- (point)) (point))))
+			   (insert " "))
+			 (insert presentation-text)
+			 (when (and (not (eolp)) (not (looking-at "\\s-")))
+			   (insert " "))))
       (if (>= (point) slime-repl-prompt-start-mark)
 	  (do-insertion)
 	(save-excursion
@@ -642,12 +633,12 @@ A negative argument means move backward instead."
 the presented object."
   (let ((id (slime-presentation-id presentation)))
     (etypecase id
-      (number
+      (number         
        ;; Make sure it works even if *read-base* is not 10.
-       (format "(swank:lookup-presented-object-or-lose %d.)" id))
+       (format "(swank:get-repl-result #10r%d)" id))
       (list
        ;; for frame variables and inspector parts
-       (format "(swank:lookup-presented-object-or-lose '%s)" id)))))
+       (format "(swank:get-repl-result '%s)" id)))))
 
 (defun slime-buffer-substring-with-reified-output (start end)
   (let ((str-props (buffer-substring start end))
@@ -677,7 +668,6 @@ If replace it non-nil the current input is replaced with the old
 output; otherwise the new input is appended."
   (multiple-value-bind (presentation beg end) 
       (slime-presentation-around-or-before-point (point))
-    (slime-check-presentation beg end (current-buffer) presentation)
     (let ((old-output (buffer-substring beg end))) ;;keep properties
       ;; Append the old input or replace the current input
       (cond (replace (goto-char slime-repl-input-start-mark))
@@ -690,7 +680,7 @@ output; otherwise the new input is appended."
 
 ;;; Presentation-related key bindings, non-context menu
 
-(defvar slime-presentation-command-map nil
+(defvar slime-presentation-command-map (make-sparse-keymap)
   "Keymap for presentation-related commands. Bound to a prefix key.")
 
 (defvar slime-presentation-bindings
@@ -703,8 +693,9 @@ output; otherwise the new input is appended."
     (?\  slime-mark-presentation)))
 
 (defun slime-presentation-init-keymaps ()
-  (slime-init-keymap 'slime-presentation-command-map nil t 
-		     slime-presentation-bindings)
+  (setq slime-presentation-command-map (make-sparse-keymap))
+  (slime-define-both-key-bindings slime-presentation-command-map 
+				  slime-presentation-bindings)
   (define-key slime-presentation-command-map "\M-o" 'slime-clear-presentations)
   ;; C-c C-v is the prefix for the presentation-command map.
   (define-key slime-prefix-map "\C-v" slime-presentation-command-map))
@@ -772,11 +763,12 @@ output; otherwise the new input is appended."
      (with-current-buffer (slime-output-buffer)
        (let ((marker (slime-output-target-marker target)))
          (goto-char marker)
-         (slime-propertize-region `(face slime-repl-result-face
-                                         rear-nonsticky (face))
-           (insert string))
-         ;; Move the input-start marker after the REPL result.
-         (set-marker marker (point)))))
+         (let ((result-start (point)))
+	   (slime-propertize-region `(face slime-repl-result-face
+					   rear-nonsticky (face))
+	     (insert string))
+           ;; Move the input-start marker after the REPL result.
+           (set-marker marker (point))))))
     (t
      (let* ((marker (slime-output-target-marker target))
             (buffer (and marker (marker-buffer marker))))
@@ -797,11 +789,12 @@ buffer. Presentations of old results are expanded into code."
 					       (point-max)))
 
 (defun slime-presentation-on-return-pressed ()
-  (when (and (car (slime-presentation-around-or-before-point (point)))
-             (< (point) slime-repl-input-start-mark))
-    (slime-repl-grab-old-output end-of-input)
-    (slime-repl-recenter-if-needed)
-    t))
+  (cond ((and (car (slime-presentation-around-or-before-point (point)))
+	      (< (point) slime-repl-input-start-mark))
+	 (slime-repl-grab-old-output end-of-input)
+	 (slime-repl-recenter-if-needed)
+	 t)
+	(t nil)))
 
 (defun slime-presentation-on-stream-open (stream)
   (require 'bridge)
@@ -852,7 +845,6 @@ even on Common Lisp implementations without weak hash tables."
 ;;; Initialization
 
 (defun slime-presentations-init ()
-  (slime-require :swank-presentations)
   (add-hook 'slime-repl-mode-hook
 	    (lambda ()
 	      ;; Respect the syntax text properties of presentation.
@@ -865,11 +857,17 @@ even on Common Lisp implementations without weak hash tables."
   (add-hook 'slime-repl-current-input-hooks 'slime-presentation-current-input)
   (add-hook 'slime-open-stream-hooks 'slime-presentation-on-stream-open)
   (add-hook 'slime-repl-clear-buffer-hook 'slime-clear-presentations)
+  (add-hook 'slime-connected-hook 'slime-install-presentations)
   (add-hook 'slime-edit-definition-hooks 'slime-edit-presentation)
   (setq slime-inspector-insert-ispec-function 'slime-presentation-inspector-insert-ispec)
   (setq sldb-insert-frame-variable-value-function 
 	'slime-presentation-sldb-insert-frame-variable-value)
   (slime-presentation-init-keymaps)
   (slime-presentation-add-easy-menu))
+
+(defun slime-install-presentations ()
+  (slime-eval-async '(swank:swank-require :swank-presentations)))
+
+(slime-presentations-init)
 
 (provide 'slime-presentations)

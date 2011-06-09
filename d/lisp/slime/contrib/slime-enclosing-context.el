@@ -5,9 +5,6 @@
 ;; License: GNU GPL (same license as Emacs)
 ;;
 
-;;; TODO: with the removal of `slime-enclosing-form-specs' this
-;;; contrib won't work anymore.
-
 (require 'slime-parse)
 
 (defvar slime-variable-binding-ops-alist

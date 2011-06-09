@@ -43,14 +43,16 @@
           (when (<= (point) limit)
             (if (or (and (eq char ?+) (not val))
                     (and (eq char ?-) val))
-                ;; If `slime-extend-region-for-font-lock' did not
-                ;; fully extend the region, the assertion below may
-                ;; fail. This should only happen on XEmacs and older
-                ;; versions of GNU Emacs.
-                (ignore-errors
+                (progn
                   (forward-sexp) (backward-sexp)
                   ;; Try to suppress as far as possible.
-                  (slime-forward-sexp)
+                  (ignore-errors (slime-forward-sexp))
+                  ;; There was an `ignore-errors' form around all this
+                  ;; because the following assertion was triggered
+                  ;; regularly (resulting in the "non-deterministic"
+                  ;; behaviour mentioned in the comment further below.)
+                  ;; With extending the region properly, this assertion
+                  ;; would truly mean a bug now.
                   (assert (<= (point) limit))
                   (let ((md (match-data nil slime-search-suppressed-forms-match-data)))
                     (setf (first md) start)
@@ -82,7 +84,10 @@
            (setq result 'retry)) 
           (error
            (setq result nil)
-           (slime-display-warning
+           ;; If this reports `(cl-assertion-failed (<= (point) limit))',
+           ;; the actual culprit is `slime-extend-region-for-font-lock'
+           ;; which did not extend the region enough in this case.
+           (slime-bug 
             (concat "Caught error during fontification while searching for forms\n"
                     "that are suppressed by reader-conditionals. The error was: %S.")
             condition))))
@@ -136,7 +141,7 @@ position, or nil."
             (slime-compute-region-for-font-lock font-lock-beg font-lock-end))
           changedp)
       (error
-       (slime-display-warning
+       (slime-bug 
         (concat "Caught error when trying to extend the region for fontification.\n"
                 "The error was: %S\n"
                 "Further: font-lock-beg=%d, font-lock-end=%d.")
@@ -168,10 +173,9 @@ position, or nil."
     (goto-char beg)
     (inline (slime-beginning-of-tlf))
     (assert (not (plusp (nth 0 (slime-current-parser-state)))))
-    (setq beg (let ((pt (point)))
-                (cond ((> (- beg pt) 20000) beg)
-                      ((slime-search-directly-preceding-reader-conditional))
-                      (t pt))))
+    (setq beg (let ((pt (point))) 
+                (or (slime-search-directly-preceding-reader-conditional)
+                    pt)))
     (goto-char end)
     (while (search-backward-regexp slime-reader-conditionals-regexp beg t)
       (setq end (max end (save-excursion 

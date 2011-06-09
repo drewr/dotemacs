@@ -10,6 +10,8 @@
 ;;
 ;;   (slime-setup '(... slime-sprof))
 
+(slime-require :swank-sprof)
+
 (defvar slime-sprof-exclude-swank nil
   "*Display swank functions in the report.")
 
@@ -25,6 +27,7 @@
 
 (slime-define-keys slime-sprof-browser-mode-map
   ("h" 'describe-mode)
+  ("q" 'bury-buffer)
   ("d" 'slime-sprof-browser-disassemble-function)
   ("g" 'slime-sprof-browser-go-to)
   ("v" 'slime-sprof-browser-view-source)
@@ -44,7 +47,7 @@
 ;; Reporting
 
 (defun slime-sprof-format (graph)
-  (with-current-buffer "*slime-sprof-browser*"
+  (with-current-buffer (slime-sprof-browser-buffer)
     (let ((inhibit-read-only t))
       (erase-buffer)
       (insert (format "%4s %-54s %6s %6s %6s\n"
@@ -64,11 +67,17 @@
 
 (defun slime-sprof-browser ()
   (interactive)
-  (slime-with-popup-buffer ("*slime-sprof-browser*"
-                            :connection t
-                            :select t
-                            :mode 'slime-sprof-browser-mode)
-    (slime-sprof-update)))
+  (switch-to-buffer (slime-sprof-browser-buffer))
+  (slime-sprof-update))
+
+(defun slime-sprof-browser-buffer ()
+  (if (get-buffer "*slime-sprof-browser*")
+      (get-buffer "*slime-sprof-browser*")
+      (let ((connection (slime-connection)))
+        (with-current-buffer (get-buffer-create "*slime-sprof-browser*")
+          (slime-sprof-browser-mode)
+          (setq slime-buffer-connection connection)
+          (current-buffer)))))
 
 (defun slime-sprof-toggle-swank-exclusion ()
   (interactive)
@@ -208,7 +217,6 @@
 ;;; Menu
 
 (defun slime-sprof-init ()
-  (slime-require :swank-sprof)
   (let ((C '(and (slime-connected-p)
              (equal (slime-lisp-implementation-type) "SBCL"))))
     (setf (cdr (last (assoc "Profiling" slime-easy-menu)))

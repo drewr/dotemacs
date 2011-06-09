@@ -20,8 +20,10 @@
 
 (require 'slime-presentations)
 
-(defun slime-presentation-streams-init ()
-  (slime-require :swank-presentation-streams))
+(add-hook 'slime-connected-hook 'slime-install-presentation-streams)
+
+(defun slime-install-presentation-streams ()
+  (slime-eval-async '(swank:swank-require :swank-presentation-streams)))
 
 (provide 'slime-presentation-streams)
 

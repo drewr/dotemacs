@@ -439,9 +439,7 @@
       (funcall function))))
 
 (defimplementation swank-compile-file (input-file output-file 
-                                       load-p external-format
-                                       &key policy)
-  (declare (ignore policy))
+                                       load-p external-format)
   (with-compilation-hooks ()
     (let ((*buffer-name* nil)
           (ext:*ignore-extra-close-parentheses* nil))
@@ -1316,6 +1314,9 @@ Signal an error if no constructor can be found."
 
 (defimplementation pathname-to-filename (pathname)
   (ext:unix-namestring pathname nil))
+
+(defimplementation call-without-interrupts (fn)
+  (funcall fn))
 
 (defimplementation getpid ()
   (unix:unix-getpid))
