@@ -10,6 +10,8 @@
 (setenv "PATH" (concat (expand-file-name "~/bin") ":"
                        (getenv "PATH")))
 
+(setq shell-file-name "/opt/local/bin/zsh")
+
 (when (>= emacs-major-version 23)
   ;; (setq mac-command-modifier 'meta)
   ;; (setq mac-option-modifier 'super)
