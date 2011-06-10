@@ -4,6 +4,12 @@
 (add-to-list 'exec-path "/sw/sbin")
 (add-to-list 'exec-path "/usr/local/bin")
 
+;; for M-x shell
+(setenv "PATH" (concat "/opt/local/bin" ":"
+                       (getenv "PATH")))
+(setenv "PATH" (concat (expand-file-name "~/bin") ":"
+                       (getenv "PATH")))
+
 (when (>= emacs-major-version 23)
   ;; (setq mac-command-modifier 'meta)
   ;; (setq mac-option-modifier 'super)

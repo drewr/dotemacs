@@ -130,10 +130,6 @@
   (setq slime-lisp-implementations '())
   (add-clojure-project clojure "~/src/scratch"))
 
-; lein-swank requires this why?
-(setenv "PATH" (concat (expand-file-name "~/bin") ":"
-                       (getenv "PATH")))
-
 ;; geiser
 (add-lisp-dir "geiser")
 (eval-after-load 'geiser
