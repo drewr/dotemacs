@@ -11,6 +11,7 @@
                        (getenv "PATH")))
 
 (setq shell-file-name "/opt/local/bin/zsh")
+(setenv "SHELL" "/opt/local/bin/zsh")
 
 (when (>= emacs-major-version 23)
   ;; (setq mac-command-modifier 'meta)
