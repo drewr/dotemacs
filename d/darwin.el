@@ -5,10 +5,9 @@
 (add-to-list 'exec-path "/usr/local/bin")
 
 ;; for M-x shell
-(setenv "PATH" (concat "/opt/local/bin" ":"
-                       (getenv "PATH")))
-(setenv "PATH" (concat (expand-file-name "~/bin") ":"
-                       (getenv "PATH")))
+(setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
+(setenv "PATH" (concat "/opt/local/bin" ":" (getenv "PATH")))
+(setenv "PATH" (concat (expand-file-name "~/bin") ":" (getenv "PATH")))
 
 (setq shell-file-name "/opt/local/bin/zsh")
 (setenv "SHELL" "/opt/local/bin/zsh")
