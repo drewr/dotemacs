@@ -27,6 +27,7 @@
            (fboundp 'server-running-p))
   (server-start))
 (require 'ffap)
+(require 'saveplace)
 (require 'package)
 (package-initialize)
 (toggle-uniquify-buffer-names)
@@ -262,7 +263,6 @@
   (erc :server "valve" :port 11001 :nick "drewr" :password erc-pass)
   (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass)
   (erc :server "valve" :port 11003 :nick "drewr" :password erc-pass))
-
 
 ;; Customize
 
