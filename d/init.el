@@ -172,6 +172,9 @@
 (defalias 'perl-mode 'sepia-mode)
 (require 'sepia)
 
+;; python
+(require 'python)
+
 ;; org
 
 (org-remember-insinuate)
