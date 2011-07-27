@@ -175,6 +175,9 @@
 ;; python
 (require 'python)
 
+;; javascript
+(setq js-indent-level 2)
+
 ;; org
 
 (org-remember-insinuate)
