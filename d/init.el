@@ -178,6 +178,10 @@
 ;; javascript
 (setq js-indent-level 2)
 
+;; scala
+(add-lisp-dir "scala-mode")
+(require 'scala-mode-auto)
+
 ;; org
 
 (org-remember-insinuate)
