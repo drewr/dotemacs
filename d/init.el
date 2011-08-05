@@ -274,6 +274,10 @@
   (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass)
   (erc :server "valve" :port 11003 :nick "drewr" :password erc-pass))
 
+;; edit-server
+(require 'edit-server)
+
+
 ;; Customize
 
 (custom-set-variables
