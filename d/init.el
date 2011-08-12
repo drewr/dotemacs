@@ -217,6 +217,7 @@
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
+(require 'epresent)
 
 ;; ledger
 
