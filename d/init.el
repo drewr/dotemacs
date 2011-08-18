@@ -101,6 +101,7 @@
 (slime-setup '(slime-repl))
 (require 'clojure-mode)
 (require 'clojure-test-mode)
+(require 'durendal)
 (load "swank-clojure")
 (setq slime-net-coding-system 'utf-8-unix)
 (setq slime-protocol-version 'ignore)
