@@ -1,6 +1,6 @@
 (setq user-full-name "Drew Raines"
-      user-mail-address "aaraines@gmail.com"
-      message-user-fqdn "id.draines.com"
+      user-mail-address "drew@raines.me"
+      message-user-fqdn "mid.raines.me"
       gnus-check-bogus-newsgroups nil
       gnus-check-new-newsgroups nil
       gnus-article-skip-boring nil
