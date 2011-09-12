@@ -80,3 +80,20 @@ Symbols matching the text at point are put first in the completion list."
 (defun eshell/cds ()
   "Change directory to the project's root."
   (eshell/cd (locate-dominating-file default-directory "src")))
+
+(defvar growlnotify-command (executable-find "growlnotify")
+  "The path to growlnotify")
+
+(defun growl (title message)
+  "Shows a message through the growl notification system using
+ `growlnotify-command` as the program."
+  (flet ((encfn (s) (encode-coding-string s (keyboard-coding-system))) )
+    (let* ((process (start-process "growlnotify" nil
+                                   growlnotify-command
+                                   (encfn title)
+                                   "-a" "Emacs"
+                                   "-n" "Emacs")))
+      (process-send-string process (encfn message))
+      (process-send-string process "\n")
+      (process-send-eof process)))
+  t)
