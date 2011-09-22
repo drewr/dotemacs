@@ -29,12 +29,21 @@
                    "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
     (global-set-key "\M-`" 'other-frame)))
 
-(defun aar/erc-me (match-type nick message)
-  "Shows a growl notification, when user's nick was mentioned. If
-  the buffer is currently not visible, makes it sticky."
-  (unless (posix-string-match "^\\** *Users on #" message)
-    (growl (buffer-name (current-buffer)) message)))
+(defun aar/you-rang? (mat nick message)
+  (let ((buf (buffer-name (current-buffer)))
+        (msg (concat "<" (car (erc-parse-user nick)) "> " message)))
+    (when (eq mat 'current-nick)
+      (unless (posix-string-match "^\\** *Users on #" message)
+        (growl buf msg)))))
 
-(add-hook 'erc-text-matched-hook 'aar/erc-me)
+(defun aar/erc-me (proc parsed)
+  (let ((chan (car (erc-response.command-args parsed)))
+        (msg (concat "<" (car (erc-parse-user (erc-response.sender parsed)))
+                     "> " (erc-response.contents parsed))))
+    (when (or (string-match erc-favorite-channels chan)
+              (string= chan (erc-current-nick)))
+      (growl chan msg)
+      nil)))
 
-
+(add-hook 'erc-text-matched-hook 'aar/you-rang?)
+(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)

@@ -267,7 +267,8 @@
        erc-server-send-ping-interval 45
        erc-server-send-ping-timeout 86400
        erc-server-reconnect-timeout 60
-       erc-prompt (lambda () (concat (erc-default-target) ">")))
+       erc-prompt (lambda () (concat (erc-default-target) ">"))
+       erc-favorite-channels "\\(84115\\|safe\\|nashdl\\|test\\)")
 
 (load "~/.erc-auth")
 (defun aar/erc ()
