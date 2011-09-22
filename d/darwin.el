@@ -29,12 +29,14 @@
                    "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
     (global-set-key "\M-`" 'other-frame)))
 
+(require 'erc)
 (defun aar/you-rang? (mat nick message)
   (let ((buf (buffer-name (current-buffer)))
         (msg (concat "<" (car (erc-parse-user nick)) "> " message)))
     (when (eq mat 'current-nick)
       (unless (posix-string-match "^\\** *Users on #" message)
-        (growl buf msg)))))
+        (growl buf msg)
+        nil))))
 
 (defun aar/erc-me (proc parsed)
   (let ((chan (car (erc-response.command-args parsed)))
