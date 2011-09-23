@@ -39,11 +39,13 @@
         nil))))
 
 (defun aar/erc-me (proc parsed)
-  (let ((chan (car (erc-response.command-args parsed)))
-        (msg (concat "<" (car (erc-parse-user (erc-response.sender parsed)))
-                     "> " (erc-response.contents parsed))))
-    (when (or (string-match erc-favorite-channels chan)
-              (string= chan (erc-current-nick)))
+  (let* ((chan (car (erc-response.command-args parsed)))
+         (nickraw (erc-response.sender parsed))
+         (nick (car (erc-parse-user nickraw)))
+         (msg (concat "<" nick "> " (erc-response.contents parsed))))
+    (when (and (or (string-match erc-favorite-channels chan)
+                   (string= chan (erc-current-nick)))
+               (not (erc-ignored-user-p nickraw)))
       (growl chan msg)
       nil)))
 
