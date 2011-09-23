@@ -43,7 +43,7 @@
          (nickraw (erc-response.sender parsed))
          (nick (car (erc-parse-user nickraw)))
          (msg (concat "<" nick "> " (erc-response.contents parsed))))
-    (when (and (or (string-match erc-favorite-channels chan)
+    (when (and (or (string-match erc-favorite-channel chan)
                    (string= chan (erc-current-nick)))
                (not (erc-ignored-user-p nickraw)))
       (growl chan msg)
