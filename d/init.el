@@ -2,7 +2,7 @@
 
 (defmacro load-custom (f)
   "Load a local configuration file in ~/.emacs.d/."
-   `(load (concat ,(expand-file-name "~/.emacs.d/") ,f)))
+  `(load (concat ,(expand-file-name "~/.emacs.d/") ,f)))
 
 (defmacro add-lisp-dir (d)
   "Add dir to load-path."
@@ -10,7 +10,7 @@
 
 (require 'cl) ; need this for (case)
 (load-custom
-  (case system-type
+ (case system-type
    ('darwin "darwin")
    ('gnu/linux "linux")
    ('windows-nt "win32")))
@@ -136,7 +136,7 @@
 (add-lisp-dir "geiser")
 (eval-after-load 'geiser
   '(setq geiser-scheme-dir
-        (expand-file-name "~/.emacs.d/share/geiser/scheme")))
+         (expand-file-name "~/.emacs.d/share/geiser/scheme")))
 (require 'geiser)
 
 ;; haskell
@@ -228,11 +228,11 @@
 ;; markdown
 (require 'markdown-mode)
 (autoload 'markdown-mode "markdown-mode.el"
-   "Major mode for editing Markdown files" t)
+  "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
-   (cons '("\\.md" . markdown-mode) auto-mode-alist))
+      (cons '("\\.md" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist
-   (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+      (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
 
 ;; erc
@@ -320,10 +320,10 @@
                            indentation space-after-tab))
  '(whitespace-line-column 80))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(circe-my-message-face ((t (:foreground "DarkRed")))))
 
 (put 'downcase-region 'disabled nil)
