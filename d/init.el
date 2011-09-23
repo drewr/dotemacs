@@ -261,7 +261,7 @@
                                  "NAMES" "324" "329" "332" "333" "353" "477")
        erc-encoding-coding-alist '(("#emacs" . utf-8))
        erc-current-nick-highlight-type 'nick
-       erc-ignore-list '("^xah_?" "^jordanb_?")
+       erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-github!")
        erc-max-buffer-size 100000
        erc-join-buffer 'bury
        erc-server-send-ping-interval 45
@@ -269,8 +269,7 @@
        erc-server-reconnect-timeout 60
        erc-prompt (lambda () (concat (erc-default-target) ">"))
        erc-favorite-channels
-       "\\(84115\\|safe\\|nashdl\\|test\\|devops\\|devs\\)"
-       erc-ignore-list '("^sonian-github!"))
+       "\\(84115\\|safe\\|nashdl\\|test\\|devops\\|devs\\)")
 
 (load "~/.erc-auth")
 (defun aar/erc ()
