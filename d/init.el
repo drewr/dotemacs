@@ -258,7 +258,8 @@
        erc-log-channels-directory "~/tmp/irc/log"
        erc-kill-queries-on-quit nil
        erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
-                                 "NAMES" "324" "329" "332" "333" "353" "477")
+                                 "NAMES" "324" "329" "332" "333" "353" "477"
+                                 "NOTICE")
        erc-encoding-coding-alist '(("#emacs" . utf-8))
        erc-current-nick-highlight-type 'nick
        erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-")
