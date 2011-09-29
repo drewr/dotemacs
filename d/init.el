@@ -242,34 +242,34 @@
 (add-to-list 'erc-modules 'log)
 (add-to-list 'erc-modules 'highlight-nicknames)
 
-(setq  erc-server "irc.us.freenode.net"
-       erc-port 6667
-       erc-nick "drewr"
-       erc-user-full-name "Drew Raines"
-       erc-email-userid "drew"       ; for when ident is not activated
-       erc-fill-column 86
-       erc-fill-prefix "   "
-       erc-auto-query 'window-noselect
-       erc-prompt-for-nickserv-password nil
-       erc-nickserv-passwords nil
-       erc-auto-discard-away t
-       erc-autoaway-idle-seconds 600
-       erc-log-insert-log-on-open nil
-       erc-log-channels-directory "~/tmp/irc/log"
-       erc-kill-queries-on-quit nil
-       erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
-                                 "NAMES" "324" "329" "332" "333" "353" "477"
-                                 "NOTICE")
-       erc-encoding-coding-alist '(("#emacs" . utf-8))
-       erc-current-nick-highlight-type 'nick
-       erc-max-buffer-size 100000
-       erc-join-buffer 'bury
-       erc-server-send-ping-interval 45
-       erc-server-send-ping-timeout 86400
-       erc-server-reconnect-timeout 60
-       erc-prompt (lambda () (concat (erc-default-target) ">"))
-       erc-favorite-channel
-          "\\(84115\\|#search\\|safe\\|devops\\|devs\\)")
+(setq erc-server "irc.us.freenode.net"
+      erc-port 6667
+      erc-nick "drewr"
+      erc-user-full-name "Drew Raines"
+      erc-email-userid "drew"       ; for when ident is not activated
+      erc-fill-column 86
+      erc-fill-prefix "   "
+      erc-auto-query 'window-noselect
+      erc-prompt-for-nickserv-password nil
+      erc-nickserv-passwords nil
+      erc-auto-discard-away t
+      erc-autoaway-idle-seconds 600
+      erc-log-insert-log-on-open nil
+      erc-log-channels-directory "~/tmp/irc/log"
+      erc-kill-queries-on-quit nil
+      erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
+                                "NAMES" "324" "329" "332" "333" "353" "477"
+                                "NOTICE")
+      erc-encoding-coding-alist '(("#emacs" . utf-8))
+      erc-current-nick-highlight-type 'nick
+      erc-max-buffer-size 100000
+      erc-join-buffer 'bury
+      erc-server-send-ping-interval 45
+      erc-server-send-ping-timeout 86400
+      erc-server-reconnect-timeout 60
+      erc-prompt (lambda () (concat (erc-default-target) ">"))
+      erc-favorite-channel
+      "\\(84115\\|#search\\|safe\\|devops\\|devs\\)")
 
 (setq-default erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-"))
 
