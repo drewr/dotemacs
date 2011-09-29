@@ -262,7 +262,6 @@
                                  "NOTICE")
        erc-encoding-coding-alist '(("#emacs" . utf-8))
        erc-current-nick-highlight-type 'nick
-       erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-")
        erc-max-buffer-size 100000
        erc-join-buffer 'bury
        erc-server-send-ping-interval 45
@@ -293,6 +292,7 @@
  '(cursor-in-non-selected-windows nil)
  '(dired-recursive-deletes (quote top))
  '(enable-recursive-minibuffers t)
+ '(erc-ignore-list (quote ("^xah_?" "^jordanb_?" "^sonian-")))
  '(safe-local-variable-values
    (quote
     ((prompt-to-byte-compile)
