@@ -272,12 +272,7 @@
        erc-favorite-channel
           "\\(84115\\|#search\\|safe\\|devops\\|devs\\)")
 
-(load "~/.erc-auth")
-(defun aar/erc ()
-  (interactive)
-  (erc :server "valve" :port 11001 :nick "drewr" :password erc-pass)
-  (erc :server "valve" :port 11002 :nick "drewr" :password erc-pass)
-  (erc :server "valve" :port 11003 :nick "drewr" :password erc-pass))
+(load "~/.erc-auth.el")
 
 ;; edit-server
 (require 'edit-server)
