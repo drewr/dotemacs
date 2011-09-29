@@ -271,6 +271,8 @@
        erc-favorite-channel
           "\\(84115\\|#search\\|safe\\|devops\\|devs\\)")
 
+(setq-default erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-"))
+
 (load "~/.erc-auth.el")
 
 ;; edit-server
@@ -292,7 +294,6 @@
  '(cursor-in-non-selected-windows nil)
  '(dired-recursive-deletes (quote top))
  '(enable-recursive-minibuffers t)
- '(erc-ignore-list (quote ("^xah_?" "^jordanb_?" "^sonian-")))
  '(safe-local-variable-values
    (quote
     ((prompt-to-byte-compile)
