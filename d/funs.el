@@ -97,3 +97,8 @@ Symbols matching the text at point are put first in the completion list."
       (process-send-string process "\n")
       (process-send-eof process)))
   t)
+
+(defun ledger-clean-up-transaction (start end)
+  (interactive "r")
+  (shell-command-on-region start end "ledger -f - print" "*ledger-clean*" t))
+

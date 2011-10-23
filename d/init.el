@@ -223,7 +223,9 @@
 ;; ledger
 
 (require 'ledger)
-
+(eval-after-load 'ledger
+  (define-key ledger-mode-map
+    [(control ?c) (control ?n)] 'ledger-clean-up-transaction))
 
 ;; markdown
 (require 'markdown-mode)
