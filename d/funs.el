@@ -102,3 +102,7 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "r")
   (shell-command-on-region start end "ledger -f - print" "*ledger-clean*" t))
 
+(defun ledger-bal-region (start end)
+  (interactive "r")
+  (shell-command-on-region start end "ledger -f - bal" "*ledger-bal*"))
+
