@@ -224,11 +224,11 @@
 
 (require 'ledger)
 (eval-after-load 'ledger
-  (progn
-    (define-key ledger-mode-map
-      [(control ?c) (control ?n)] 'ledger-clean-up-transaction)
-    (define-key ledger-mode-map
-      [(control ?c) (control ?b)] 'ledger-bal-region)))
+  '(progn
+     (define-key ledger-mode-map
+       [(control ?c) (control ?n)] 'ledger-clean-up-transaction)
+     (define-key ledger-mode-map
+       [(control ?c) (control ?b)] 'ledger-bal-region)))
 
 ;; markdown
 (require 'markdown-mode)
