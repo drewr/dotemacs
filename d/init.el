@@ -274,7 +274,7 @@
       erc-server-reconnect-timeout 60
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
-      "\\(84115\\|#search\\|safe\\|devops\\|devs\\)")
+      "\\(84115\\|#search\\|safe\\|devs\\)")
 
 (setq-default erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-"))
 
