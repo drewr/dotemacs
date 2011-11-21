@@ -65,6 +65,10 @@
   '(progn (set-face-foreground 'diff-added "green4")
           (set-face-foreground 'diff-removed "red3")))
 
+;; w3m
+(add-lisp-dir "emacs-w3m")
+(require 'w3m)
+
 ;; magit
 
 (add-lisp-dir "magit")
