@@ -224,3 +224,9 @@ address if only it was present."
 (define-key message-mode-map "\C-c\C-c" 'aar/delay-send)
 (define-key message-mode-map "\C-c\C-s" 'aar/delay-send)
 
+(setq gnus-posting-styles
+      '((".*"
+         ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
+         (signature "\n-Drew\n"))
+        ("aaraines:list\\."
+         (address "aaraines@gmail.com"))))
