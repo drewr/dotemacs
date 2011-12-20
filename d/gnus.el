@@ -44,7 +44,7 @@
         "^X-Delivery-Agent:"
         "^X-Spambayes-Classification:" "^X-Spambayes-Trained:"
         "^X-Bogosity:" "^X-Gnus-Delayed:"
-        "^Content-Type:")
+        "^Content-Type:" "^Archived-At:")
       gnus-agent-go-online t
       gnus-agent-synchronize-flags t
       gnus-agent-long-article 1500
