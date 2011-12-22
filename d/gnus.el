@@ -50,6 +50,12 @@
       gnus-agent-long-article 1500
       gnus-agent-short-article 1000)
 
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+               (summary 0.5 point)
+               (article 1.0))))
+
 (setq starttls-use-gnutls nil
       send-mail-function 'smtpmail-send-it
       message-send-mail-function 'message-send-mail-with-sendmail ;; 'message-smtpmail-send-it
