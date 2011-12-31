@@ -163,6 +163,10 @@
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
 
+;; jinja2
+(require 'jinja2-mode)
+(setq auto-mode-alist (cons '("\\.j2$" . jinja2-mode) auto-mode-alist))
+
 ;; nxhtml
 ;;(load-custom "lisp/nxhtml/autostart") please no debug-on-error
 
