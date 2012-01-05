@@ -57,6 +57,7 @@
 (global-set-key (kbd "C-x M") (lambda () (interactive) (eshell t)))
 (global-set-key (kbd "C-x M-m") 'shell)
 (global-set-key (kbd "C-x 4 t") 'aar/transpose-windows)
+(global-set-key (kbd "C-x 4 i") 'aar/irc-home)
 
 (when (equalp "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))

@@ -106,3 +106,8 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "r")
   (shell-command-on-region start end "ledger -f - bal" "*ledger-bal*"))
 
+(defun aar/irc-home (&optional arg)
+  "Keyboard macro."
+  (interactive "p")
+  (kmacro-exec-ring-item
+   (quote ("1b#search3ob#84115o" 0 "%d")) arg))
