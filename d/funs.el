@@ -110,4 +110,6 @@ Symbols matching the text at point are put first in the completion list."
   "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item
-   (quote ("1b#search3ob#84115o" 0 "%d")) arg))
+   (quote
+    ("1b#search32b#84115oo2b#safeob#devopsoo" 0 "%d"))
+   arg))
