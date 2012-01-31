@@ -116,5 +116,7 @@ Symbols matching the text at point are put first in the completion list."
 
 (defun aar/irc-go-to-balls (&optional arg)
   (interactive "p")
-  (select-window (get-buffer-window "#84115")))
+  (aar/irc-home)
+  (select-window
+   (get-buffer-window "#84115")))
 
