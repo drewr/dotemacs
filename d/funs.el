@@ -113,3 +113,8 @@ Symbols matching the text at point are put first in the completion list."
    (quote
     ("1b#search32b#84115oo2b#safeob#devopsoo" 0 "%d"))
    arg))
+
+(defun aar/irc-go-to-balls (&optional arg)
+  (interactive "p")
+  (select-window (get-buffer-window "#84115")))
+

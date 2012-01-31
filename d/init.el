@@ -58,6 +58,7 @@
 (global-set-key (kbd "C-x M-m") 'shell)
 (global-set-key (kbd "C-x 4 t") 'aar/transpose-windows)
 (global-set-key (kbd "C-x 4 i") 'aar/irc-home)
+(global-set-key (kbd "C-x 4 8") 'aar/irc-go-to-balls)
 
 (when (equalp "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))
