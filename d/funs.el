@@ -74,7 +74,7 @@ Symbols matching the text at point are put first in the completion list."
         (next-win (window-buffer (next-window))))
     (set-window-buffer (selected-window) next-win)
     (set-window-buffer (next-window) this-win)
-    (when (= arg 0)
+    (when (= arg 1)
       (select-window (next-window)))))
 
 (defun eshell/cds ()
