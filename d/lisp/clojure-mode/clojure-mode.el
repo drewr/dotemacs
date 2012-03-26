@@ -6,7 +6,7 @@
 ;;          Lennart Staflin <lenst@lysator.liu.se>
 ;;          Phil Hagelberg <technomancy@gmail.com>
 ;; URL: http://github.com/technomancy/clojure-mode
-;; Version: 1.9.2
+;; Version: 1.11.5
 ;; Keywords: languages, lisp
 
 ;; This file is not part of GNU Emacs.
@@ -107,9 +107,10 @@ Clojure to load that file."
     (define-key map "\C-c\C-e" 'lisp-eval-last-sexp)
     (define-key map "\C-c\C-l" 'clojure-load-file)
     (define-key map "\C-c\C-r" 'lisp-eval-region)
-    (define-key map "\C-c\C-z" 'run-lisp)
+    (define-key map "\C-c\C-z" 'clojure-display-inferior-lisp-buffer)
     (define-key map (kbd "RET") 'reindent-then-newline-and-indent)
     (define-key map (kbd "C-c t") 'clojure-jump-to-test)
+    (define-key map (kbd "C-c M-q") 'clojure-fill-docstring)
     map)
   "Keymap for Clojure mode. Inherits from `lisp-mode-shared-map'.")
 
@@ -136,9 +137,6 @@ Clojure to load that file."
 This holds a cons cell of the form `(DIRECTORY . FILE)'
 describing the last `clojure-load-file' or `clojure-compile-file' command.")
 
-(defvar clojure-def-regexp "^\\s *(def\\S *\\s +\\(?:\\^\\S +\\s +\\)?\\([^ \n\t]+\\)"
-  "A regular expression to match any top-level definitions.")
-
 (defvar clojure-test-ns-segment-position -1
   "Which segment of the ns is \"test\" inserted in your test name convention.
 
@@ -150,7 +148,7 @@ numbers count from the end:
 
 (defun clojure-mode-version ()
   "Currently package.el doesn't support prerelease version numbers."
-  "1.9.0")
+  "1.11.5")
 
 ;;;###autoload
 (defun clojure-mode ()
@@ -171,7 +169,7 @@ if that value is non-nil."
         major-mode 'clojure-mode
         imenu-create-index-function
         (lambda ()
-          (imenu--generic-function `((nil ,clojure-def-regexp 1))))
+          (imenu--generic-function '((nil clojure-match-next-def 0))))
         local-abbrev-table clojure-mode-abbrev-table
         indent-tabs-mode nil)
   (lisp-mode-variables nil)
@@ -185,6 +183,8 @@ if that value is non-nil."
          'clojure-forward-sexp))
   (set (make-local-variable 'lisp-doc-string-elt-property)
        'clojure-doc-string-elt)
+  (set (make-local-variable 'inferior-lisp-program) "lein repl")
+  (set (make-local-variable 'parse-sexp-ignore-comments) t)
 
   (clojure-mode-font-lock-setup)
 
@@ -195,6 +195,13 @@ if that value is non-nil."
   (when (and (featurep 'paredit) paredit-mode (>= paredit-version 21))
     (define-key clojure-mode-map "{" 'paredit-open-curly)
     (define-key clojure-mode-map "}" 'paredit-close-curly)))
+
+(defun clojure-display-inferior-lisp-buffer ()
+  "Display a buffer bound to `inferior-lisp-buffer'."
+  (interactive)
+  (if (and inferior-lisp-buffer (get-buffer inferior-lisp-buffer))
+      (pop-to-buffer inferior-lisp-buffer t)
+      (run-lisp inferior-lisp-program)))
 
 (defun clojure-load-file (file-name)
   "Load a Lisp file into the inferior Lisp process."
@@ -209,6 +216,17 @@ if that value is non-nil."
   (switch-to-lisp t))
 
 
+
+(defun clojure-match-next-def ()
+  "Scans the buffer backwards for the next top-level definition.
+Called by `imenu--generic-function'."
+  (when (re-search-backward "^\\s *(def\\S *[ \n\t]+" nil t)
+    (save-excursion
+      (goto-char (match-end 0))
+      (when (looking-at "#?\\^")
+        (let (forward-sexp-function) ; using the built-in one
+          (forward-sexp)))           ; skip the metadata
+      (re-search-forward "[^ \n\t)]+"))))
 
 (defun clojure-mode-font-lock-setup ()
   "Configures font-lock for editing Clojure code."
@@ -345,7 +363,7 @@ elements of a def* forms."
          "(\\(?:clojure.core/\\)?"
          (regexp-opt
           '("let" "letfn" "do"
-            "cond" "condp"
+            "case" "cond" "condp"
             "for" "loop" "recur"
             "when" "when-not" "when-let" "when-first"
             "if" "if-let" "if-not"
@@ -358,7 +376,7 @@ elements of a def* forms."
             "gen-class" "gen-and-load-class" "gen-and-save-class"
             "handler-case" "handle") t)
          "\\>")
-       .  1)
+       1 font-lock-builtin-face)
       ;; Built-ins
       (,(concat
          "(\\(?:clojure.core/\\)?"
@@ -383,7 +401,7 @@ elements of a def* forms."
         "bit-clear" "bit-flip" "bit-not" "bit-or" "bit-set"
         "bit-shift-left" "bit-shift-right" "bit-test" "bit-xor" "boolean"
         "boolean-array" "booleans" "bound-fn" "bound-fn*" "butlast"
-        "byte" "byte-array" "bytes" "cast" "char"
+        "byte" "byte-array" "bytes" "case" "cast" "char"
         "char-array" "char-escape-string" "char-name-string" "char?" "chars"
         "chunk" "chunk-append" "chunk-buffer" "chunk-cons" "chunk-first"
         "chunk-next" "chunk-rest" "chunked-seq?" "class" "class?"
@@ -403,13 +421,13 @@ elements of a def* forms."
         "enumeration-seq" "eval" "even?" "every?"
         "extend" "extend-protocol" "extend-type" "extends?" "extenders"
         "false?" "ffirst" "file-seq" "filter" "find" "find-doc"
-        "find-ns" "find-var" "first" "float" "float-array"
+        "find-ns" "find-var" "first" "flatten" "float" "float-array"
         "float?" "floats" "flush" "fn" "fn?"
         "fnext" "for" "force" "format" "future"
         "future-call" "future-cancel" "future-cancelled?" "future-done?" "future?"
         "gen-class" "gen-interface" "gensym" "get" "get-in"
-        "get-method" "get-proxy-class" "get-thread-bindings" "get-validator" "hash"
-        "hash-map" "hash-set" "identical?" "identity" "if-let"
+        "get-method" "get-proxy-class" "get-thread-bindings" "get-validator" "group-by"
+        "hash" "hash-map" "hash-set" "identical?" "identity" "if-let"
         "if-not" "ifn?" "import" "in-ns" "inc"
         "init-proxy" "instance?" "int" "int-array" "integer?"
         "interleave" "intern" "interpose" "into" "into-array"
@@ -429,7 +447,7 @@ elements of a def* forms."
         "ns-map" "ns-name" "ns-publics" "ns-refers" "ns-resolve"
         "ns-unalias" "ns-unmap" "nth" "nthnext" "num"
         "number?" "odd?" "or" "parents" "partial"
-        "partition" "pcalls" "peek" "persistent!" "pmap"
+        "partition" "partition-all" "partition-by" "pcalls" "peek" "persistent!" "pmap"
         "pop" "pop!" "pop-thread-bindings" "pos?" "pr"
         "pr-str" "prefer-method" "prefers" "primitives-classnames" "print"
         "print-ctor" "print-doc" "print-dup" "print-method" "print-namespace-doc"
@@ -450,7 +468,7 @@ elements of a def* forms."
         "set-validator!" "set?" "short" "short-array" "shorts"
         "shutdown-agents" "slurp" "some" "sort" "sort-by"
         "sorted-map" "sorted-map-by" "sorted-set" "sorted-set-by" "sorted?"
-        "special-form-anchor" "special-symbol?" "split-at" "split-with" "str"
+        "special-form-anchor" "special-symbol?" "spit" "split-at" "split-with" "str"
         "stream?" "string?" "struct" "struct-map" "subs"
         "subseq" "subvec" "supers" "swap!" "symbol"
         "symbol?" "sync" "syntax-symbol-anchor" "take" "take-last"
@@ -463,10 +481,10 @@ elements of a def* forms."
         "var?" "vary-meta" "vec" "vector" "vector?"
         "when" "when-first" "when-let" "when-not" "while"
         "with-bindings" "with-bindings*" "with-in-str" "with-loading-context" "with-local-vars"
-        "with-meta" "with-open" "with-out-str" "with-precision" "xml-seq"
+        "with-meta" "with-open" "with-out-str" "with-precision" "xml-seq" "zipmap"
         ) t)
          "\\>")
-       1 font-lock-builtin-face)
+       1 font-lock-variable-name-face)
       ;; (fn name? args ...)
       (,(concat "(\\(?:clojure.core/\\)?\\(fn\\)[ \t]+"
                 ;; Possibly type
@@ -516,7 +534,7 @@ elements of a def* forms."
          "\\>")
        1 font-lock-type-face)
       ;; Constant values (keywords), including as metadata e.g. ^:static
-      ("\\<^?:\\(\\sw\\|#\\)+\\>" 0 font-lock-builtin-face)
+      ("\\<^?:\\(\\sw\\|#\\)+\\>" 0 font-lock-constant-face)
       ;; Meta type annotation #^Type or ^Type
       ("#?^\\sw+" 0 font-lock-type-face)
       ("\\<io\\!\\>" 0 font-lock-warning-face)
@@ -727,6 +745,7 @@ use (put-clojure-indent 'some-symbol 'defun)."
   (bound-fn 'defun)
   (if 1)
   (if-not 1)
+  (case 1)
   (condp 2)
   (when 1)
   (while 1)
@@ -752,6 +771,7 @@ use (put-clojure-indent 'some-symbol 'defun)."
 
   (try 0)
   (catch 2)
+  (finally 0)
 
   ;; binding forms
   (let 1)
@@ -783,7 +803,100 @@ use (put-clojure-indent 'some-symbol 'defun)."
 
 
 
-(defconst *namespace-name-regex*
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Better docstring filling for clojure-mode
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun clojure-string-start ()
+  "Return the position of the \" that begins the string at point."
+  (save-excursion
+    (save-match-data
+      ;; Find a quote that appears immediately after whitespace,
+      ;; beginning of line, or an open paren, brace, or bracket
+      (re-search-backward "\\(\\s-\\|^\\|(\\|\\[\\|{\\)\\(\"\\)")
+      (match-beginning 2))))
+
+(defun clojure-char-at-point ()
+  "Return the char at point or nil if at buffer end."
+  (when (not (= (point) (point-max)))
+   (buffer-substring-no-properties (point) (1+ (point)))))
+
+(defun clojure-char-before-point ()
+  "Return the char before point or nil if at buffer beginning."
+  (when (not (= (point) (point-min)))
+    (buffer-substring-no-properties (point) (1- (point)))))
+
+;; TODO: Deal with the fact that when point is exactly at the
+;; beginning of a string, it thinks that is the end.
+(defun clojure-string-end ()
+  "Return the position of the \" that ends the string at point.
+
+Note that point must be inside the string - if point is
+positioned at the opening quote, incorrect results will be
+returned."
+  (save-excursion
+    (save-match-data
+      ;; If we're at the end of the string, just return point.
+      (if (and (string= (clojure-char-at-point) "\"")
+               (not (string= (clojure-char-before-point) "\\")))
+          (point)
+        ;; We don't want to get screwed by starting out at the
+        ;; backslash in an escaped quote.
+        (when (string= (clojure-char-at-point) "\\")
+          (backward-char))
+        ;; Look for a quote not preceeded by a backslash
+        (re-search-forward "[^\\]\\\(\\\"\\)")
+        (match-beginning 1)))))
+
+(defun clojure-docstring-start+end-points ()
+  "Return the start and end points of the string at point as a cons."
+  (if (and (fboundp 'paredit-string-start+end-points) paredit-mode)
+      (paredit-string-start+end-points)
+    (cons (clojure-string-start) (clojure-string-end))))
+
+(defun clojure-mark-string ()
+  "Mark the string at point."
+  (interactive)
+  (goto-char (clojure-string-start))
+  (forward-char)
+  (set-mark (clojure-string-end)))
+
+(defun clojure-fill-docstring (&optional argument)
+  "Fill the definition that the point is on appropriate for Clojure.
+
+  Fills so that every paragraph has a minimum of two initial spaces,
+  with the exception of the first line. Fill margins are taken from
+  paragraph start, so a paragraph that begins with four spaces will
+  remain indented by four spaces after refilling."
+  (interactive "P")
+  (if (and (fboundp 'paredit-in-string-p) paredit-mode)
+      (unless (paredit-in-string-p)
+        (error "Must be inside a string")))
+  ;; Oddly, save-excursion doesn't do a good job of preserving point.
+  ;; It's probably because we delete the string and then re-insert it.
+  (let ((old-point (point)))
+    (save-restriction
+      (save-excursion
+        (let* ((string-region (clojure-docstring-start+end-points))
+               (string-start (1+ (car string-region)))
+               (string-end (cdr string-region))
+               (string (buffer-substring-no-properties (1+ (car string-region))
+                                                       (cdr string-region))))
+          (delete-region string-start string-end)
+          (insert
+           (with-temp-buffer
+             (insert string)
+             (let ((left-margin 2))
+               (delete-trailing-whitespace)
+               (fill-region (point-min) (point-max))
+               (buffer-substring-no-properties (+ 2 (point-min)) (point-max))))))))
+    (goto-char old-point)))
+
+
+
+(defconst clojure-namespace-name-regex
   (rx line-start
       "("
       (zero-or-one (group (regexp "clojure.core/")))
@@ -799,16 +912,16 @@ use (put-clojure-indent 'some-symbol 'defun)."
                                       (one-or-more (not (any whitespace)))))
                     (one-or-more (any whitespace "\n")))
       ;; why is this here? oh (in-ns 'foo) or (ns+ :user)
-      (zero-or-one (any ":'"))         
+      (zero-or-one (any ":'"))
       (group (one-or-more (not (any "()\"" whitespace))) word-end)))
 
-;; for testing *namespace-name-regex*, you can evaluate this code and make
+;; for testing clojure-namespace-name-regex, you can evaluate this code and make
 ;; sure foo (or whatever the namespace name is) shows up in results. some of
 ;; these currently fail.
-;; (mapcar (lambda (s) (let ((n (string-match *namespace-name-regex* s)))
+;; (mapcar (lambda (s) (let ((n (string-match clojure-namespace-name-regex s)))
 ;;                       (if n (match-string 4 s))))
 ;;         '("(ns foo)"
-;;           "(ns 
+;;           "(ns
 ;; foo)"
 ;;           "(ns foo.baz)"
 ;;           "(ns ^:bar foo)"
@@ -826,46 +939,171 @@ use (put-clojure-indent 'some-symbol 'defun)."
 ;;     "foo"))
 
 
+
+(defun clojure-insert-ns-form ()
+  (interactive)
+  (goto-char (point-min))
+  (let* ((rel (car (last (split-string buffer-file-name "src/\\|test/"))))
+         (relative (car (split-string rel "\\.clj")))
+         (segments (split-string relative "/")))
+    (insert (format "(ns %s)" (mapconcat #'identity segments ".")))))
+
+
 ;;; Slime help
 
 (defvar clojure-project-root-file "project.clj")
 
-(defvar clojure-swank-command "cd %s && lein jack-in %s &")
+;; Pipe to $SHELL to work around mackosecks GUI Emacs $PATH issues.
+(defcustom clojure-swank-command
+  (if (or (locate-file "lein" exec-path) (locate-file "lein.bat" exec-path))
+      "lein jack-in %s"
+    "echo \"lein jack-in %s\" | $SHELL -l")
+  "The command used to start swank via clojure-jack-in.
+For remote swank it is lein must be in your PATH and the remote
+proc is launched via sh rather than bash, so it might be necessary
+to specific the full path to it. The argument is the port to connect on.
+Localhost is assumed."
+  :type 'string
+  :group 'clojure-mode)
 
-(defvar clojure-swank-port nil)
+(defcustom clojure-generate-remote-swank-command-function
+  'clojure-generate-remote-swank-command-ssh-tunnel
+  "A function that is called to determine the swank command that
+`clojure-jack-in` will execute and the hostname/port that slime
+should connect to for remote projects that are opened via tramp.
+
+The arguments are dir, hostname, and port.  The return value should be an `alist` of the form
+(:cmd \"command string\" :hostname \"hostname\" :port 1234)"
+  :type 'function
+  :group 'clojure-mode)
+
+(defun clojure-generate-local-swank-command-default (dir hostname port)
+  (if (not (string-equal "localhost" hostname))
+      (error (concat
+              "If you need to jack-in to remote projects/jvms over tramp, "
+              "you need to define a custom `clojure-generate-swank-command-function`"))
+    (list :cmd (format clojure-swank-command port)
+          :hostname hostname
+          :port port)))
+
+(defun clojure-generate-remote-swank-command-ssh-tunnel (dir hostname port)
+  (destructuring-bind (_method user host localname)
+      (append (tramp-dissect-file-name dir) nil)
+    (list :cmd (format-spec
+                "ssh -L %p:localhost:%p -l '%u' '%h' 'cd \'%d\'; lein jack-in \'%p\''"
+                `((?p . ,port)
+                  (?h . ,host)
+                  (?u . ,(or user (getenv "USER")))
+                  (?d . ,localname)))
+          :hostname "localhost"
+          :port port)))
+
+(defun clojure-generate-swank-cmd (dir hostname port)
+  (if (file-remote-p dir)
+      (if (functionp clojure-generate-remote-swank-command-function)
+          (funcall clojure-generate-remote-swank-command-function dir hostname port)
+        (error (concat
+                "If you need to jack-in to remote projects/jvms over tramp "
+                "you need to define a custom `clojure-generate-remote-swank-command-function`")))
+    (clojure-generate-local-swank-command-default dir hostname port)))
+
+(defun clojure-jack-in-sentinel (process event)
+  (let ((debug-on-error t))
+    (error "Could not start swank server: %s"
+           (let ((b (process-buffer process)))
+             (if (and b (buffer-live-p b))
+                 (with-current-buffer b
+                   (buffer-substring (point-min) (point-max))))))))
+
+(defun clojure-eval-bootstrap-region (process)
+  "Eval only the elisp in between the markers."
+  (with-current-buffer (process-buffer process)
+    (save-excursion
+      (goto-char 0)
+      (search-forward ";;; Bootstrapping bundled version of SLIME")
+      (let ((begin (point)))
+        (when (not (search-forward ";;; Done bootstrapping." nil t))
+          ;; fall back to possibly-ambiguous string if above isn't found
+          (search-forward "(run-hooks 'slime-load-hook)"))
+        (eval-region begin (point))))))
+
+(defun clojure-kill-swank-buffer (swank-buffer-name)
+  (when (get-buffer swank-buffer-name)
+    (let ((process (get-buffer-process (get-buffer swank-buffer-name))))
+      (if process
+          (set-process-query-on-exit-flag process nil))
+      (kill-buffer swank-buffer-name))))
+
+(defun clojure-generate-swank-connection-name (dir hostname)
+  "swank")
+
+(defun clojure-jack-in-start-process (swank-connection-name swank-buffer-name dir hostname)
+  ;; The buffer has to be created before the proc if
+  ;; `start-file-process-shell-command` is used. It doesn't hurt to do
+  ;; it now even if `start-process-shell-command` is used:
+  (get-buffer-create swank-buffer-name)
+
+  (let ((port (- 65535 (mod (caddr (current-time)) 4096))))
+    (destructuring-bind (&key cmd hostname port)
+        (clojure-generate-swank-cmd dir hostname port)
+      (lexical-let* ((proc (start-process-shell-command
+                            ;; this command runs locally
+                            ;; `start-file-process-shell-command` would
+                            ;; run remote for tramp buffers
+                            swank-connection-name
+                            swank-buffer-name
+                            cmd))
+                     (dir dir)
+                     (hostname hostname)
+                     (port port)
+                     (connect-callback (lambda () (slime-connect hostname port))))
+        (set-process-sentinel proc 'clojure-jack-in-sentinel)
+        (set-process-query-on-exit-flag proc nil)
+        (set-process-filter proc
+                            (lambda (process output)
+                              (with-current-buffer (process-buffer process)
+                                (insert output))
+                              (when (string-match "proceed to jack in" output)
+                                (clojure-eval-bootstrap-region process)
+                                (with-current-buffer
+                                    ;; this block is an attempt to avoid
+                                    ;; creating duplicate repl windows
+                                    (or
+                                     (get-buffer "*slime-repl clojure*")
+                                     (get-buffer "*slime-repl nil*")
+                                     (current-buffer))
+                                  (funcall connect-callback)
+                                  (when (string-match "slime-repl" (buffer-name))
+                                    ;; this is most likely an old repl
+                                    ;; buffer that existed prior to the
+                                    ;; jack-in call.
+                                    (setq default-directory dir)
+                                    (goto-char (point-max))))
+                                (set-process-sentinel process nil)
+                                (set-process-filter process nil))))))))
 
 ;;;###autoload
 (defun clojure-jack-in ()
   (interactive)
-  (let ((clojure-root (locate-dominating-file default-directory
-                                              clojure-project-root-file)))
-    ;; graaaahhhh--no closures in elisp (23)
-    (setq clojure-swank-port (+ 1024 (* (random 64512))))
-    (when (not clojure-root)
-      (setq clojure-root (if ido-mode
-                             (ido-read-directory-name "Project: ")
-                           (read-directory-name "Project: "))))
-    (shell-command (format clojure-swank-command (expand-file-name clojure-root) clojure-swank-port)
-                   "*swank*")
-    (set-process-filter (get-buffer-process "*swank*")
-                        (lambda (process output)
-                          (with-current-buffer "*swank*"
-                            (insert output))
-                          (when (string-match "proceed to jack in" output)
-                            (with-current-buffer "*swank*"
-                              (kill-region (save-excursion
-                                             (goto-char (point-max))
-                                             (search-backward "slime-load-hook")
-                                             (forward-line)
-                                             (point))
-                                           (point-max)))
-                            (eval-buffer "*swank*")
-                            (slime-connect "localhost" clojure-swank-port)
-                            (set-process-filter process nil))))
-    (message "Starting swank server...")))
+  (setq slime-net-coding-system 'utf-8-unix)
+  (let* ((dir default-directory)
+         (hostname (if (file-remote-p default-directory)
+                       tramp-current-host "localhost"))
+         (connection-name (clojure-generate-swank-connection-name dir hostname))
+         (swank-buffer-name (format "*%s*" connection-name)))
+
+    (when (and (functionp 'slime-disconnect)
+               (slime-current-connection)
+               ;; TODO: ask for permission once jack-in supports multiple connections
+               ;; (and (interactive-p) (y-or-n-p "Close old connections first? "))
+               )
+      (slime-disconnect))
+    (clojure-kill-swank-buffer swank-buffer-name)
+    (clojure-jack-in-start-process connection-name swank-buffer-name dir hostname))
+  (message "Starting swank server..."))
 
 (defun clojure-find-ns ()
-  (let ((regexp *namespace-name-regex*))
+  (let ((regexp clojure-namespace-name-regex))
     (save-excursion
       (when (or (re-search-backward regexp nil t)
                 (re-search-forward regexp nil t))
@@ -889,6 +1127,9 @@ use (put-clojure-indent 'some-symbol 'defun)."
           (clojure-enable-slime))))))
 
 ;; Test navigation:
+(defun clojure-in-tests-p ()
+  (or (string-match-p "test\." (clojure-find-ns))
+      (string-match-p "/test" (buffer-file-name))))
 
 (defun clojure-underscores-for-hyphens (namespace)
   (replace-regexp-in-string "-" "_" namespace))
@@ -904,17 +1145,54 @@ use (put-clojure-indent 'some-symbol 'defun)."
 (defun clojure-jump-to-test ()
   "Jump from implementation file to test."
   (interactive)
-  (find-file (format "%s/test/%s.clj"
-                     (locate-dominating-file buffer-file-name "src/")
+  (find-file (format "%stest/%s.clj"
+                     (file-name-as-directory
+                      (locate-dominating-file buffer-file-name "src/"))
                      (clojure-test-for (clojure-find-ns)))))
+
+(defun clojure-jump-between-tests-and-code ()
+  (interactive)
+  (if (clojure-in-tests-p)
+      (clojure-test-jump-to-implementation)
+    (clojure-jump-to-test)))
+
+;;; slime filename translation for tramp
+(defun clojure-slime-tramp-local-filename (f)
+  (if (file-remote-p f)
+      (tramp-file-name-localname
+       (tramp-dissect-file-name f))
+    f))
+
+(defun clojure-slime-tramp-remote-filename (f)
+  (if (file-remote-p default-directory)
+      (tramp-make-tramp-file-name
+       (tramp-file-name-method
+        (tramp-dissect-file-name default-directory))
+       (tramp-file-name-user
+        (tramp-dissect-file-name default-directory))
+       (tramp-file-name-host
+        (tramp-dissect-file-name default-directory))
+       f)
+    f))
+
+(defun clojure-slime-remote-file-name-hook ()
+  (setq slime-from-lisp-filename-function
+        'clojure-slime-tramp-remote-filename)
+  (setq slime-to-lisp-filename-function
+        'clojure-slime-tramp-local-filename))
+
+(add-hook 'slime-connected-hook 'clojure-slime-remote-file-name-hook)
 
 ;;;###autoload
 (add-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
+
+(add-hook 'slime-indentation-update-hooks 'put-clojure-indent)
 
 
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.clj$" . clojure-mode))
+(add-to-list 'interpreter-mode-alist '("jark" . clojure-mode))
 (add-to-list 'interpreter-mode-alist '("cake" . clojure-mode))
 
 (provide 'clojure-mode)
