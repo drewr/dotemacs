@@ -292,7 +292,7 @@
       erc-favorite-channel
       "\\(84115\\|#search\\|safe\\|devs\\)")
 
-(setq-default erc-ignore-list '("^xah_?" "^jordanb_?" "^sonian-"))
+(setq-default erc-ignore-list '("^xah_?" "^jordanb_?"))
 
 (load "~/.erc-auth.el")
 
