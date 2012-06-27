@@ -68,6 +68,9 @@
   '(progn (set-face-foreground 'diff-added "green4")
           (set-face-foreground 'diff-removed "red3")))
 
+;; pre-gnus
+(setq gnus-home-directory "~/.gnus.d/")
+
 ;; pomodoro
 (require 'pomodoro)
 
