@@ -28,8 +28,6 @@
       gnus-auto-select-next 'almost-quietly
       gnus-use-full-window t
       gnus-inhibit-mime-unbuttonizing t
-      nntp-marks-is-evil nil
-      nnml-marks-is-evil nil
       gnus-use-cache t
       gnus-user-agent '(emacs gnus config)
       message-sendmail-envelope-from 'header
@@ -85,10 +83,8 @@
                   (nnfolder-active-file "~/Mail/mboxes/active")
                   (nnfolder-get-new-mail nil)
                   (nnfolder-inhibit-expiry nil))
-        (nntp "news.gmane.org"
-              (nntp-marks-is-evil t))
-        (nntp "news.gwene.org"
-              (nntp-marks-is-evil t))))
+        (nntp "news.gmane.org")
+        (nntp "news.gwene.org")))
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
