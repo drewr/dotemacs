@@ -70,6 +70,8 @@
 
 ;; pre-gnus
 (setq gnus-home-directory "~/.gnus.d/")
+(add-to-list 'load-path "~/src/gnus/lisp")
+(add-to-list 'Info-directory-list "~/src/gnus/texi")
 
 ;; pomodoro
 (require 'pomodoro)
