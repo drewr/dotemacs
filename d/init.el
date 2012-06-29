@@ -231,11 +231,12 @@
 
 (setq org-default-notes-file "~/.org/notes.org")
 
-(setq org-remember-templates
-      '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org" 'top)
-        ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org" 'top)
-        ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org" 'top)
-        ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org" 'top)
+(setq org-remember-default-headline "Tasks"
+      org-remember-templates
+      '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org")
+        ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org")
+        ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org")
+        ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org")
         ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
@@ -353,4 +354,3 @@
 
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
-
