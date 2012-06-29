@@ -229,6 +229,4 @@ address if only it was present."
 (setq gnus-posting-styles
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
-         (signature "\n-Drew\n"))
-        ("aaraines:list\\."
          (address "aaraines@gmail.com"))))
