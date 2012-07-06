@@ -8,11 +8,11 @@
       gnus-gcc-mark-as-read nil
       gnus-gcc-externalize-attachments "all"
       gnus-home-score-file 'gnus-hierarchial-home-score-file
-      gnus-large-newsgroup 250
+      gnus-large-newsgroup 100
       gnus-score-find-score-files-function 'gnus-score-find-hierarchical
       gnus-treat-display-smileys t
       gnus-treat-wash-html nil
-      gnus-treat-fill-long-lines nil   ;90
+      gnus-treat-fill-long-lines nil
       gnus-version-expose-system t
       gnus-cited-lines-visible '(3 . 6)
       gnus-article-skip-boring nil
@@ -21,7 +21,7 @@
       message-dont-reply-to-names
       (concat "\\(aaraines\\|me\\)@\\(gmail\\|draines\\)")
       message-from-style 'angles
-      message-forward-as-mime nil
+      message-forward-as-mime t
       message-make-forward-subject-function 'message-forward-subject-fwd
       message-subject-trailing-was-query nil
       message-wash-forwarded-subjects t
@@ -90,8 +90,7 @@
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
   (turn-on-auto-fill)
-  (require 'footnote)
-  (flyspell-mode))
+  (require 'footnote))
 
 (add-hook 'message-mode-hook 'aar/message-mode-setup)
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
