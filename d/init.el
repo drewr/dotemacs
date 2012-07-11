@@ -77,6 +77,7 @@
 ;; elmer
 
 (require 'elmer)
+(global-set-key (kbd "C-c C-e") 'elmer)
 
 ;; scpaste
 
