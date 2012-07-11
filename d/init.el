@@ -76,7 +76,7 @@
 
 ;; scpaste
 
-(require 'scpaste)
+(autoload 'scpaste "scpaste" "Paste the current buffer." t nil)
 (setq scpaste-http-destination "http://www.draines.com/tmp"
       scpaste-scp-destination "draines:/www/htdocs/draines/tmp")
 
