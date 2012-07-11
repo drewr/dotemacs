@@ -74,6 +74,10 @@
 (require 'info)
 (add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
 
+;; elmer
+
+(require 'elmer)
+
 ;; scpaste
 
 (autoload 'scpaste "scpaste" "Paste the current buffer." t nil)
