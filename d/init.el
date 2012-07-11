@@ -74,6 +74,12 @@
 (require 'info)
 (add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
 
+;; scpaste
+
+(require 'scpaste)
+(setq scpaste-http-destination "http://www.draines.com/tmp"
+      scpaste-scp-destination "draines:/www/htdocs/draines/tmp")
+
 ;; pomodoro
 (require 'pomodoro)
 
