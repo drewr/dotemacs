@@ -350,7 +350,12 @@
  '(require-final-newline t)
  '(whitespace-style '(face trailing lines space-before-tab
                            indentation space-after-tab))
- '(whitespace-line-column 80))
+ '(whitespace-line-column 80)
+ '(hfy-default-face-def
+   ((t :foreground "white" :background "black" :family "misc-fixed")))
+ '(hfy-display-class
+   (quote ((type . x-toolkit) (class . color) (background . light)))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
