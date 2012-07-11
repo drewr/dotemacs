@@ -352,7 +352,7 @@
                            indentation space-after-tab))
  '(whitespace-line-column 80)
  '(hfy-default-face-def
-   ((t :foreground "white" :background "black" :family "misc-fixed")))
+   (quote ((t :foreground "black" :background "white" :family "monospace"))))
  '(hfy-display-class
    (quote ((type . x-toolkit) (class . color) (background . light)))))
 
