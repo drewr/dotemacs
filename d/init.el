@@ -77,6 +77,7 @@
 ;; elmer
 
 (require 'elmer)
+(setq elmer-paste-bin "zsh <(curl -s p.draines.com/sh)")
 (global-set-key (kbd "C-c C-e") 'elmer)
 
 ;; scpaste
