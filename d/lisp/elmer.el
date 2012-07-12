@@ -1,21 +1,23 @@
-(defun elmer-chomp (str)
-  "Chomp leading and tailing whitespace from STR."
-  (while (string-match "\\`\n+\\|^\\s-+\\|\\s-+$\\|\n+\\'" str)
-    (setq str (replace-match "" t t str)))
-  str)
+(defun elmer-concat-cmd (str1 str2)
+  (if (string= str2 "")
+      str1
+    (concat str1 " " str2)))
 
-(defun elmer (name)
-  (interactive "MName (defaults to random): ")
+(defun elmer (name key)
+  (interactive "MName (defaults to random): \nMKey: ")
   (let* ((buf (get-buffer-create "*elmer*"))
          (cmd "zsh <(curl -s p.draines.com/sh)")
-         (cmd (if (equal "" name)
-                  cmd
-                (concat cmd " " name)))
-         (resp (elmer-chomp
-                (save-excursion
-                  (shell-command-on-region (mark) (point) cmd buf)
-                  (set-buffer buf)
-                  (buffer-string))))
+         (cmd (elmer-concat-cmd cmd name))
+         (cmd (if (not (string= name ""))
+                  (elmer-concat-cmd cmd key)
+                cmd))
+         (resp (let ((str (save-excursion
+                            (shell-command-on-region (mark) (point) cmd buf)
+                            (set-buffer buf)
+                            (buffer-string))))
+                 (if (string-match "\\(\n\\|\s \\)+$" str)
+                     (replace-match "" t t str)
+                   str)))
          (url (if (string-match " http" resp)
                   (kill-new (car (last (split-string resp)))))))
     resp))
