@@ -11,7 +11,7 @@
          (cmd (if (equal "" name)
                   cmd
                 (concat cmd " " name)))
-         (resp (chomp
+         (resp (elmer-chomp
                 (save-excursion
                   (shell-command-on-region (mark) (point) cmd buf)
                   (set-buffer buf)
