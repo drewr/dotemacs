@@ -56,7 +56,7 @@ to elmer."
                             (shell-command-on-region (mark) (point) cmd buf)
                             (set-buffer buf)
                             (buffer-string))))
-                 (if (string-match "\\(\n\\|\s \\)+$" str)
+                 (if (string-match "\\(\n\\|\\s-\\)+$" str)
                      (replace-match "" t t str)
                    str)))
          (url (if (string-match " http" resp)
