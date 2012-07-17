@@ -79,6 +79,7 @@
 ;; pre-gnus
 (setq gnus-home-directory "~/.gnus.d/")
 (add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
+(bbdb-initialize 'gnus 'message)
 (require 'info)
 (add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
 

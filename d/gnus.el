@@ -49,9 +49,6 @@
       gnus-agent-short-article 1000
       mm-discouraged-alternatives '("text/html" "text/richtext"))
 
-(require 'bbdb)
-(bbdb-initialize 'gnus 'message)
-
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
 (gnus-add-configuration
