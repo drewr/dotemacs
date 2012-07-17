@@ -49,6 +49,8 @@
       gnus-agent-short-article 1000
       mm-discouraged-alternatives '("text/html" "text/richtext"))
 
+(add-hook 'message-sent-hook 'gnus-score-followup-thread)
+
 (gnus-add-configuration
  '(article
    (horizontal 1.0
