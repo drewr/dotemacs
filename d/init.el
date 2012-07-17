@@ -70,7 +70,6 @@
 
 (add-lisp-dir "bbdb")
 (require 'bbdb)
-(bbdb-initialize 'message)
 (setq bbdb-north-american-phone-numbers-p nil)
 (setq bbdb-user-mail-names
       (regexp-opt '("aaraines@gmail.com" "drew@raines.me")))
