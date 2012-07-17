@@ -68,6 +68,15 @@
   '(progn (set-face-foreground 'diff-added "green4")
           (set-face-foreground 'diff-removed "red3")))
 
+(add-lisp-dir "bbdb")
+(require 'bbdb-loaddefs)
+(bbdb-initialize 'message)
+(setq bbdb-north-american-phone-numbers-p nil)
+(setq bbdb-user-mail-names
+      (regexp-opt '("aaraines@gmail.com" "drew@raines.me")))
+(setq bbdb-complete-name-allow-cycling t)
+(setq bbdb-use-pop-up nil)
+
 ;; pre-gnus
 (setq gnus-home-directory "~/.gnus.d/")
 (add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
