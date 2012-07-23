@@ -249,6 +249,8 @@
       '((sequence "TODO" "WAITING" "DEFERRED"
                   "|" "DONE" "DELEGATED" "CANCELED")))
 
+(setq org-export-html-postamble "<p class=\"postamble\">%d %a</p>")
+
 (setq org-default-notes-file "~/.org/notes.org")
 
 (setq org-remember-default-headline "Tasks"
