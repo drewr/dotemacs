@@ -314,11 +314,9 @@
       erc-current-nick-highlight-type 'nick
       erc-max-buffer-size 100000
       erc-join-buffer 'bury
-      erc-server-send-ping-interval 10
-      erc-server-send-ping-timeout 20
-      erc-server-reconnect-timeout 30
-      erc-server-reconnect-attempts 100
-      erc-log-p nil
+      erc-server-send-ping-interval 45
+      erc-server-send-ping-timeout 86400
+      erc-server-reconnect-timeout 60
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
       "\\(84115\\|#search\\|safe\\|devs\\)")
