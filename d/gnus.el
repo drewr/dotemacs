@@ -174,7 +174,7 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
 (defun aar/sync-imap ()
   (interactive)
   (save-excursion
-    (shell-command "$HOME/bin/offlineimap" "*offlineimap*" "*offlineimap*")))
+    (shell-command "offlineimap" "*offlineimap*" "*offlineimap*")))
 
 (defun aar/get-new-news-and-disconnect (&optional arg)
   "Plug in, send, receive, plug out."
