@@ -59,7 +59,7 @@
 (setq starttls-use-gnutls nil
       send-mail-function 'smtpmail-send-it
       message-send-mail-function 'message-send-mail-with-sendmail ;; 'message-smtpmail-send-it
-      sendmail-program "/opt/local/bin/msmtp"
+      sendmail-program "msmtp"
       smtpmail-debug-info nil
       smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
