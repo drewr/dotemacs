@@ -29,7 +29,6 @@
       gnus-use-full-window t
       gnus-inhibit-mime-unbuttonizing t
       gnus-use-cache t
-      gnus-user-agent '(emacs gnus config)
       message-sendmail-envelope-from 'header
       gnus-visible-headers
       '("^From:" "^Newsgroups:" "^Subject:"
