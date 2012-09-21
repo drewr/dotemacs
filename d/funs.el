@@ -128,3 +128,9 @@ Symbols matching the text at point are put first in the completion list."
   (select-window
    (get-buffer-window "#84115")))
 
+(defun aar/irc-go-to-notes (&optional arg)
+  "Keyboard macro."
+  (interactive "p")
+  (kmacro-exec-ring-item
+   (quote
+    ([24 49 24 98 83 79 78 73 65 78 46 111 114 103 return 24 51 24 111 24 98 35 115 101 97 114 99 104 return 24 111] 0 "%d")) arg))

@@ -60,6 +60,7 @@
 (global-set-key (kbd "C-x 4 i") 'aar/irc-home)
 (global-set-key (kbd "C-x 4 o") 'aar/irc-home-freenode)
 (global-set-key (kbd "C-x 4 8") 'aar/irc-go-to-balls)
+(global-set-key (kbd "C-x 4 l") 'aar/irc-go-to-notes)
 
 (when (equalp "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))
