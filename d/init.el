@@ -318,6 +318,7 @@
       erc-server-send-ping-interval 45
       erc-server-send-ping-timeout 86400
       erc-server-reconnect-timeout 60
+      erc-server-reconnect-attempts 10
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
       "\\(84115\\|#search\\|safe\\|devs\\)")
