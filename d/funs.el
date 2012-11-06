@@ -106,7 +106,7 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "r")
   (shell-command-on-region start end "ledger -f - bal" "*ledger-bal*"))
 
-(defun aar/irc-home (&optional arg)
+(defun aar/irc-home-sonian (&optional arg)
   "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item
@@ -114,7 +114,7 @@ Symbols matching the text at point are put first in the completion list."
     ("1b#search32b#84115oo2b#safeob#devopsoo" 0 "%d"))
    arg))
 
-(defun aar/irc-home-freenode (&optional arg)
+(defun aar/irc-home (&optional arg)
   "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item
@@ -131,4 +131,4 @@ Symbols matching the text at point are put first in the completion list."
 (defun aar/irc-go-to-notes (&optional arg)
   "Keyboard macro."
   (interactive "p")
-  (kmacro-exec-ring-item (quote ("13bSONIAN.org" 0 "%d")) arg))
+  (kmacro-exec-ring-item (quote ("13bES.org" 0 "%d")) arg))
