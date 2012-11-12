@@ -179,7 +179,7 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
   "Plug in, send, receive, plug out."
   (interactive "P")
   (gnus-group-save-newsrc)
-  (aar/sync-imap)
+  ;; (aar/sync-imap)
   (gnus-agent-toggle-plugged t)
   (gnus-group-send-queue)
   (gnus-group-get-new-news arg)
