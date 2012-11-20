@@ -176,6 +176,10 @@
          (expand-file-name "~/.emacs.d/share/geiser/scheme")))
 (require 'geiser)
 
+;; ocaml
+(add-lisp-dir "tuareg")
+(load "~/.emacs.d/lisp/tuareg/tuareg-site-file.el")
+
 ;; haskell
 
 (load "~/.emacs.d/lisp/haskell-mode/haskell-site-file")
