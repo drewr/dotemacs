@@ -301,7 +301,7 @@
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
       erc-email-userid "drew"       ; for when ident is not activated
-      erc-fill-column 90
+      erc-fill-column 82
       erc-fill-prefix "   "
       erc-auto-query 'window-noselect
       erc-prompt-for-nickserv-password nil
