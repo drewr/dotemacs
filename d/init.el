@@ -325,7 +325,7 @@
       erc-server-reconnect-attempts 10
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
-      "\\(84115\\|#search\\|safe\\|devs\\)")
+      "\\(84115\\|#elasticsearch\\|pallet\\)")
 
 (setq-default erc-ignore-list '("^xah_?" "^jordanb_?"))
 
@@ -351,7 +351,7 @@
       nil)))
 
 (add-hook 'erc-text-matched-hook 'aar/you-rang?)
-;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
+(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
 
 
 ;; edit-server
