@@ -353,6 +353,9 @@
 (add-hook 'erc-text-matched-hook 'aar/you-rang?)
 (add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
 
+;; github
+(add-lisp-dir "gh.el")
+(require 'gist)
 
 ;; edit-server
 (require 'edit-server)
