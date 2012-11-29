@@ -98,6 +98,18 @@ Symbols matching the text at point are put first in the completion list."
       (process-send-eof process)))
   t)
 
+(defun notify-send (title message)
+  (let ((cmd (concat "notify-send "
+                     "\"" title "\" "
+                     "\"" message "\"")))
+    (shell-command cmd)))
+
+(defun notify (title message)
+  (case system-type
+    ('darwin (growl title message))
+    ('gnu/linux (notify-send title message))
+    ('windows-nt 'wtf)))
+
 (defun ledger-clean-up-transaction (start end)
   (interactive "r")
   (shell-command-on-region start end "ledger -E -f - print" "*ledger-clean*" t))

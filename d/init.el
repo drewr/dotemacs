@@ -331,6 +331,29 @@
 
 (load "~/.erc-auth.el")
 
+(defun aar/you-rang? (mat nick message)
+  (let ((buf (buffer-name (current-buffer)))
+        (msg (concat "<" (car (erc-parse-user nick)) "> " message)))
+    (when (eq mat 'current-nick)
+      (unless (posix-string-match "^\\** *Users on #" message)
+        (notify buf msg)
+        nil))))
+
+(defun aar/erc-me (proc parsed)
+  (let* ((chan (car (erc-response.command-args parsed)))
+         (nickraw (erc-response.sender parsed))
+         (nick (car (erc-parse-user nickraw)))
+         (msg (concat "<" nick "> " (erc-response.contents parsed))))
+    (when (and (or (string-match erc-favorite-channel chan)
+                   (string= chan (erc-current-nick)))
+               (not (erc-ignored-user-p nickraw)))
+      (notify chan msg)
+      nil)))
+
+(add-hook 'erc-text-matched-hook 'aar/you-rang?)
+;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
+
+
 ;; edit-server
 (require 'edit-server)
 
