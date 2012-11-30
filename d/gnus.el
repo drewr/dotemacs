@@ -134,6 +134,7 @@
   (gnus-message 5 "Using ascii tree layout with unicode chars."))
 
 (aar/gnus-summary-line-format-unicode)
+(aar/gnus-summary-line-format-ascii)
 
 (defun gnus-user-format-function-@ (header)
   "Display @ for message with attachment in summary line.
