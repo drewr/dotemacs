@@ -99,10 +99,10 @@ Symbols matching the text at point are put first in the completion list."
   t)
 
 (defun notify-send (title message)
-  (let ((cmd (concat "notify-send "
-                     "\"" title "\" "
-                     "\"" message "\"")))
-    (shell-command cmd)))
+  (start-process "notify" nil
+                 "notify-send"
+                 title
+                 message))
 
 (defun notify (title message)
   (case system-type
