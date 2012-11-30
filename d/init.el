@@ -325,7 +325,7 @@
       erc-server-reconnect-attempts 10
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
-      "\\(84115\\|#elasticsearch\\|pallet\\)")
+      "\\(84115\\|elast\\|pallet\\|lein\\|nash\\)")
 
 (setq-default erc-ignore-list '("^xah_?" "^jordanb_?"))
 
