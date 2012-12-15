@@ -144,3 +144,8 @@ Symbols matching the text at point are put first in the completion list."
   "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item (quote ("13bES.org" 0 "%d")) arg))
+
+(defun aar/pretty-json (&optional arg) "Keyboard macro."
+  (interactive "p")
+  (kmacro-exec-ring-item
+   (quote ("|json_pp" 0 "%d")) arg))

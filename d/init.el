@@ -42,6 +42,7 @@
 (global-set-key (kbd "C-x C-i") 'ido-imenu)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c C-n") 'clean-up-buffer)
+(global-set-key (kbd "C-c C-j") 'aar/pretty-json)
 (global-set-key (kbd "C-x f") 'recentf-ido-find-file)
 (global-set-key (kbd "C-x F") 'find-function)
 (global-set-key (kbd "C-M-h") 'backward-kill-word)
