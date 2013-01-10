@@ -148,4 +148,4 @@ Symbols matching the text at point are put first in the completion list."
 (defun aar/pretty-json (&optional arg) "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item
-   (quote ("|json_pp" 0 "%d")) arg))
+   (quote ("|json_xs" 0 "%d")) arg))
