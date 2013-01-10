@@ -303,7 +303,7 @@
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
       erc-email-userid "drew"       ; for when ident is not activated
-      erc-fill-column 82
+      erc-fill-column 70
       erc-fill-prefix "   "
       erc-auto-query 'window-noselect
       erc-prompt-for-nickserv-password nil
@@ -352,7 +352,7 @@
       nil)))
 
 (add-hook 'erc-text-matched-hook 'aar/you-rang?)
-(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
+;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
 
 ;; github
 (add-lisp-dir "gh.el")
