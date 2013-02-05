@@ -262,9 +262,8 @@
 (setq org-remember-default-headline "Tasks"
       org-remember-templates
       '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org")
-        ("NotifyMD" 109 "* TODO %?\n  %u" "clients/NMD.org")
         ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org")
-        ("Sonian" 115 "* TODO %?\n  %u" "clients/SONIAN.org")
+        ("Elasticsearch" 101 "* TODO %?\n  %u" "clients/ES.org")
         ("Note" 110 "* %u %?" "notes.org" 'bottom)))
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
