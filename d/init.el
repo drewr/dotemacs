@@ -233,6 +233,7 @@
 
 ;; org
 
+(require 'org-remember)
 (org-remember-insinuate)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
