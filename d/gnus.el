@@ -231,4 +231,5 @@ address if only it was present."
 (setq gnus-posting-styles
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
-         (address "aaraines@gmail.com"))))
+         (address "aaraines@gmail.com")
+         (Face (gnus-face-from-file "~/.face-48.png")))))
