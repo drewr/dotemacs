@@ -8,7 +8,7 @@
       gnus-gcc-mark-as-read nil
       gnus-gcc-externalize-attachments "all"
       gnus-home-score-file 'gnus-hierarchial-home-score-file
-      gnus-large-newsgroup 100
+      gnus-large-newsgroup 1000
       gnus-score-find-score-files-function 'gnus-score-find-hierarchical
       gnus-treat-display-smileys t
       gnus-treat-wash-html nil
