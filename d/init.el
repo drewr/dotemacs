@@ -81,7 +81,8 @@
 (setq gnus-home-directory "~/.gnus.d/")
 (add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
 (require 'info)
-(add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
+(add-to-list 'Info-default-directory-list
+   (expand-file-name "~/src/gnus/texi/"))
 
 ;; elmer
 
