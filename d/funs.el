@@ -156,8 +156,8 @@ Symbols matching the text at point are put first in the completion list."
   (if (and (buffer-file-name) (buffer-modified-p))
       (save-buffer args)))
 
-(defun browse-latest-url ()
-  (interactive)
+(defun browse-latest-url (&optional arg)
+  (interactive "p")
   (save-excursion
-    (search-backward-regexp "https?://")
+    (search-backward-regexp "https?://" nil nil arg)
     (browse-url-at-point)))
