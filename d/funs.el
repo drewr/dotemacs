@@ -149,3 +149,9 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "p")
   (kmacro-exec-ring-item
    (quote ("|json_xs" 0 "%d")) arg))
+
+(defun save-buffer-if-visiting-file (&optional args)
+  "Save the current buffer only if it is visiting a file"
+  (interactive)
+  (if (and (buffer-file-name) (buffer-modified-p))
+      (save-buffer args)))
