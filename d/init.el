@@ -331,6 +331,8 @@
       erc-favorite-channel
       "\\(84115\\|elast\\|pallet\\|lein\\|nash\\)")
 
+(define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
+
 (setq-default erc-ignore-list '("^xah_?" "^jordanb_?"))
 
 (load "~/.erc-auth.el")
