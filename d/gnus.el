@@ -233,3 +233,36 @@ address if only it was present."
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
          (address "aaraines@gmail.com")
          (Face (gnus-face-from-file "~/.face-48.png")))))
+
+;; format=flowed
+;; http://article.gmane.org/gmane.emacs.gnus.user/14508
+
+(defun harden-newlines ()
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward "\n" nil t)
+      (put-text-property (1- (point)) (point) 'hard t))))
+
+(setq fill-flowed-display-column nil)
+
+(add-hook 'message-setup-hook
+          (lambda ()
+            (when message-this-is-mail
+              (turn-off-auto-fill)
+              (setq
+               truncate-lines nil
+               word-wrap t
+               use-hard-newlines t))))
+
+(add-hook 'message-send-hook
+          (lambda ()
+            (when use-hard-newlines
+              (harden-newlines))))
+
+(add-hook 'gnus-article-mode-hook
+          (lambda ()
+            (setq
+             truncate-lines nil
+             word-wrap t)))
+
+;; -----------
