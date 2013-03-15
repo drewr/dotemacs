@@ -73,6 +73,9 @@
       '((nnimap "aaraines"
                 (nnimap-address "imap.aaraines")
                 (nnimap-authenticator login))
+        (nnimap "drewres"
+                (nnimap-address "imap.drewres")
+                (nnimap-authenticator login))
         (nnimap "testdroid1000"
                 (nnimap-address "imap.testdroid1000")
                 (nnimap-authenticator login))
