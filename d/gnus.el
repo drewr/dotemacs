@@ -56,16 +56,8 @@
                (summary 0.5 point)
                (article 1.0))))
 
-(setq starttls-use-gnutls nil
-      send-mail-function 'smtpmail-send-it
-      message-send-mail-function 'message-send-mail-with-sendmail ;; 'message-smtpmail-send-it
-      sendmail-program "~/bin/mail"
-      smtpmail-debug-info nil
-      smtpmail-smtp-server "smtp.gmail.com"
-      smtpmail-smtp-service 587
-      smtpmail-starttls-credentials '(("smtp.gmail.com" 587 nil nil)
-                                      ("mail.hcoop.net" 26 nil nil))
-      smtpmail-local-domain "draines.com")
+(setq message-send-mail-function 'message-send-mail-with-sendmail
+      sendmail-program "~/bin/mail")
 
 (setq gnus-select-method '(nnnil ""))
 
@@ -235,7 +227,9 @@ address if only it was present."
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
          (address "aaraines@gmail.com")
-         (Face (gnus-face-from-file "~/.face-48.png")))))
+         (Face (gnus-face-from-file "~/.face-48.png")))
+        ("drewres:.*"
+         (address "drew.raines@elasticsearch.com"))))
 
 ;; format=flowed
 ;; http://article.gmane.org/gmane.emacs.gnus.user/14508
