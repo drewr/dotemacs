@@ -229,6 +229,7 @@ address if only it was present."
          (address "aaraines@gmail.com")
          (Face (gnus-face-from-file "~/.face-48.png")))
         ("drewres:.*"
+         (eval (setq message-sendmail-extra-arguments '("-a" "drewres")))
          (address "drew.raines@elasticsearch.com"))))
 
 ;; format=flowed
