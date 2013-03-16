@@ -18,8 +18,8 @@
       gnus-article-skip-boring t
       gnus-treat-hide-citation t
       message-cite-function 'message-cite-original-without-signature
-      message-dont-reply-to-names
-      (concat "\\(aaraines\\|me\\)@\\(gmail\\|draines\\)")
+      message-dont-reply-to-names '("^drew.raines@elasticsearch"
+                                    "\\(aaraines\\|me\\)@\\(gmail\\|draines\\)")
       message-from-style 'angles
       message-forward-as-mime t
       message-make-forward-subject-function 'message-forward-subject-fwd
