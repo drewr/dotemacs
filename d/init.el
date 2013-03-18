@@ -363,6 +363,10 @@
 (add-lisp-dir "gh.el")
 (require 'gist)
 
+;; pupppet
+(require 'puppet-mode)
+(setq auto-mode-alist (cons '("\\.pp" . puppet-mode) auto-mode-alist))
+
 ;; edit-server
 (require 'edit-server)
 
