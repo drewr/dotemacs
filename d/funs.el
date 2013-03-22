@@ -148,7 +148,7 @@ Symbols matching the text at point are put first in the completion list."
 (defun aar/pretty-json (&optional arg) "Keyboard macro."
   (interactive "p")
   (kmacro-exec-ring-item
-   (quote ("|json_xs" 0 "%d")) arg))
+   (quote ("|python -mjson.tool" 0 "%d")) arg))
 
 (defun save-buffer-if-visiting-file (&optional args)
   "Save the current buffer only if it is visiting a file"
