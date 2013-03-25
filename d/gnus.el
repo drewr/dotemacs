@@ -227,9 +227,11 @@ address if only it was present."
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
          (Face (gnus-face-from-file "~/.face-48.png"))
-         (address "aaraines@gmail.com"))
+         (address "aaraines@gmail.com")
+         ("X-MSMTP" "gmail"))
         ("drewres:.*"
-         (address "drew.raines@elasticsearch.com"))))
+         (address "drew.raines@elasticsearch.com")
+         ("X-MSMTP" "drewres"))))
 
 ;; format=flowed
 ;; http://article.gmane.org/gmane.emacs.gnus.user/14508
