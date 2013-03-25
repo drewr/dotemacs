@@ -226,11 +226,9 @@ address if only it was present."
 (setq gnus-posting-styles
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
-         (eval (setq message-sendmail-extra-arguments '("-a" "gmail")))
          (Face (gnus-face-from-file "~/.face-48.png"))
          (address "aaraines@gmail.com"))
         ("drewres:.*"
-         (eval (setq message-sendmail-extra-arguments '("-a" "drewres")))
          (address "drew.raines@elasticsearch.com"))))
 
 ;; format=flowed
