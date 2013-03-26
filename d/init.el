@@ -23,8 +23,6 @@
 (add-to-list 'default-frame-alist '(width . 103))
 (add-to-list 'default-frame-alist '(height . 35))
 
-(add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
-
 (when (and (>= (string-to-number emacs-version) 23)
            (fboundp 'server-running-p))
   (server-start))
