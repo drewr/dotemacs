@@ -401,6 +401,7 @@
  '(tool-bar-mode nil nil (tool-bar))
  '(transient-mark-mode nil)
  '(truncate-lines nil)
+ '(line-move-visual nil)
  '(require-final-newline t)
  '(whitespace-style '(face trailing lines space-before-tab
                            indentation space-after-tab))
