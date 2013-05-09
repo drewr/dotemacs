@@ -189,6 +189,7 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(setq haskell-program-name "ghci -XOverloadedStrings")
 (require 'hpaste)
 
 ;; erlang
@@ -420,3 +421,43 @@
 
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+
+
+
+
+
+
+
+
+(require 'cmuscheme)
+
+(define-key scheme-mode-map "\C-c\C-l" 'scheme-load-current-file)
+(define-key scheme-mode-map "\C-c\C-k" 'scheme-compile-current-file)
+
+(defun scheme-load-current-file (&optional switch)
+  (interactive "P")
+  (let ((file-name (buffer-file-name)))
+    (comint-check-source file-name)
+    (setq scheme-prev-l/c-dir/file (cons (file-name-directory    file-name)
+                                         (file-name-nondirectory file-name)))
+    (comint-send-string (scheme-proc) (concat "(load \""
+                                              file-name
+                                              "\"\)\n"))
+    (if switch
+        (switch-to-scheme t)
+      (message "\"%s\" loaded." file-name) ) ) )
+
+(defun scheme-compile-current-file (&optional switch)
+  (interactive "P")
+  (let ((file-name (buffer-file-name)))
+    (comint-check-source file-name)
+    (setq scheme-prev-l/c-dir/file (cons (file-name-directory    file-name)
+                                         (file-name-nondirectory file-name)))
+    (message "compiling \"%s\" ..." file-name)
+    (comint-send-string (scheme-proc) (concat "(compile-file \""
+                                              file-name
+                                              "\"\)\n"))
+    (if switch
+        (switch-to-scheme t)
+      (message "\"%s\" compiled and loaded." file-name) ) ) )
