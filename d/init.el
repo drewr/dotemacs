@@ -82,7 +82,7 @@
 (add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
 (require 'info)
 (add-to-list 'Info-default-directory-list
-   (expand-file-name "~/src/gnus/texi/"))
+             (expand-file-name "~/src/gnus/texi/"))
 
 ;; elmer
 
@@ -292,6 +292,12 @@
 (setq auto-mode-alist
       (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
+;; asciidoc
+(require 'doc-mode)
+(setq auto-mode-alist
+      (cons '("\\.adoc" . doc-mode)
+            (cons '("\\.asciidoc" . doc-mode)
+                  auto-mode-alist)))
 
 ;; erc
 
