@@ -55,6 +55,17 @@
     (when p
       (demo-next-slide))))
 
+(defun demo-eval-slide ()
+  (interactive)
+  (let ((start (point))
+        (end (window-end)))
+    (shell-command-on-region
+     start end "sh | python -m json.tool"
+     (concat "*slide-out-"
+             (number-to-string
+              (demo-current-slide-number)) "*"))
+    (delete-window)))
+
 (defvar demo-mode-map (make-sparse-keymap)
   "Keymap for the demo minor mode.")
 
@@ -62,6 +73,7 @@
 (define-key demo-mode-map (kbd "C-c C-n") 'demo-next-slide)
 (define-key demo-mode-map (kbd "C-c C-p") 'demo-prev-slide)
 (define-key demo-mode-map (kbd "C-c C-l") 'demo-align)
+(define-key demo-mode-map (kbd "C-c M-|") 'demo-eval-slide)
 
 (define-minor-mode demo-mode
   "Minor mode for slide-based presentation.  Meant for interactivity."
