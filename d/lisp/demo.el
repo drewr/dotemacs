@@ -2,10 +2,10 @@
 
 (defun demo-goto-pattern (pat)
   (let ((p (save-excursion
-             (re-search-forward pat nil t))))
+             (search-forward-regexp pat nil t))))
     (when p
       (goto-char p)
-      (next-line)
+      (forward-line 1)
       (recenter-top-bottom 0))))
 
 (defun demo-goto-slide (&optional n)
@@ -23,7 +23,7 @@
 
 (defun demo-prev-slide ()
   (interactive)
-  (let ((p (re-search-backward demo-slide-separator nil t 2)))
+  (let ((p (search-backward-regexp demo-slide-separator nil t 2)))
     (when p
       (demo-next-slide))))
 
