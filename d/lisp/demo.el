@@ -64,6 +64,7 @@
                       (demo-current-slide-number)) "*")))
     (shell-command-on-region start end "sh | python -m json.tool" buf)
     (switch-to-buffer buf)
+    (goto-char 0)
     ;; Clear echo area
     (message nil)))
 
