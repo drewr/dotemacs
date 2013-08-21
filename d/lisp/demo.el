@@ -1,5 +1,22 @@
 (defvar demo-slide-separator "^=-= ")
 
+(defun demo-current-slide-number ()
+  (interactive)
+  (save-excursion
+    (let ((thing (search-backward-regexp demo-slide-separator nil t 1)))
+      (end-of-line)
+      (backward-word)
+      (when thing
+        (string-to-number (thing-at-point 'word))))))
+
+(defun demo-align ()
+  (interactive)
+  (let ((p (point)))
+    (when (not (= 1 (demo-current-slide-number)))
+      (demo-prev-slide)
+      (demo-next-slide))
+    (goto-char p)))
+
 (defun demo-goto-pattern (pat)
   (let ((p (save-excursion
              (search-forward-regexp pat nil t))))
@@ -44,6 +61,7 @@
 (define-key demo-mode-map (kbd "C-c C-c") 'demo-goto-slide)
 (define-key demo-mode-map (kbd "C-c C-n") 'demo-next-slide)
 (define-key demo-mode-map (kbd "C-c C-p") 'demo-prev-slide)
+(define-key demo-mode-map (kbd "C-c C-l") 'demo-align)
 
 (define-minor-mode demo-mode
   "Minor mode for slide-based presentation.  Meant for interactivity."
