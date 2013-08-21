@@ -58,13 +58,14 @@
 (defun demo-eval-slide ()
   (interactive)
   (let ((start (point))
-        (end (window-end)))
-    (shell-command-on-region
-     start end "sh | python -m json.tool"
-     (concat "*slide-out-"
-             (number-to-string
-              (demo-current-slide-number)) "*"))
-    (delete-window)))
+        (end (window-end))
+        (buf (concat "*slide-out-"
+                     (number-to-string
+                      (demo-current-slide-number)) "*")))
+    (shell-command-on-region start end "sh | python -m json.tool" buf)
+    (switch-to-buffer buf)
+    ;; Clear echo area
+    (message nil)))
 
 (defvar demo-mode-map (make-sparse-keymap)
   "Keymap for the demo minor mode.")
