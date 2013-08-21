@@ -375,6 +375,9 @@
 ;; edit-server
 (require 'edit-server)
 
+;; demo slides
+(require 'demo)
+
 
 ;; Customize
 

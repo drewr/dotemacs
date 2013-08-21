@@ -12,10 +12,12 @@
 (defun demo-align ()
   (interactive)
   (let ((p (point)))
+    (when (= 1 (demo-current-slide-number))
+      (demo-next-slide)
+      (demo-prev-slide))
     (when (not (= 1 (demo-current-slide-number)))
       (demo-prev-slide)
-      (demo-next-slide))
-    (goto-char p)))
+      (demo-next-slide))))
 
 (defun demo-goto-pattern (pat)
   (let ((p (save-excursion
@@ -57,16 +59,21 @@
 
 (defun demo-eval-slide ()
   (interactive)
-  (let ((start (point))
-        (end (window-end))
-        (buf (concat "*slide-out-"
+  (let ((buf (concat "*slide-out-"
                      (number-to-string
                       (demo-current-slide-number)) "*")))
-    (shell-command-on-region start end "sh | python -m json.tool" buf)
+    (shell-command-on-region
+     (window-start) (window-end)
+     "sh | python -m json.tool" buf)
     (switch-to-buffer buf)
     (goto-char 0)
+    (delete-other-windows)
     ;; Clear echo area
     (message nil)))
+
+(defun demo-prompt ()
+  (interactive)
+  (insert "PROMPT='%% '"))
 
 (defvar demo-mode-map (make-sparse-keymap)
   "Keymap for the demo minor mode.")
