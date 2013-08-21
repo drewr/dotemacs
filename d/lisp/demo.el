@@ -8,6 +8,17 @@
       (forward-line 1)
       (recenter-top-bottom 0))))
 
+(defun demo-renumber-slides ()
+  (interactive)
+  (save-excursion
+    (setq n 1)
+    (goto-char 0)
+    (while (search-forward-regexp demo-slide-separator nil t)
+      (when (not (= (point) (line-end-position)))
+        (kill-line))
+      (insert (number-to-string n))
+      (setq n (1+ n)))))
+
 (defun demo-goto-slide (&optional n)
   (interactive "P")
   (if n
