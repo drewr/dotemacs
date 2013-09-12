@@ -361,7 +361,7 @@
       (notify chan msg)
       nil)))
 
-(add-hook 'erc-text-matched-hook 'aar/you-rang?)
+;;(add-hook 'erc-text-matched-hook 'aar/you-rang?)
 ;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
 
 ;; github
