@@ -61,6 +61,8 @@
 (global-set-key (kbd "C-x 4 o") 'aar/irc-home)
 (global-set-key (kbd "C-x 4 8") 'aar/irc-go-to-balls)
 (global-set-key (kbd "C-x 4 l") 'aar/irc-go-to-notes)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
 
 (when (equalp "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))
