@@ -8,6 +8,7 @@ DEST=$HOME/.emacs.d
     tar xvf - )
 
 ( cd $HOME
-  rm .gnus.d/.gnus.el
+  [ ! -d ~/.gnus.d ] && mkdir ~/.gnus.d
+  [ -f ~/.gnus.d/.gnus.el ] && rm .gnus.d/.gnus.el
   ln -s ../.emacs.d/gnus.el .gnus.d/.gnus.el )
 
