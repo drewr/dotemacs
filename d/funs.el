@@ -5,25 +5,25 @@ Symbols matching the text at point are put first in the completion list."
   (imenu--make-index-alist)
   (let ((name-and-pos '())
         (symbol-names '()))
-    (flet ((addsymbols (symbol-list)
-                       (when (listp symbol-list)
-                         (dolist (symbol symbol-list)
-                           (let ((name nil) (position nil))
-                             (cond
-                              ((and (listp symbol) (imenu--subalist-p symbol))
-                               (addsymbols symbol))
+    (cl-flet ((addsymbols (symbol-list)
+                          (when (listp symbol-list)
+                            (dolist (symbol symbol-list)
+                              (let ((name nil) (position nil))
+                                (cond
+                                 ((and (listp symbol) (imenu--subalist-p symbol))
+                                  (addsymbols symbol))
 
-                              ((listp symbol)
-                               (setq name (car symbol))
-                               (setq position (cdr symbol)))
+                                 ((listp symbol)
+                                  (setq name (car symbol))
+                                  (setq position (cdr symbol)))
 
-                              ((stringp symbol)
-                               (setq name symbol)
-                               (setq position (get-text-property 1 'org-imenu-marker symbol))))
+                                 ((stringp symbol)
+                                  (setq name symbol)
+                                  (setq position (get-text-property 1 'org-imenu-marker symbol))))
 
-                             (unless (or (null position) (null name))
-                               (add-to-list 'symbol-names name)
-                               (add-to-list 'name-and-pos (cons name position))))))))
+                                (unless (or (null position) (null name))
+                                  (add-to-list 'symbol-names name)
+                                  (add-to-list 'name-and-pos (cons name position))))))))
       (addsymbols imenu--index-alist))
     ;; If there are matching symbols at point, put them at the beginning of `symbol-names'.
     (let ((symbol-at-point (thing-at-point 'symbol)))
@@ -87,7 +87,7 @@ Symbols matching the text at point are put first in the completion list."
 (defun growl (title message)
   "Shows a message through the growl notification system using
  `growlnotify-command` as the program."
-  (flet ((encfn (s) (encode-coding-string s (keyboard-coding-system))) )
+  (cl-flet ((encfn (s) (encode-coding-string s (keyboard-coding-system))) )
     (let* ((process (start-process "growlnotify" nil
                                    growlnotify-command
                                    (encfn title)
