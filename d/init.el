@@ -139,7 +139,6 @@
 ;; clojure
 
 (add-lisp-dir "slime")
-(add-lisp-dir "clojure-mode")
 (add-lisp-dir "swank-clojure")
 (require 'slime)
 (slime-setup '(slime-repl))
