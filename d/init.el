@@ -131,9 +131,16 @@
   (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
   (define-key paredit-mode-map (kbd "M-(") 'paredit-forward-barf-sexp)
   (show-paren-mode 1))
+
+(defun aar/massage-nrepl-bindings ()
+  "Alter some kooky nrepl.el defaults"
+  (define-key paredit-mode-map (kbd "C-c C-n") 'clean-up-buffer)
+  (define-key paredit-mode-map (kbd "C-c n") 'nrepl-eval-ns-form))
+
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
 (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
 (add-hook 'clojure-mode-hook 'aar/lispy-parens)
+(add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
 (add-hook 'clojure-mode-hook 'whitespace-mode)
 
 ;; clojure
