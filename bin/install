@@ -1,14 +1,12 @@
 #!/bin/sh
 
-DEST=$HOME/.emacs.d
+EMACS=$HOME/.emacs.d
+GNUS=$HOME/Dropbox/.gnus.d
 
 ( cd d; tar cf - . ) \
-| ( mkdir -p $DEST; \
-    cd $DEST; \
+| ( mkdir -p $EMACS; \
+    cd $EMACS; \
     tar xvf - )
 
-( cd $HOME
-  [ ! -d ~/.gnus.d ] && mkdir ~/.gnus.d
-  [ -f ~/.gnus.d/.gnus.el ] && rm .gnus.d/.gnus.el
-  ln -s ../.emacs.d/gnus.el .gnus.d/.gnus.el )
-
+( mkdir -p $GNUS
+  ln -snf ../../.emacs.d/gnus.el $GNUS/.gnus.el )

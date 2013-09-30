@@ -1,4 +1,5 @@
-(setq user-full-name "Drew Raines"
+(setq gnus-agent-directory "~/.gnus.d/agent"
+      user-full-name "Drew Raines"
       user-mail-address "drew@raines.me"
       message-user-fqdn "mid.raines.me"
       gnus-check-bogus-newsgroups nil
