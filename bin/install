@@ -8,5 +8,4 @@ GNUS=$HOME/Dropbox/.gnus.d
     cd $EMACS; \
     tar xvf - )
 
-( mkdir -p $GNUS
-  ln -snf ../../.emacs.d/gnus.el $GNUS/.gnus.el )
+ln -snf $GNUS ~/.gnus.d
