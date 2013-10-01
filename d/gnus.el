@@ -1,5 +1,4 @@
-(setq gnus-agent-directory "~/.gnus.agent"
-      user-full-name "Drew Raines"
+(setq user-full-name "Drew Raines"
       user-mail-address "drew@raines.me"
       message-user-fqdn "mid.raines.me"
       gnus-check-bogus-newsgroups nil
@@ -44,6 +43,7 @@
         "^X-Spambayes-Classification:" "^X-Spambayes-Trained:"
         "^X-Bogosity:" "^X-Gnus-Delayed:"
         "^Content-Type:" "^Archived-At:")
+      gnus-agent-directory "~/.gnus.agent"
       gnus-agent-go-online t
       gnus-agent-synchronize-flags t
       gnus-agent-long-article 2500
