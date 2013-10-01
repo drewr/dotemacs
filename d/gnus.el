@@ -48,6 +48,7 @@
       gnus-agent-synchronize-flags t
       gnus-agent-long-article 2500
       gnus-agent-short-article 1000
+      gnus-agent-max-fetch-size 1000000
       mm-discouraged-alternatives '("text/html" "text/richtext"))
 
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
