@@ -46,7 +46,7 @@
         "^Content-Type:" "^Archived-At:")
       gnus-agent-go-online t
       gnus-agent-synchronize-flags t
-      gnus-agent-long-article 1500
+      gnus-agent-long-article 2500
       gnus-agent-short-article 1000
       mm-discouraged-alternatives '("text/html" "text/richtext"))
 
