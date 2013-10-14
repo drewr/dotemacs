@@ -262,6 +262,7 @@
       org-agenda-show-all-dates t
       org-agenda-ndays 7
       org-agenda-start-on-weekday nil
+      org-agenda-start-with-log-mode t
       org-export-publishing-directory "~/.org/export"
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
