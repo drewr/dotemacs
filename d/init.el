@@ -204,7 +204,10 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-(setq haskell-program-name "ghci -XOverloadedStrings")
+(setq haskell-program-name
+      (expand-file-name
+       (concat "~/.cabal/bin/cabal repl "
+               "--ghc-options -XOverloadedStrings")))
 (require 'hpaste)
 
 ;; erlang
