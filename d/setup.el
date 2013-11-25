@@ -8,6 +8,6 @@
 (package-install 's)
 (package-install 'dash)
 (package-install 'pkg-info)
-(package-install 'nrepl)
+(package-install 'cider)
 (package-install 'clojure-mode)
 (package-install 'clojurescript-mode)
