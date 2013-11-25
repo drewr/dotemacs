@@ -6,7 +6,7 @@
 ;; URL: http://emacswiki.org/cgi-bin/wiki/ClojureTestMode
 ;; Version: 2.1.0
 ;; Keywords: languages, lisp, test
-;; Package-Requires: ((clojure-mode "1.7") (nrepl "0.1.7"))
+;; Package-Requires: ((clojure-mode "1.7") (cider "0.3.0"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -109,14 +109,8 @@
 (require 'cl)
 (require 'clojure-mode)
 (require 'which-func)
-(require 'nrepl)
-
-(declare-function nrepl-repl-buffer            "nrepl.el")
-(declare-function nrepl-make-response-handler  "nrepl.el")
-(declare-function nrepl-send-string            "nrepl.el")
-(declare-function nrepl-current-ns             "nrepl.el")
-(declare-function nrepl-current-tooling-session "nrepl.el")
-(declare-function nrepl-current-connection-buffer "nrepl.el")
+(require 'nrepl-client)
+(require 'cider-interaction)
 
 ;; Faces
 
@@ -161,7 +155,9 @@
 ;; Support Functions
 
 (defun clojure-test-nrepl-connected-p ()
-  (nrepl-current-connection-buffer))
+  (condition-case nil
+      (nrepl-current-connection-buffer)
+    (error nil)))
 
 (defun clojure-test-make-handler (callback)
   (lexical-let ((buffer (current-buffer))
@@ -170,15 +166,15 @@
                                  (lambda (buffer value)
                                    (funcall callback buffer value))
                                  (lambda (buffer value)
-                                   (nrepl-emit-interactive-output value))
+                                   (cider-emit-interactive-output value))
                                  (lambda (buffer err)
-                                   (nrepl-emit-interactive-output err))
+                                   (cider-emit-interactive-output err))
                                  '())))
 
 (defun clojure-test-eval (string &optional handler)
   (nrepl-send-string string
                      (clojure-test-make-handler (or handler #'identity))
-                     (or (nrepl-current-ns) "user")
+                     (or (cider-current-ns) "user")
                      (nrepl-current-tooling-session)))
 
 (defun clojure-test-load-reporting ()
@@ -239,7 +235,7 @@
             (clojure-test-mode-test-one-var ns test-name))
           (do-report {:type :end-test-ns, :ns ns-obj}))
         (do-report (assoc @*report-counters* :type :summary))))"
-     (or (nrepl-current-ns) "user")
+     (or (cider-current-ns) "user")
      (nrepl-current-tooling-session))))
 
 (defun clojure-test-get-results (buffer result)
@@ -353,7 +349,7 @@ Clojure src file for the given test namespace.")
   (save-some-buffers nil (lambda () (equal major-mode 'clojure-mode)))
   (message "Testing...")
   (if (not (clojure-in-tests-p))
-      (nrepl-load-file (buffer-file-name)))
+      (cider-load-file (buffer-file-name)))
   (save-window-excursion
     (if (not (clojure-in-tests-p))
         (clojure-jump-to-test))
@@ -461,7 +457,7 @@ Clojure src file for the given test namespace.")
                          (clojure-find-ns))))
     (nrepl-send-string-sync command)))
 
-(defun clojure-test-clear (&optional callback)
+(defun clojure-test-clear ()
   "Remove overlays and clear stored results."
   (interactive)
   (remove-overlays)
