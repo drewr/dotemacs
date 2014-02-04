@@ -148,42 +148,8 @@
 
 ;; clojure
 
-(add-lisp-dir "slime")
-(add-lisp-dir "swank-clojure")
-(require 'slime)
-(slime-setup '(slime-repl))
 (require 'clojure-mode)
 (require 'clojure-test-mode)
-(require 'durendal)
-(load "swank-clojure")
-(setq slime-net-coding-system 'utf-8-unix)
-(setq slime-protocol-version 'ignore)
-
-(setq swank-clojure-binary (expand-file-name "~/bin/clojure"))
-(require 'assoc)  ;; swank-clojure-project fails without
-
-(defun classpathize (paths)
-  (mapconcat 'expand-file-name paths ":"))
-
-(defmacro add-clojure-project (project path)
-  (let* ((fullpath (expand-file-name path))
-         (classpaths (mapcar
-                      (lambda (p)
-                        (concat fullpath p))
-                      '("/lib/*"
-                        "/src")))
-         (clj (expand-file-name "~/bin/clojure")))
-    `(add-to-list 'slime-lisp-implementations
-                  (backquote
-                   (,project
-                    ("env"
-                     ,(concat "CLASSPATH=" (classpathize classpaths))
-                     ,clj)
-                    :init swank-clojure-init)) t)))
-
-(progn
-  (setq slime-lisp-implementations '())
-  (add-clojure-project clojure "~/src/scratch"))
 
 ;; geiser
 (add-lisp-dir "geiser")
