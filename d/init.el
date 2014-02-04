@@ -153,7 +153,6 @@
 (require 'slime)
 (slime-setup '(slime-repl))
 (require 'clojure-mode)
-(require 'clojurescript-mode)
 (require 'clojure-test-mode)
 (require 'durendal)
 (load "swank-clojure")
