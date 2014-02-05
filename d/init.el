@@ -148,8 +148,6 @@
 
 ;; clojure
 
-(require 'clojure-mode)
-(require 'clojure-test-mode)
 (eval-after-load 'cider
   '(setq cider-repl-history-size 10000
          cider-repl-history-file "~/.cider.history.el"))
