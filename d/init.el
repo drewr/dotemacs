@@ -84,14 +84,13 @@
 (setq bbdb-use-pop-up nil)
 
 ;; pre-gnus
-(add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
+;;(add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
+;;(add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
 (setq gnus-home-directory "~/.gnus.d/")
 (setq gnus-directory (concat gnus-home-directory "News/"))
 (setq message-directory (concat gnus-home-directory "Mail/"))
 (require 'gnus)
 (require 'info)
-(add-to-list 'Info-default-directory-list
-             (expand-file-name "~/src/gnus/texi/"))
 
 ;; elmer
 
