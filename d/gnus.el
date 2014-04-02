@@ -221,6 +221,7 @@ address if only it was present."
 (setq gnus-posting-styles
       '((".*"
          ("X-PGP-Key" "http://draines.com/pubkey.asc.txt")
+         ;; Need ImageMagick!
          (Face (gnus-face-from-file "~/.face-48.png"))
          (address "aaraines@gmail.com")
          ("X-MSMTP" "gmail"))
