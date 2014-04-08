@@ -29,3 +29,5 @@
                    "-apple-Menlo-medium-normal-normal-*-12-*-*-*-m-0-iso10646-1")
     (global-set-key "\M-`" 'other-frame)))
 
+(set-face-attribute 'default nil :height 150)
+
