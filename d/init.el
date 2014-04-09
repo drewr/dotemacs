@@ -151,6 +151,10 @@
   '(setq cider-repl-history-size 10000
          cider-repl-history-file "~/.cider.history.el"))
 
+;; gherkin
+(require 'gherkin)
+(setq auto-mode-alist (cons '("\\.gk$" . gherkin-mode) auto-mode-alist))
+
 ;; geiser
 (add-lisp-dir "geiser")
 (eval-after-load 'geiser
