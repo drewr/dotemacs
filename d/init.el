@@ -380,7 +380,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(blink-cursor-mode t)
+ '(blink-cursor-mode nil)
  '(calc-float-format (quote (fix 2)) t)
  '(canlock-password "9a765f623398f9e6a768c158f2fca8588d732be7")
  '(cua-mode nil nil (cua-base))
