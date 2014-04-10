@@ -152,7 +152,7 @@
          cider-repl-history-file "~/.cider.history.el"))
 
 ;; gherkin
-(require 'gherkin)
+(require 'gherkin-mode)
 (setq auto-mode-alist (cons '("\\.gk$" . gherkin-mode) auto-mode-alist))
 
 ;; geiser
