@@ -136,8 +136,9 @@
 
 (defun aar/massage-nrepl-bindings ()
   "Alter some kooky nrepl.el defaults"
-  (define-key paredit-mode-map (kbd "C-c C-n") 'clean-up-buffer)
-  (define-key paredit-mode-map (kbd "C-c n") 'cider-eval-ns-form))
+  (define-key cider-mode-map (kbd "C-c C-n") nil)
+  (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)
+  (define-key paredit-mode-map (kbd "C-c C-n") 'clean-up-buffer))
 
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
 (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
