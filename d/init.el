@@ -135,9 +135,6 @@
   (show-paren-mode 1))
 
 (defun aar/massage-nrepl-bindings ()
-  "Alter some kooky nrepl.el defaults"
-  (define-key cider-mode-map (kbd "C-c C-n") nil)
-  (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)
   (define-key paredit-mode-map (kbd "C-c C-n") 'clean-up-buffer))
 
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
@@ -149,8 +146,11 @@
 ;; clojure
 
 (eval-after-load 'cider
-  '(setq cider-repl-history-size 10000
-         cider-repl-history-file "~/.cider.history.el"))
+  '(progn
+     (setq cider-repl-history-size 10000
+           cider-repl-history-file "~/.cider.history.el")
+     (define-key cider-mode-map (kbd "C-c C-n") nil)
+     (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)))
 
 ;; gherkin
 (require 'gherkin-mode)
