@@ -227,11 +227,9 @@
 
 ;; org
 
-(require 'org-remember)
-(org-remember-insinuate)
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key [(control meta ?r)] 'org-remember)
+(global-set-key [(control meta ?r)] 'org-capture)
 (setq org-directory "~/.org"
       org-agenda-files (quote ("~/.org/PERSONAL.org"
                                "~/.org/clients"))
@@ -255,12 +253,19 @@
 
 (setq org-default-notes-file "~/.org/notes.org")
 
-(setq org-remember-default-headline "Tasks"
-      org-remember-templates
-      '(("Personal task" 112 "* TODO %?\n  %u" "PERSONAL.org")
-        ("Trinity" 116 "* TODO %?\n  %u" "clients/TRINITY.org")
-        ("Elasticsearch" 101 "* TODO %?\n  %u" "clients/ES.org")
-        ("Note" 110 "* %u %?" "notes.org" 'bottom)))
+(setq org-capture-templates
+      '(("p" "Personal task" entry
+         (file+headline "PERSONAL.org" "Tasks")
+         "* TODO %?\n  %u" :prepend t)
+        ("t" "Trinity" entry
+         (file+headline "clients/TRINITY.org" "Tasks")
+         "* TODO %?\n  %u" :prepend t)
+        ("e" "Elasticsearch" entry
+         (file+headline "clients/ES.org" "Tasks")
+         "* TODO %?\n  %u" :prepend t)
+        ("n" "Note" entry
+         (file+headline "notes.org" 'bottom)
+         "* %u %?" :prepend t)))
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
