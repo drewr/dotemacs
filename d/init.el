@@ -156,6 +156,11 @@
 (require 'gherkin-mode)
 (setq auto-mode-alist (cons '("\\.gk$" . gherkin-mode) auto-mode-alist))
 
+;; purescript
+(add-lisp-dir "purescript-mode")
+(require 'purescript-mode-autoloads)
+(add-to-list 'Info-default-directory-list "~/emacs.d/lisp/purescript-mode/")
+
 ;; geiser
 (add-lisp-dir "geiser")
 (eval-after-load 'geiser
