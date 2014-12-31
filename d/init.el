@@ -20,6 +20,10 @@
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
+(let ((d (expand-file-name "~/.nix-profile/share/emacs/site-lisp")))
+  (when (file-exists-p d)
+    (add-to-list 'load-path d)))
+
 (add-to-list 'default-frame-alist '(width . 103))
 (add-to-list 'default-frame-alist '(height . 35))
 
@@ -189,6 +193,10 @@
                "--ghc-options -XOverloadedStrings")))
 (require 'hpaste)
 
+;; nix
+(require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
+                     ;; (nix-env -i emacs)
+
 ;; erlang
 
 (add-lisp-dir "erlang")
@@ -314,7 +322,7 @@
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
       erc-email-userid "drew"       ; for when ident is not activated
-      erc-fill-column 77
+      erc-fill-column 86
       erc-fill-prefix "   "
       erc-auto-query 'window-noselect
       erc-prompt-for-nickserv-password nil
