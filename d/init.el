@@ -111,10 +111,6 @@
 ;; pomodoro
 (require 'pomodoro)
 
-;; w3m
-(add-lisp-dir "emacs-w3m")
-(require 'w3m)
-
 ;; magit
 
 (add-lisp-dir "magit")
