@@ -38,7 +38,10 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
 (package-initialize)
-(toggle-uniquify-buffer-names)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
+
 (recentf-mode 1)
 (ido-mode t)
 (column-number-mode 1)
