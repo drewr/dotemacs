@@ -9,5 +9,6 @@
 (package-install 'dash)
 (package-install 'pkg-info)
 (package-install 'cider)
+(package-install 'cider-nrepl)
 (package-install 'clojure-mode)
-(package-install 'clojure-test-mode)
+
