@@ -412,8 +412,7 @@
  '(enable-recursive-minibuffers t)
  '(safe-local-variable-values
    (quote
-    ((prompt-to-byte-compile)
-     (before-save-hook delete-trailing-whitespace))))
+    ((prompt-to-byte-compile))))
  '(global-font-lock-mode t)
  '(indent-tabs-mode nil)
  '(inhibit-startup-echo-area-message t)
