@@ -71,9 +71,9 @@
         (nnimap "drewres"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-authenticator login))
-        (nnimap "testdroid1000"
-                (nnimap-address "imap.gmail.com")
-                (nnimap-authenticator login))
+        ;; (nnimap "testdroid1000"
+        ;;         (nnimap-address "imap.gmail.com")
+        ;;         (nnimap-authenticator login))
         (nnml "")
         (nntp "news.gmane.org")
         (nntp "news.gwene.org")))
