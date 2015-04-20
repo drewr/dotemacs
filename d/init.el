@@ -214,8 +214,14 @@
 ;;(load-custom "lisp/nxhtml/autostart") please no debug-on-error
 
 ;; go
-(require 'go-mode-load)
-(add-hook 'go-mode-hook (lambda () (setq tab-width 2)))
+(require 'go-mode-autoloads)
+(add-hook 'go-mode-hook
+          (lambda ()
+            (setq tab-width 2)
+            (add-hook 'before-save-hook #'gofmt-before-save)
+            (add-hook 'go-mode-hook
+                      (lambda ()
+                        (local-set-key (kbd \"M-.\") #'godef-jump)))))
 
 ;; groovy
 (require 'groovy-mode)
