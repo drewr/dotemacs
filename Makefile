@@ -13,3 +13,7 @@ clean:
 
 publish:
 	bin/publish
+
+install-packages:
+	rm -rf ~/.emacs.d/elpa
+	emacs -Q --batch -l d/setup.el
