@@ -389,6 +389,8 @@
 ;; pupppet
 (require 'puppet-mode)
 (setq auto-mode-alist (cons '("\\.pp" . puppet-mode) auto-mode-alist))
+(eval-after-load 'puppet-mode
+  '(define-key puppet-mode-map (kbd "$") 'self-insert-command))
 
 ;; edit-server
 (require 'edit-server)
