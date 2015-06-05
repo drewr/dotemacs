@@ -4,7 +4,7 @@ default:
 compile:
 	bin/compile
 
-install:
+install: install-packages
 	emacs --batch -l install.el
 	bin/install
 
