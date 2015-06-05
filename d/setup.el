@@ -10,5 +10,6 @@
 (package-install 'pkg-info)
 (package-install 'cider)
 (package-install 'clojure-mode)
+(package-install 'haskell-mode)
 (package-install 'magit)
 
