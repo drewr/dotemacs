@@ -14,6 +14,7 @@
         (company-cabal       . "melpa")
         (company-ghci        . "melpa")
         (deft                . "melpa")
+	(w3m                 . "melpa")
         (flycheck-rust       . "melpa")
         (gist                . "melpa")
         (gnuplot             . "melpa")
