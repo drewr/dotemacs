@@ -120,10 +120,6 @@
 (require 'magit)
 (global-set-key "\C-xg" 'magit-status)
 (setq magit-last-seen-setup-instructions "1.4.0")
-(eval-after-load 'magit
-  '(progn (set-face-background 'magit-item-highlight "white")
-          (set-face-foreground 'magit-diff-add "green3")
-          (set-face-foreground 'magit-diff-del "red3")))
 
 ;; lisp
 
