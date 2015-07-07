@@ -209,9 +209,6 @@
 (require 'jinja2-mode)
 (setq auto-mode-alist (cons '("\\.j2$" . jinja2-mode) auto-mode-alist))
 
-;; nxhtml
-;;(load-custom "lisp/nxhtml/autostart") please no debug-on-error
-
 ;; go
 (require 'go-mode-autoloads)
 (add-hook 'go-mode-hook
