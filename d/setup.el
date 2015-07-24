@@ -14,7 +14,8 @@
         (company-cabal       . "melpa")
         (company-ghci        . "melpa")
         (deft                . "melpa")
-	(w3m                 . "melpa")
+        (w3m                 . "melpa")
+        (flycheck-haskell    . "melpa")
         (flycheck-rust       . "melpa")
         (gist                . "melpa")
         (gnuplot             . "melpa")
@@ -31,10 +32,10 @@
         (markdown-mode       . "melpa")
         (nix-mode            . "melpa")
         (org                 . "org")
-;;        (org-ac              . "melpa")  these all seem broken
-;;        (org-magit           . "melpa")
-;;        (org-pandoc          . "melpa-stable")
-;;        (org-trello          . "melpa-stable")
+        ;; (org-ac              . "melpa")  these all seem broken
+        ;; (org-magit           . "melpa")
+        ;; (org-pandoc          . "melpa-stable")
+        ;; (org-trello          . "melpa-stable")
         (paredit             . "melpa")
         (rainbow-delimiters  . "melpa")
         (rainbow-identifiers . "melpa")
@@ -53,6 +54,7 @@
               (package-install pkg))))
         package-pinned-packages))
 
+(require 'ert)
 (require 'package)
 (package-initialize t)
 (bootstrap)
