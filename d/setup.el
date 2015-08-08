@@ -37,6 +37,7 @@
         ;; (org-pandoc          . "melpa-stable")
         ;; (org-trello          . "melpa-stable")
         (paredit             . "melpa")
+        (purescript-mode     . "melpa")
         (rainbow-delimiters  . "melpa")
         (rainbow-identifiers . "melpa")
         (rust-mode           . "melpa")
