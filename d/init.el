@@ -410,9 +410,7 @@ See URL `http://www.haskell.org/ghc/'."
 (add-lisp-dir "gh.el")
 (require 'gist)
 
-;; pupppet
-(require 'puppet-mode)
-(setq auto-mode-alist (cons '("\\.pp" . puppet-mode) auto-mode-alist))
+;; puppet
 (eval-after-load 'puppet-mode
   '(define-key puppet-mode-map (kbd "$") 'self-insert-command))
 
