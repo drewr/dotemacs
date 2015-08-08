@@ -111,13 +111,8 @@
 (setq scpaste-http-destination "http://draines.com/tmp"
       scpaste-scp-destination "draines:/www/htdocs/draines/tmp")
 
-;; pomodoro
-(require 'pomodoro)
-
 ;; magit
 
-(add-lisp-dir "magit")
-(require 'magit)
 (global-set-key "\C-xg" 'magit-status)
 (setq magit-last-seen-setup-instructions "1.4.0")
 
@@ -151,10 +146,6 @@
            cider-test-infer-test-ns '(lambda (ns) ns))
      (define-key cider-mode-map (kbd "C-c C-n") nil)
      (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)))
-
-;; gherkin
-(require 'gherkin-mode)
-(setq auto-mode-alist (cons '("\\.gk$" . gherkin-mode) auto-mode-alist))
 
 ;; haskell
 
@@ -241,16 +232,7 @@ See URL `http://www.haskell.org/ghc/'."
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
 ;; (nix-env -i emacs)
 
-;; lua
-(setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
-(autoload 'lua-mode "lua-mode" "Lua editing mode." t)
-
-;; jinja2
-(require 'jinja2-mode)
-(setq auto-mode-alist (cons '("\\.j2$" . jinja2-mode) auto-mode-alist))
-
 ;; go
-(require 'go-mode-autoloads)
 (add-hook 'go-mode-hook
           (lambda ()
             (setq tab-width 2)
@@ -258,10 +240,6 @@ See URL `http://www.haskell.org/ghc/'."
             (add-hook 'go-mode-hook
                       (lambda ()
                         (local-set-key (kbd \"M-.\") #'godef-jump)))))
-
-;; groovy
-(require 'groovy-mode)
-(setq auto-mode-alist (cons '("\\.groovy$" . groovy-mode) auto-mode-alist))
 
 ;; python
 (require 'python)
@@ -313,7 +291,6 @@ See URL `http://www.haskell.org/ghc/'."
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
-(require 'epresent)
 
 ;; ledger
 
@@ -325,21 +302,6 @@ See URL `http://www.haskell.org/ghc/'."
      (define-key ledger-mode-map
        [(control ?c) (control ?b)] 'ledger-bal-region)))
 
-;; markdown
-(require 'markdown-mode)
-(autoload 'markdown-mode "markdown-mode.el"
-  "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-      (cons '("\\.md" . markdown-mode) auto-mode-alist))
-(setq auto-mode-alist
-      (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
-
-;; asciidoc
-(require 'doc-mode)
-(setq auto-mode-alist
-      (cons '("\\.adoc" . doc-mode)
-            (cons '("\\.asciidoc" . doc-mode)
-                  auto-mode-alist)))
 
 ;; erc
 

@@ -7,7 +7,8 @@
         ("melpa-stable"   . "http://stable.melpa.org/packages/")
         ("org"            . "http://orgmode.org/elpa/"))
       package-pinned-packages
-      '((arduino-mode        . "melpa")
+      '((adoc-mode           . "melpa")
+	(arduino-mode        . "melpa")
         (bbdb                . "melpa")
         (cider               . "melpa-stable")
         (clojure-mode        . "melpa")
@@ -22,6 +23,7 @@
         (geiser              . "melpa")
         (gist                . "melpa")
         (gnuplot             . "melpa")
+        (go-mode             . "melpa")
         (graphviz-dot-mode   . "melpa")
         (hamlet-mode         . "melpa")
         (haskell-emacs       . "melpa")
