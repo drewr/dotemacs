@@ -42,6 +42,7 @@
         (rust-mode           . "melpa")
         (smex                . "melpa")
         (textile-mode        . "melpa")
+        (tuareg              . "melpa")
         (yaml-mode           . "melpa")
         (yasnippet           . "melpa")))
 
