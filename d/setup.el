@@ -17,6 +17,7 @@
         (w3m                 . "melpa")
         (flycheck-haskell    . "melpa")
         (flycheck-rust       . "melpa")
+        (geiser              . "melpa")
         (gist                . "melpa")
         (gnuplot             . "melpa")
         (graphviz-dot-mode   . "melpa")

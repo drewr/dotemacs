@@ -156,13 +156,6 @@
 (require 'gherkin-mode)
 (setq auto-mode-alist (cons '("\\.gk$" . gherkin-mode) auto-mode-alist))
 
-;; geiser
-(add-lisp-dir "geiser")
-(eval-after-load 'geiser
-  '(setq geiser-scheme-dir
-         (expand-file-name "~/.emacs.d/share/geiser/scheme")))
-(require 'geiser)
-
 ;; haskell
 
 (require 'flycheck-haskell)
