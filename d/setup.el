@@ -8,6 +8,7 @@
         ("org"            . "http://orgmode.org/elpa/"))
       package-pinned-packages
       '((arduino-mode        . "melpa")
+        (bbdb                . "melpa")
         (cider               . "melpa-stable")
         (clojure-mode        . "melpa")
         (company             . "melpa")

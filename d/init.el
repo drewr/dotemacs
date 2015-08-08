@@ -82,8 +82,8 @@
   '(progn (set-face-foreground 'diff-added "green4")
           (set-face-foreground 'diff-removed "red3")))
 
-(add-lisp-dir "bbdb")
-(require 'bbdb)
+;; bbdb
+
 (setq bbdb-north-american-phone-numbers-p nil)
 (setq bbdb-user-mail-names
       (regexp-opt '("aaraines@gmail.com" "drew@raines.me")))
