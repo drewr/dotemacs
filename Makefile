@@ -4,7 +4,10 @@ default:
 compile:
 	bin/compile
 
-install: install-packages
+install:
+	emacs -Q --batch --eval '(setq package-user-dir "~/.emacs.d-build/elpa")' -l d/setup.el
+	rm -rf ~/.emacs.d
+	mv ~/.emacs.d-build ~/.emacs.d
 	emacs --batch -l install.el
 	bin/install
 
@@ -14,6 +17,3 @@ clean:
 publish:
 	bin/publish
 
-install-packages:
-	rm -rf ~/.emacs.d
-	emacs -Q --batch -l d/setup.el
