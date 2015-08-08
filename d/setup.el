@@ -30,6 +30,7 @@
         (ido-ubiquitous      . "melpa")
         (idris-mode          . "melpa")
         (js2-mode            . "melpa")
+        (lua-mode            . "melpa")
         (magit               . "melpa")
         (magit-gh-pulls      . "melpa")
         (markdown-mode       . "melpa")
