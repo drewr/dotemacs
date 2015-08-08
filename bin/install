@@ -9,3 +9,6 @@ GNUS=$HOME/Dropbox/.gnus.d
     tar xvf - )
 
 ln -snf $GNUS ~/.gnus.d
+
+emacs --batch \
+  --eval "(byte-recompile-directory (expand-file-name \"${EMACS}\") 0)"
