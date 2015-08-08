@@ -426,9 +426,6 @@ See URL `http://www.haskell.org/ghc/'."
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
 
-;; Rust
-(require 'rust-mode)
-
 ;; Customize
 
 (custom-set-variables
