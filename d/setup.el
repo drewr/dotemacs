@@ -15,6 +15,7 @@
         (company-cabal       . "melpa")
         (company-ghci        . "melpa")
         (deft                . "melpa")
+        (erlang              . "melpa")
         (w3m                 . "melpa")
         (flycheck-haskell    . "melpa")
         (flycheck-rust       . "melpa")

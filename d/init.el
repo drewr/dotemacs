@@ -241,11 +241,6 @@ See URL `http://www.haskell.org/ghc/'."
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
 ;; (nix-env -i emacs)
 
-;; erlang
-
-(add-lisp-dir "erlang")
-(require 'erlang-start)
-
 ;; lua
 (setq auto-mode-alist (cons '("\\.lua$" . lua-mode) auto-mode-alist))
 (autoload 'lua-mode "lua-mode" "Lua editing mode." t)
