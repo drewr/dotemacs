@@ -288,10 +288,6 @@ See URL `http://www.haskell.org/ghc/'."
 ;; javascript
 (setq js-indent-level 2)
 
-;; scala
-(add-lisp-dir "scala-mode")
-(require 'scala-mode-auto)
-
 ;; org
 
 (global-set-key "\C-cl" 'org-store-link)
