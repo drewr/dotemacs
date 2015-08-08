@@ -368,10 +368,6 @@ See URL `http://www.haskell.org/ghc/'."
 ;;(add-hook 'erc-text-matched-hook 'aar/you-rang?)
 ;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
 
-;; github
-(add-lisp-dir "gh.el")
-(require 'gist)
-
 ;; puppet
 (eval-after-load 'puppet-mode
   '(define-key puppet-mode-map (kbd "$") 'self-insert-command))
