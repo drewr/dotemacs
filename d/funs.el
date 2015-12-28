@@ -47,6 +47,11 @@ Symbols matching the text at point are put first in the completion list."
   (untabify (point-min) (point-max))
   (delete-trailing-whitespace))
 
+(defun clean-up-golang-buffer ()
+  "Perform a bunch of operations on the whitespace content of a buffer."
+  (interactive)
+  (gofmt))
+
 (defun recentf-ido-find-file ()
   "Find a recent file using ido."
   (interactive)

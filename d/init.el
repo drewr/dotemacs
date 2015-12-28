@@ -235,12 +235,12 @@ See URL `http://www.haskell.org/ghc/'."
 ;; go
 (add-hook 'go-mode-hook
           (lambda ()
+            (local-set-key (kbd "C-c C-n") #'clean-up-golang-buffer)
+            (local-set-key (kbd "M-.") #'godef-jump)
             (setq tab-width 2)
             (setq gofmt-command "goimports")
-            (add-hook 'before-save-hook #'gofmt-before-save)
-            (add-hook 'go-mode-hook
-                      (lambda ()
-                        (local-set-key (kbd \"M-.\") #'godef-jump)))))
+            ;;(add-hook 'before-save-hook #'gofmt-before-save)
+))
 
 ;; python
 (require 'python)
