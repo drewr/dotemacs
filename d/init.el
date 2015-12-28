@@ -236,6 +236,7 @@ See URL `http://www.haskell.org/ghc/'."
 (add-hook 'go-mode-hook
           (lambda ()
             (setq tab-width 2)
+            (setq gofmt-command "goimports")
             (add-hook 'before-save-hook #'gofmt-before-save)
             (add-hook 'go-mode-hook
                       (lambda ()
