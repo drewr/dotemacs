@@ -6,7 +6,7 @@ compile:
 
 install:
 	emacs -Q --batch --eval '(setq package-user-dir "~/.emacs.d-build/elpa")' -l d/setup.el
-	rm -rf ~/.emacs.d
+	mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
 	mv ~/.emacs.d-build ~/.emacs.d
 	bin/install
 
