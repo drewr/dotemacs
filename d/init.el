@@ -383,6 +383,9 @@ See URL `http://www.haskell.org/ghc/'."
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
 
+;; PureScript
+(add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
+
 ;; Customize
 
 (custom-set-variables
