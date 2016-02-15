@@ -68,15 +68,14 @@
       '((nnimap "aaraines"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-authenticator login))
-        (nnimap "drewres"
+        (nnimap "drewrelastic"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-authenticator login))
         ;; (nnimap "testdroid1000"
         ;;         (nnimap-address "imap.gmail.com")
         ;;         (nnimap-authenticator login))
         (nnml "")
-        (nntp "news.gmane.org")
-        (nntp "news.gwene.org")))
+        (nntp "news.gmane.org")))
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
