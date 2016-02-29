@@ -224,8 +224,8 @@ address if only it was present."
          (Face (gnus-face-from-file "~/.face-48.png"))
          (address "aaraines@gmail.com")
          ("X-MSMTP" "gmail"))
-        ("drewres:.*"
-         (address "drew.raines@elasticsearch.com")
+        ("drewrelastic:.*"
+         (address "drew@elastic.co")
          ("X-MSMTP" "drewres"))))
 
 ;; format=flowed
