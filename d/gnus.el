@@ -53,11 +53,11 @@
 
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
-;; (gnus-add-configuration
-;;  '(article
-;;    (horizontal 1.0
-;;                (summary 0.5 point)
-;;                (article 1.0))))
+(gnus-add-configuration
+ '(article
+   (horizontal 1.0
+               (summary 0.5 point)
+               (article 1.0))))
 
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       sendmail-program "~/bin/mail")
