@@ -19,6 +19,7 @@
       gnus-treat-hide-citation t
       message-cite-function 'message-cite-original-without-signature
       message-dont-reply-to-names '("^drew.raines@elasticsearch"
+                                    "^drew@elastic"
                                     "drew@raines.me"
                                     "\\(aaraines\\|me\\)@\\(gmail\\|draines\\)")
       message-from-style 'angles
