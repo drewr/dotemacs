@@ -26,7 +26,7 @@
       message-make-forward-subject-function 'message-forward-subject-fwd
       message-subject-trailing-was-query nil
       message-wash-forwarded-subjects t
-      gnus-auto-select-next 'almost-quietly
+      gnus-auto-select-next t
       gnus-use-full-window t
       gnus-inhibit-mime-unbuttonizing t
       gnus-use-cache t
