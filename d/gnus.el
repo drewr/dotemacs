@@ -3,7 +3,7 @@
       message-user-fqdn "mid.raines.me"
       gnus-check-bogus-newsgroups nil
       gnus-check-new-newsgroups nil
-      gnus-article-skip-boring nil
+      gnus-article-skip-boring t
       gnus-delay-default-delay "2h"
       gnus-gcc-mark-as-read nil
       gnus-gcc-externalize-attachments "all"
@@ -15,7 +15,6 @@
       gnus-treat-fill-long-lines nil
       gnus-version-expose-system t
       gnus-cited-lines-visible '(3 . 6)
-      gnus-article-skip-boring t
       gnus-treat-hide-citation t
       message-cite-function 'message-cite-original-without-signature
       message-dont-reply-to-names '("^drew.raines@elasticsearch"
