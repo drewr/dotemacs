@@ -4,6 +4,9 @@ default:
 compile:
 	bin/compile
 
+gnus:
+	cp d/gnus.el ~/.emacs.d/gnus.el
+
 install:
 	emacs -Q --batch --eval '(setq package-user-dir "~/.emacs.d-build/elpa")' -l d/setup.el
 	mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
