@@ -38,6 +38,7 @@
         (markdown-mode       . "melpa")
         (nix-mode            . "melpa")
         (org                 . "org")
+        (org-journal         . "melpa")
         ;; (org-ac              . "melpa")  these all seem broken
         ;; (org-magit           . "melpa")
         ;; (org-pandoc          . "melpa-stable")

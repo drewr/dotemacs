@@ -293,6 +293,11 @@ See URL `http://www.haskell.org/ghc/'."
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
+(require 'org-journal)
+(eval-after-load 'org-journal
+  '(progn
+     (setq org-journal-dir "~/src/org/journal/")))
+
 ;; ledger
 
 (require 'ledger)
