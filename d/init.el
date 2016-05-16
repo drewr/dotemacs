@@ -230,6 +230,10 @@ See URL `http://www.haskell.org/ghc/'."
 
 ;; rust
 (add-hook 'rust-mode-hook 'cargo-minor-mode)
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
+(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
 
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
@@ -243,7 +247,7 @@ See URL `http://www.haskell.org/ghc/'."
             (setq tab-width 2)
             (setq gofmt-command "goimports")
             ;;(add-hook 'before-save-hook #'gofmt-before-save)
-))
+            ))
 
 ;; python
 (require 'python)
