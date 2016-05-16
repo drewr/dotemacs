@@ -234,6 +234,7 @@ See URL `http://www.haskell.org/ghc/'."
           (lambda ()
             (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
 (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+(add-hook 'rust-mode-hook 'flycheck-mode)
 
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
