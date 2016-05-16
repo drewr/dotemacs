@@ -10,6 +10,7 @@
       '((adoc-mode           . "melpa")
         (arduino-mode        . "melpa")
         (bbdb                . "melpa")
+        (cargo               . "melpa")
         (cider               . "melpa")
         (clojure-mode        . "melpa")
         (company             . "melpa")

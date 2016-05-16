@@ -228,6 +228,9 @@ See URL `http://www.haskell.org/ghc/'."
 
 (require 'hpaste)
 
+;; rust
+(add-hook 'rust-mode-hook 'cargo-minor-mode)
+
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
 ;; (nix-env -i emacs)
