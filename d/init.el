@@ -150,71 +150,15 @@
 ;; haskell
 
 (require 'flycheck-haskell)
-(delete 'haskell-ghc flycheck-checkers)
-
-(flycheck-define-checker haskell-stack
-  "A Haskell syntax and type checker using ghc.
-
-See URL `http://www.haskell.org/ghc/'."
-  :command ("stack" "ghc" "--" "-Wall" "-fno-code"
-            (option-flag "-no-user-package-db"
-                         flycheck-ghc-no-user-package-database)
-            (option-list "-package-db" flycheck-ghc-package-databases)
-            (option-list "-i" flycheck-ghc-search-path concat)
-            ;; Include the parent directory of the current module tree, to
-            ;; properly resolve local imports
-            (eval (concat
-                   "-i"
-                   (flycheck-module-root-directory
-                    (flycheck-find-in-buffer flycheck-haskell-module-re))))
-            (option-list "-X" flycheck-ghc-language-extensions concat)
-            (eval flycheck-ghc-args)
-            "-x" (eval
-                  (pcase major-mode
-                    (`haskell-mode "hs")
-                    (`literate-haskell-mode "lhs")))
-            source)
-  :error-patterns
-  ((warning line-start (file-name) ":" line ":" column ":"
-            (or " " "\n    ") "Warning:" (optional "\n")
-            (message
-             (one-or-more " ") (one-or-more not-newline)
-             (zero-or-more "\n"
-                           (one-or-more " ")
-                           (one-or-more not-newline)))
-            line-end)
-   (error line-start (file-name) ":" line ":" column ":"
-          (or (message (one-or-more not-newline))
-              (and "\n"
-                   (message
-                    (one-or-more " ") (one-or-more not-newline)
-                    (zero-or-more "\n"
-                                  (one-or-more " ")
-                                  (one-or-more not-newline)))))
-          line-end))
-  :error-filter
-  (lambda (errors)
-    (flycheck-sanitize-errors (flycheck-dedent-error-messages errors)))
-  :modes (haskell-mode literate-haskell-mode)
-  :next-checkers ((warning . haskell-hlint)))
+(eval-after-load 'flycheck
+  '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 (defun aar/haskell-mode-hook ()
-  (local-set-key (kbd "C-c C-b") 'haskell-interactive-bring)
-  (local-set-key (kbd "C-c C-c") 'haskell-process-cabal-build)
-  (local-set-key (kbd "C-c C-i") 'haskell-process-do-info)
-  (local-set-key (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-  (local-set-key (kbd "C-c C-l") 'haskell-process-load-or-reload)
-  (local-set-key (kbd "C-c C-s") 'haskell-interactive-switch)
-  (local-set-key (kbd "C-c C-t") 'haskell-process-do-type)
-  (local-set-key (kbd "C-c c")   'haskell-process-cabal)
-  (local-set-key (kbd "C-c v c") 'haskell-cabal-visit-file)
-  (local-set-key (kbd "SPC")     'haskell-mode-contextual-space)
-  (flycheck-select-checker 'haskell-stack))
+  (hindent-mode)
+  (interactive-haskell-mode)
+  (turn-on-haskell-doc-mode)
+  (turn-on-haskell-indentation))
 
-(add-hook 'haskell-mode-hook 'hindent-mode)
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'aar/haskell-mode-hook)
 
 (setq
@@ -224,7 +168,7 @@ See URL `http://www.haskell.org/ghc/'."
  haskell-process-type 'ghci
  haskell-process-path-ghci "stack"
  haskell-process-args-ghci '("ghci")
- haskell-process-suggest-remove-import-lines t)
+ haskell-process-suggest-remove-import-lines nil)
 
 (require 'hpaste)
 
