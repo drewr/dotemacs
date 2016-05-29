@@ -52,7 +52,12 @@
         (rust-mode           . "melpa")
         (smex                . "melpa")
         (textile-mode        . "melpa")
+
+        ;; ocaml
         (tuareg              . "melpa")
+        (utop                . "melpa")
+        (merlin              . "melpa")
+
         (yaml-mode           . "melpa")
         (yasnippet           . "melpa")))
 
