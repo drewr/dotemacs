@@ -165,7 +165,7 @@
  haskell-process-auto-import-loaded-modules t
  haskell-process-suggest-language-pragmas nil
  haskell-process-log t
- haskell-process-type 'ghci
+ haskell-process-type 'stack-ghci
  haskell-process-path-ghci "stack"
  haskell-process-args-ghci '("ghci")
  haskell-process-suggest-remove-import-lines nil)
