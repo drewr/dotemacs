@@ -32,6 +32,7 @@
         (hindent             . "melpa")
         (ido-ubiquitous      . "melpa")
         (idris-mode          . "melpa")
+        (intero              . "melpa")
         (js2-mode            . "melpa")
         (lua-mode            . "melpa")
         (magit               . "melpa")

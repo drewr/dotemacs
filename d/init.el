@@ -149,28 +149,10 @@
 
 ;; haskell
 
-(require 'flycheck-haskell)
-(eval-after-load 'flycheck
-  '(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
-
 (defun aar/haskell-mode-hook ()
-  (hindent-mode)
-  (interactive-haskell-mode)
-  (turn-on-haskell-doc-mode)
-  (turn-on-haskell-indentation))
+  (intero-mode))
 
 (add-hook 'haskell-mode-hook 'aar/haskell-mode-hook)
-
-(setq
- haskell-process-auto-import-loaded-modules t
- haskell-process-suggest-language-pragmas nil
- haskell-process-log t
- haskell-process-type 'stack-ghci
- haskell-process-path-ghci "stack"
- haskell-process-args-ghci '("ghci")
- haskell-process-suggest-remove-import-lines nil)
-
-(require 'hpaste)
 
 ;; ocaml
 
