@@ -263,8 +263,8 @@
 (add-to-list 'erc-modules 'log)
 (add-to-list 'erc-modules 'highlight-nicknames)
 
-(setq erc-server "irc.us.freenode.net"
-      erc-port 6667
+(setq erc-server "irc.freenode.net"
+      erc-port 6697
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
       erc-email-userid "drew"       ; for when ident is not activated
@@ -291,13 +291,12 @@
       erc-server-reconnect-attempts 10
       erc-prompt (lambda () (concat (erc-default-target) ">"))
       erc-favorite-channel
-      "\\(84115\\|elast\\|pallet\\|lein\\|nash\\)")
+      "\\(84115\\|elast\\|pallet\\|lein\\|nash\\)"
+      erc-autojoin-channels-alist
+      '(("freenode.net" "#emacs" "#84115" "#elasticsearch"
+         "#purescript" "#haskell" "#haskell-beginners")))
 
 (define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
-
-(setq-default erc-ignore-list '("^xah_?" "^jordanb_?"))
-
-(load "~/.erc-auth.el")
 
 (defun aar/you-rang? (mat nick message)
   (let ((buf (buffer-name (current-buffer)))
@@ -318,8 +317,11 @@
       (notify chan msg)
       nil)))
 
-;;(add-hook 'erc-text-matched-hook 'aar/you-rang?)
-;;(add-hook 'erc-server-PRIVMSG-functions 'aar/erc-me)
+(defun aar/erc ()
+  (interactive)
+  (erc-tls :server "irc.freenode.net"
+           :port 6697
+           :nick "drewr"))
 
 ;; puppet
 (eval-after-load 'puppet-mode
