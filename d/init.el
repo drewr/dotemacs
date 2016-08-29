@@ -149,10 +149,13 @@
 
 ;; haskell
 
+(require 'hindent)
+
 (defun aar/haskell-mode-hook ()
   (intero-mode))
 
 (add-hook 'haskell-mode-hook 'aar/haskell-mode-hook)
+(add-hook 'haskell-mode-hook 'hindent-mode)
 
 ;; ocaml
 
