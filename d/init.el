@@ -202,7 +202,8 @@
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key [(control meta ?r)] 'org-capture)
+(global-set-key "\C-cc" 'org-capture)
+
 (setq org-directory "~/.org"
       org-agenda-files (quote ("~/.org/PERSONAL.org"
                                "~/.org/clients"))
@@ -236,8 +237,10 @@
         ("e" "Elasticsearch" entry
          (file+headline "clients/ES.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
+        ("j" "Journal" entry (file+datetree "~/.org/notes.org")
+         "* %?\nEntered on %U")
         ("n" "Note" entry
-         (file+headline "notes.org" 'bottom)
+         (file+headline "~/.org/notes.org" "Notes")
          "* %u %?" :prepend t)))
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
