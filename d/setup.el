@@ -53,6 +53,7 @@
         (rust-mode           . "melpa")
         (smex                . "melpa")
         (textile-mode        . "melpa")
+        (terraform-mode      . "melpa")
 
         ;; ocaml
         (tuareg              . "melpa")
