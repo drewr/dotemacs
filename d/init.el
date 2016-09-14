@@ -143,7 +143,8 @@
   '(progn
      (setq cider-repl-history-size 10000
            cider-repl-history-file "~/.cider.history.el"
-           cider-test-infer-test-ns '(lambda (ns) ns))
+           cider-test-infer-test-ns '(lambda (ns) ns)
+           cider-repl-display-help-banner nil)
      (define-key cider-mode-map (kbd "C-c C-n") nil)
      (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)))
 
