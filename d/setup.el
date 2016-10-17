@@ -11,7 +11,7 @@
         (arduino-mode        . "melpa")
         (bbdb                . "melpa")
         (cargo               . "melpa")
-        (cider               . "melpa")
+        (cider               . "melpa-stable")
         (clojure-mode        . "melpa")
         (company             . "melpa")
         (company-cabal       . "melpa")
