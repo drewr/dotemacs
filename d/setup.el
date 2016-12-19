@@ -2,7 +2,7 @@
       '(("ELPA"           . "http://tromey.com/elpa/")
         ("SC"             . "http://joseito.republika.pl/sunrise-commander/")
         ("gnu"            . "http://elpa.gnu.org/packages/")
-        ("marmalade"      . "http://marmalade-repo.org/packages/")
+        ;;("marmalade"      . "http://marmalade-repo.org/packages/")
         ("melpa"          . "http://melpa.org/packages/")
         ("melpa-stable"   . "http://stable.melpa.org/packages/")
         ("org"            . "http://orgmode.org/elpa/"))
