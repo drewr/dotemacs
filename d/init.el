@@ -17,6 +17,9 @@
 (load-custom "funs")
 (load-custom "sonian")
 
+(add-lisp-dir "use-package")
+(require 'use-package)
+
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
@@ -34,10 +37,159 @@
 (require 'saveplace)
 (require 'package)
 (add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.milkbox.net/packages/"))
+(add-to-list 'package-archives
+             '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives
+             '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
+
+(use-package adoc-mode
+  :ensure t
+  :pin "melpa")
+(use-package arduino-mode
+  :ensure t
+  :pin "melpa")
+(use-package bbdb
+  :ensure t
+  :pin "melpa")
+(use-package cargo
+  :ensure t
+  :pin "melpa")
+(use-package cider
+  :ensure t
+  :pin "melpa-stable")
+(use-package clojure-mode
+  :ensure t
+  :pin "melpa")
+(use-package company
+  :ensure t
+  :pin "melpa")
+(use-package company-cabal
+  :ensure t
+  :pin "melpa")
+(use-package company-ghci
+  :ensure t
+  :pin "melpa")
+(use-package deft
+  :ensure t
+  :pin "melpa")
+(use-package erlang
+  :ensure t
+  :pin "melpa")
+(use-package w3m
+  :ensure t
+  :pin "melpa")
+(use-package flycheck-haskell
+  :ensure t
+  :pin "melpa")
+(use-package flycheck-rust
+  :ensure t
+  :pin "melpa")
+(use-package geiser
+  :ensure t
+  :pin "melpa")
+(use-package gist
+  :ensure t
+  :pin "melpa")
+(use-package gnuplot
+  :ensure t
+  :pin "melpa")
+(use-package go-mode
+  :ensure t
+  :pin "melpa")
+(use-package graphviz-dot-mode
+  :ensure t
+  :pin "melpa")
+(use-package hamlet-mode
+  :ensure t
+  :pin "melpa")
+(use-package haskell-emacs
+  :ensure t
+  :pin "melpa")
+(use-package haskell-mode
+  :ensure t
+  :pin "melpa")
+(use-package hindent
+  :ensure t
+  :pin "melpa")
+(use-package ido-ubiquitous
+  :ensure t
+  :pin "melpa")
+(use-package idris-mode
+  :ensure t
+  :pin "melpa")
+(use-package intero
+  :ensure t
+  :pin "melpa")
+(use-package js2-mode
+  :ensure t
+  :pin "melpa")
+(use-package lua-mode
+  :ensure t
+  :pin "melpa")
+(use-package magit
+  :ensure t
+  :pin "melpa")
+(use-package magit-gh-pulls
+  :ensure t
+  :pin "melpa")
+(use-package markdown-mode
+  :ensure t
+  :pin "melpa")
+(use-package nix-mode
+  :ensure t
+  :pin "melpa")
+(use-package org
+  :ensure t
+  :pin "org")
+(use-package org-journal
+  :ensure t
+  :pin "melpa")
+(use-package paredit
+  :ensure t
+  :pin "melpa")
+(use-package puppet-mode
+  :ensure t
+  :pin "melpa")
+(use-package purescript-mode
+  :ensure t
+  :pin "melpa")
+(use-package rainbow-delimiters
+  :ensure t
+  :pin "melpa")
+(use-package rainbow-identifiers
+  :ensure t
+  :pin "melpa")
+(use-package rust-mode
+  :ensure t
+  :pin "melpa")
+(use-package smex
+  :ensure t
+  :pin "melpa")
+(use-package textile-mode
+  :ensure t
+  :pin "melpa")
+(use-package terraform-mode
+  :ensure t
+  :pin "melpa")
+(use-package tuareg
+  :ensure t
+  :pin "melpa")
+(use-package utop
+  :ensure t
+  :pin "melpa")
+(use-package merlin
+  :ensure t
+  :pin "melpa")
+(use-package yaml-mode
+  :ensure t
+  :pin "melpa")
+(use-package yasnippet
+  :ensure t
+  :pin "melpa")
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -117,6 +269,9 @@
 (setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; lisp
+
+(use-package paredit
+  :ensure t)
 
 (define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
 
@@ -247,10 +402,8 @@
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
 
-(require 'org-journal)
-(eval-after-load 'org-journal
-  '(progn
-     (setq org-journal-dir "~/src/org/journal/")))
+(use-package org-journal
+  :init (setq org-journal-dir "~/src/org/journal/"))
 
 ;; ledger
 
