@@ -8,6 +8,9 @@
   "Add dir to load-path."
   `(add-to-list 'load-path (concat ,(expand-file-name "~/.emacs.d/lisp/") ,d)))
 
+;; For stack-installed utils
+(setenv "PATH" (concat (expand-file-name "~/.local/bin") ":" (getenv "PATH")))
+
 (require 'cl) ; need this for (case)
 (load-custom
  (case system-type
@@ -35,6 +38,7 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
+
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -82,6 +86,9 @@
 (use-package w3m
   :ensure t
   :pin "melpa")
+(use-package flycheck
+  :ensure t
+  :pin "melpa")
 (use-package flycheck-haskell
   :ensure t
   :pin "melpa")
@@ -127,11 +134,12 @@
 (use-package js2-mode
   :ensure t
   :pin "melpa")
+
 (use-package ledger-mode
   :ensure t
-  :bind
-  ("C-c C-n" . ledger-clean-up-transaction)
-  ("C-c C-b" . ledger-bal-region))
+  :bind (:map ledger-mode-map
+              ("C-c C-n" . ledger-clean-up-transaction)
+              ("C-c C-b" . ledger-bal-region)))
 
 (use-package lua-mode
   :ensure t
@@ -149,16 +157,22 @@
   :ensure t
   :pin "melpa")
 (use-package org
-  :ensure t
+  :ensure org-plus-contrib
   :pin "org")
 (use-package org-journal
   :ensure t
   :pin "melpa"
   :init (setq org-journal-dir "~/src/org/journal/"))
+;; this doesn't work with org 9
+;; (use-package ox-pandoc
+;;   :ensure t
+;;   :config (require 'ox-pandoc))
 (use-package paredit
   :ensure t
   :pin "melpa"
-  :bind ("M-)". paredit-forward-slurp-sexp))
+  :bind (:map paredit-mode-map
+              ("M-)" . paredit-forward-slurp-sexp)
+              ("M-(" . paredit-forward-barf-sexp)))
 (use-package puppet-mode
   :ensure t
   :pin "melpa")
