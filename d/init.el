@@ -127,6 +127,12 @@
 (use-package js2-mode
   :ensure t
   :pin "melpa")
+(use-package ledger-mode
+  :ensure t
+  :bind
+  ("C-c C-n" . ledger-clean-up-transaction)
+  ("C-c C-b" . ledger-bal-region))
+
 (use-package lua-mode
   :ensure t
   :pin "melpa")
@@ -147,10 +153,12 @@
   :pin "org")
 (use-package org-journal
   :ensure t
-  :pin "melpa")
+  :pin "melpa"
+  :init (setq org-journal-dir "~/src/org/journal/"))
 (use-package paredit
   :ensure t
-  :pin "melpa")
+  :pin "melpa"
+  :bind ("M-)". paredit-forward-slurp-sexp))
 (use-package puppet-mode
   :ensure t
   :pin "melpa")
@@ -165,7 +173,14 @@
   :pin "melpa")
 (use-package rust-mode
   :ensure t
-  :pin "melpa")
+  :pin "melpa"
+  :config
+  (add-hook 'rust-mode-hook 'cargo-minor-mode)
+  (add-hook 'rust-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  (add-hook 'rust-mode-hook 'flycheck-mode))
 (use-package smex
   :ensure t
   :pin "melpa")
@@ -202,6 +217,8 @@
       display-time-24hr-format t)
 (display-time)
 (prefer-coding-system 'utf-8)
+(setq abbrev-file-name "~/.emacs.d/abbrev_defs"
+      save-abbrevs t)
 
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c C-n") 'clean-up-buffer)
@@ -244,7 +261,9 @@
 
 ;; pre-gnus
 ;;(add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
-;;(add-to-list 'Info-default-directory-list (expand-file-name "~/src/gnus/texi/"))
+;;(add-to-list 'Info-default-directory-list
+;;     (expand-file-name "~/src/gnus/texi/"))
+
 (setq gnus-home-directory "~/.gnus.d/")
 (setq gnus-directory (concat gnus-home-directory "News/"))
 (setq message-directory (concat gnus-home-directory "Mail/"))
@@ -270,17 +289,12 @@
 
 ;; lisp
 
-(use-package paredit
-  :ensure t)
-
 (define-key lisp-mode-shared-map (kbd "RET") 'reindent-then-newline-and-indent)
 
 (defun aar/lispy-parens ()
   "Set up parens for lispish modes."
   (require 'paredit)
   (paredit-mode 1)
-  (define-key paredit-mode-map (kbd "M-)") 'paredit-forward-slurp-sexp)
-  (define-key paredit-mode-map (kbd "M-(") 'paredit-forward-barf-sexp)
   (show-paren-mode 1))
 
 (defun aar/massage-nrepl-bindings ()
@@ -325,14 +339,6 @@
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
 (setq merlin-error-after-save nil)
-
-;; rust
-(add-hook 'rust-mode-hook 'cargo-minor-mode)
-(add-hook 'rust-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
-(add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-(add-hook 'rust-mode-hook 'flycheck-mode)
 
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
@@ -401,20 +407,6 @@
 
 (add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
 (add-hook 'org-mode-hook 'auto-fill-mode)
-
-(use-package org-journal
-  :init (setq org-journal-dir "~/src/org/journal/"))
-
-;; ledger
-
-(require 'ledger)
-(eval-after-load 'ledger
-  '(progn
-     (define-key ledger-mode-map
-       [(control ?c) (control ?n)] 'ledger-clean-up-transaction)
-     (define-key ledger-mode-map
-       [(control ?c) (control ?b)] 'ledger-bal-region)))
-
 
 ;; erc
 

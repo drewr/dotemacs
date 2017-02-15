@@ -9,13 +9,16 @@ gnus:
 
 install:
 	#emacs -Q --batch --eval '(setq package-user-dir "~/.emacs.d-build/elpa")' -l d/setup.el
-	mkdir ~/.emacs.d-build
-	mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
-	mv ~/.emacs.d-build ~/.emacs.d
+	#mkdir ~/.emacs.d-build
+	#mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
+	#mv ~/.emacs.d-build ~/.emacs.d
 	bin/install
+	emacs --batch --eval '(message "----> running init")' -l d/init.el
+	bin/compile
 
 clean:
-	find . -name \*.elc | xargs rm
+	rm -rf ~/.emacs.d
+	find . -name \*.elc | xargs rm -f
 
 publish:
 	bin/publish
