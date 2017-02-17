@@ -179,6 +179,16 @@
 (use-package purescript-mode
   :ensure t
   :pin "melpa")
+(use-package psc-ide
+  :ensure t
+  :pin "melpa"
+  :config
+  (add-hook 'purescript-mode-hook
+            '(lambda ()
+               (psc-ide-mode)
+               (company-mode)
+               (flycheck-mode)
+               (turn-on-purescript-indentation))))
 (use-package rainbow-delimiters
   :ensure t
   :pin "melpa")
@@ -502,9 +512,6 @@
 ;; D
 (autoload 'd-mode "d-mode" "Major mode for editing D code." t)
 (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
-
-;; PureScript
-(add-hook 'purescript-mode-hook 'turn-on-purescript-indentation)
 
 ;; Customize
 
