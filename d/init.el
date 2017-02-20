@@ -76,7 +76,13 @@
   (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
   (add-hook 'clojure-mode-hook 'whitespace-mode))
 
-(use-package inf-clojure       :ensure t)
+(use-package inf-clojure
+  :ensure t
+  :init
+  (defun figwheel ()
+    (interactive)
+    (run-clojure "lein figwheel")))
+
 (use-package company           :ensure t :pin "melpa")
 (use-package company-cabal     :ensure t :pin "melpa")
 (use-package company-ghci      :ensure t :pin "melpa")
