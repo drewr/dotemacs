@@ -62,12 +62,28 @@
 (use-package cargo
   :ensure t
   :pin "melpa")
+
 (use-package cider
   :ensure t
-  :pin "melpa-stable")
+  :pin "melpa-stable"
+  :bind
+  (:map cider-mode-map
+        ("C-c C-n" . nil)
+        ("C-c n" . cider-eval-ns-form))
+  :config
+  (setq cider-repl-history-size 10000
+        cider-repl-history-file "~/.cider.history.el"
+        cider-test-infer-test-ns '(lambda (ns) ns)
+        cider-repl-display-help-banner nil))
+
 (use-package clojure-mode
   :ensure t
-  :pin "melpa")
+  :pin "melpa"
+  :config
+  (add-hook 'clojure-mode-hook 'aar/lispy-parens)
+  (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
+  (add-hook 'clojure-mode-hook 'whitespace-mode))
+
 (use-package inf-clojure
   :ensure t)
 (use-package company
@@ -328,20 +344,6 @@
 
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
 (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
-(add-hook 'clojure-mode-hook 'aar/lispy-parens)
-(add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
-(add-hook 'clojure-mode-hook 'whitespace-mode)
-
-;; clojure
-
-(eval-after-load 'cider
-  '(progn
-     (setq cider-repl-history-size 10000
-           cider-repl-history-file "~/.cider.history.el"
-           cider-test-infer-test-ns '(lambda (ns) ns)
-           cider-repl-display-help-banner nil)
-     (define-key cider-mode-map (kbd "C-c C-n") nil)
-     (define-key cider-mode-map (kbd "C-c n") 'cider-eval-ns-form)))
 
 ;; haskell
 
