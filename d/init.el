@@ -101,9 +101,6 @@
 (use-package erlang
   :ensure t
   :pin "melpa")
-(use-package w3m
-  :ensure t
-  :pin "melpa")
 (use-package flycheck
   :ensure t
   :pin "melpa")
