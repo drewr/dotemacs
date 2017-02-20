@@ -68,6 +68,8 @@
 (use-package clojure-mode
   :ensure t
   :pin "melpa")
+(use-package inf-clojure
+  :ensure t)
 (use-package company
   :ensure t
   :pin "melpa")
