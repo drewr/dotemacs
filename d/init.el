@@ -50,18 +50,10 @@
              '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
-(use-package adoc-mode
-  :ensure t
-  :pin "melpa")
-(use-package arduino-mode
-  :ensure t
-  :pin "melpa")
-(use-package bbdb
-  :ensure t
-  :pin "melpa")
-(use-package cargo
-  :ensure t
-  :pin "melpa")
+(use-package adoc-mode    :ensure t :pin "melpa")
+(use-package arduino-mode :ensure t :pin "melpa")
+(use-package bbdb         :ensure t :pin "melpa")
+(use-package cargo        :ensure t :pin "melpa")
 
 (use-package cider
   :ensure t
@@ -84,71 +76,28 @@
   (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
   (add-hook 'clojure-mode-hook 'whitespace-mode))
 
-(use-package inf-clojure
-  :ensure t)
-(use-package company
-  :ensure t
-  :pin "melpa")
-(use-package company-cabal
-  :ensure t
-  :pin "melpa")
-(use-package company-ghci
-  :ensure t
-  :pin "melpa")
-(use-package deft
-  :ensure t
-  :pin "melpa")
-(use-package erlang
-  :ensure t
-  :pin "melpa")
-(use-package flycheck
-  :ensure t
-  :pin "melpa")
-(use-package flycheck-haskell
-  :ensure t
-  :pin "melpa")
-(use-package flycheck-rust
-  :ensure t
-  :pin "melpa")
-(use-package geiser
-  :ensure t
-  :pin "melpa")
-(use-package gist
-  :ensure t
-  :pin "melpa")
-(use-package gnuplot
-  :ensure t
-  :pin "melpa")
-(use-package go-mode
-  :ensure t
-  :pin "melpa")
-(use-package graphviz-dot-mode
-  :ensure t
-  :pin "melpa")
-(use-package hamlet-mode
-  :ensure t
-  :pin "melpa")
-(use-package haskell-emacs
-  :ensure t
-  :pin "melpa")
-(use-package haskell-mode
-  :ensure t
-  :pin "melpa")
-(use-package hindent
-  :ensure t
-  :pin "melpa")
-(use-package ido-ubiquitous
-  :ensure t
-  :pin "melpa")
-(use-package idris-mode
-  :ensure t
-  :pin "melpa")
-(use-package intero
-  :ensure t
-  :pin "melpa")
-(use-package js2-mode
-  :ensure t
-  :pin "melpa")
+(use-package inf-clojure       :ensure t)
+(use-package company           :ensure t :pin "melpa")
+(use-package company-cabal     :ensure t :pin "melpa")
+(use-package company-ghci      :ensure t :pin "melpa")
+(use-package deft              :ensure t :pin "melpa")
+(use-package erlang            :ensure t :pin "melpa")
+(use-package flycheck          :ensure t :pin "melpa")
+(use-package flycheck-haskell  :ensure t :pin "melpa")
+(use-package flycheck-rust     :ensure t :pin "melpa")
+(use-package geiser            :ensure t :pin "melpa")
+(use-package gist              :ensure t :pin "melpa")
+(use-package gnuplot           :ensure t :pin "melpa")
+(use-package go-mode           :ensure t :pin "melpa")
+(use-package graphviz-dot-mode :ensure t :pin "melpa")
+(use-package hamlet-mode       :ensure t :pin "melpa")
+(use-package haskell-emacs     :ensure t :pin "melpa")
+(use-package haskell-mode      :ensure t :pin "melpa")
+(use-package hindent           :ensure t :pin "melpa")
+(use-package ido-ubiquitous    :ensure t :pin "melpa")
+(use-package idris-mode        :ensure t :pin "melpa")
+(use-package intero            :ensure t :pin "melpa")
+(use-package js2-mode          :ensure t :pin "melpa")
 
 (use-package ledger-mode
   :ensure t
@@ -156,24 +105,16 @@
               ("C-c C-n" . ledger-clean-up-transaction)
               ("C-c C-b" . ledger-bal-region)))
 
-(use-package lua-mode
-  :ensure t
-  :pin "melpa")
-(use-package magit
-  :ensure t
-  :pin "melpa")
-(use-package magit-gh-pulls
-  :ensure t
-  :pin "melpa")
-(use-package markdown-mode
-  :ensure t
-  :pin "melpa")
-(use-package nix-mode
-  :ensure t
-  :pin "melpa")
+(use-package lua-mode       :ensure t :pin "melpa")
+(use-package magit          :ensure t :pin "melpa")
+(use-package magit-gh-pulls :ensure t :pin "melpa")
+(use-package markdown-mode  :ensure t :pin "melpa")
+(use-package nix-mode       :ensure t :pin "melpa")
+
 (use-package org
   :ensure org-plus-contrib
   :pin "org")
+
 (use-package org-journal
   :ensure t
   :pin "melpa"
@@ -182,18 +123,17 @@
 ;; (use-package ox-pandoc
 ;;   :ensure t
 ;;   :config (require 'ox-pandoc))
+
 (use-package paredit
   :ensure t
   :pin "melpa"
   :bind (:map paredit-mode-map
               ("M-)" . paredit-forward-slurp-sexp)
               ("M-(" . paredit-forward-barf-sexp)))
-(use-package puppet-mode
-  :ensure t
-  :pin "melpa")
-(use-package purescript-mode
-  :ensure t
-  :pin "melpa")
+
+(use-package puppet-mode     :ensure t :pin "melpa")
+(use-package purescript-mode :ensure t :pin "melpa")
+
 (use-package psc-ide
   :ensure t
   :pin "melpa"
@@ -204,12 +144,10 @@
                (company-mode)
                (flycheck-mode)
                (turn-on-purescript-indentation))))
-(use-package rainbow-delimiters
-  :ensure t
-  :pin "melpa")
-(use-package rainbow-identifiers
-  :ensure t
-  :pin "melpa")
+
+(use-package rainbow-delimiters  :ensure t :pin "melpa")
+(use-package rainbow-identifiers :ensure t :pin "melpa")
+
 (use-package rust-mode
   :ensure t
   :pin "melpa"
@@ -220,30 +158,15 @@
               (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (add-hook 'rust-mode-hook 'flycheck-mode))
-(use-package smex
-  :ensure t
-  :pin "melpa")
-(use-package textile-mode
-  :ensure t
-  :pin "melpa")
-(use-package terraform-mode
-  :ensure t
-  :pin "melpa")
-(use-package tuareg
-  :ensure t
-  :pin "melpa")
-(use-package utop
-  :ensure t
-  :pin "melpa")
-(use-package merlin
-  :ensure t
-  :pin "melpa")
-(use-package yaml-mode
-  :ensure t
-  :pin "melpa")
-(use-package yasnippet
-  :ensure t
-  :pin "melpa")
+
+(use-package smex           :ensure t :pin "melpa")
+(use-package textile-mode   :ensure t :pin "melpa")
+(use-package terraform-mode :ensure t :pin "melpa")
+(use-package tuareg         :ensure t :pin "melpa")
+(use-package utop           :ensure t :pin "melpa")
+(use-package merlin         :ensure t :pin "melpa")
+(use-package yaml-mode      :ensure t :pin "melpa")
+(use-package yasnippet      :ensure t :pin "melpa")
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
