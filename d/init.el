@@ -81,7 +81,9 @@
   :init
   (defun figwheel ()
     (interactive)
-    (run-clojure "lein figwheel")))
+    (run-clojure "lein figwheel"))
+  :config
+  (add-hook 'clojurescript-mode-hook 'inf-clojure-minor-mode))
 
 (use-package company           :ensure t :pin "melpa")
 (use-package company-cabal     :ensure t :pin "melpa")
