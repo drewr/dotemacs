@@ -96,7 +96,21 @@
 (use-package geiser            :ensure t :pin "melpa")
 (use-package gist              :ensure t :pin "melpa")
 (use-package gnuplot           :ensure t :pin "melpa")
-(use-package go-mode           :ensure t :pin "melpa")
+
+(use-package go-mode
+  :ensure t
+  :bind
+  (:map go-mode-map
+        ("C-c C-n" . clean-up-golang-buffer)
+        ("M-." . godef-jump))
+  :config
+  (add-hook 'go-mode-hook
+            (lambda ()
+              (setq tab-width 2)
+              (setq gofmt-command "goimports")
+              ;; (add-hook 'before-save-hook #'gofmt-before-save)
+              )))
+
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
 (use-package haskell-emacs     :ensure t :pin "melpa")
@@ -299,16 +313,6 @@
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
 ;; (nix-env -i emacs)
-
-;; go
-(add-hook 'go-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-c C-n") #'clean-up-golang-buffer)
-            (local-set-key (kbd "M-.") #'godef-jump)
-            (setq tab-width 2)
-            (setq gofmt-command "goimports")
-            ;;(add-hook 'before-save-hook #'gofmt-before-save)
-            ))
 
 ;; python
 (require 'python)
