@@ -328,7 +328,8 @@
 
 (setq org-directory "~/.org"
       org-agenda-files (quote ("~/.org/PERSONAL.org"
-                               "~/.org/clients"))
+                               "~/.org/clients"
+                               "~/.org/people/elastic"))
       org-log-done t
       org-agenda-show-all-dates t
       org-agenda-ndays 7
