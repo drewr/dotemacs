@@ -13,7 +13,7 @@ install:
 	#mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
 	#mv ~/.emacs.d-build ~/.emacs.d
 	bin/install
-	emacs --batch --eval '(message "----> running init")' -l d/init.el
+	emacs --batch --eval '(message "----> running init")' -l d/setup.el -l d/init.el
 	bin/compile
 
 clean:
