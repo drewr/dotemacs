@@ -181,6 +181,16 @@
   (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   (add-hook 'rust-mode-hook 'flycheck-mode))
 
+(use-package racer
+  :ensure t
+  :config
+  (setq racer-cmd "~/.cargo/bin/racer")
+  (setq racer-rust-src-path "~/src/rust-lang/rust/src")
+
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+  (add-hook 'racer-mode-hook #'company-mode))
+
 (use-package smex           :ensure t :pin "melpa")
 (use-package textile-mode   :ensure t :pin "melpa")
 (use-package terraform-mode :ensure t :pin "melpa")
