@@ -113,6 +113,7 @@
               )))
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
+(use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
 (use-package haskell-emacs     :ensure t :pin "melpa")
 (use-package haskell-mode      :ensure t :pin "melpa")
