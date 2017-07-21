@@ -122,7 +122,7 @@
 (use-package haskell-emacs     :ensure t :pin "melpa")
 (use-package haskell-mode      :ensure t :pin "melpa")
 (use-package hindent           :ensure t :pin "melpa")
-(use-package ido-ubiquitous    :ensure t :pin "melpa")
+(use-package ido-completing-read+ :ensure t :pin "melpa")
 (use-package idris-mode        :ensure t :pin "melpa")
 (use-package intero            :ensure t :pin "melpa")
 (use-package js2-mode          :ensure t :pin "melpa")
