@@ -90,7 +90,11 @@
 (use-package company-ghci      :ensure t :pin "melpa")
 (use-package deft              :ensure t :pin "melpa")
 (use-package erlang            :ensure t :pin "melpa")
-(use-package es-mode           :ensure t :pin "melpa")
+(use-package es-mode
+  :ensure t
+  :pin "melpa"
+  :config
+  (setq es-always-pretty-print t))
 (use-package flycheck          :ensure t :pin "melpa")
 (use-package flycheck-haskell  :ensure t :pin "melpa")
 (use-package flycheck-rust     :ensure t :pin "melpa")
