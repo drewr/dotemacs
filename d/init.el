@@ -159,6 +159,17 @@
               ("M-)" . paredit-forward-slurp-sexp)
               ("M-(" . paredit-forward-barf-sexp)))
 
+(use-package popwin
+  :ensure t
+  :pin "melpa"
+  :config
+  (popwin-mode 1)
+  (push '("^\\*ES:.*\\*$"
+          :regexp t
+          :position right
+          :stick t
+          :width 80) popwin:special-display-config))
+
 (use-package puppet-mode     :ensure t :pin "melpa")
 (use-package purescript-mode :ensure t :pin "melpa")
 
