@@ -94,7 +94,8 @@
   :ensure t
   :pin "melpa"
   :config
-  (setq es-always-pretty-print t))
+  (setq es-always-pretty-print t
+        es-warn-on-delete-query nil))
 (use-package flycheck          :ensure t :pin "melpa")
 (use-package flycheck-haskell  :ensure t :pin "melpa")
 (use-package flycheck-rust     :ensure t :pin "melpa")
