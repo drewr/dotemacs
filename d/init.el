@@ -66,7 +66,11 @@
   (setq cider-repl-history-size 10000
         cider-repl-history-file "~/.cider.history.el"
         cider-test-infer-test-ns '(lambda (ns) ns)
-        cider-repl-display-help-banner nil))
+        cider-repl-display-help-banner nil
+        cider-cljs-lein-repl
+        "(do (require 'figwheel-sidecar.repl-api)
+           (figwheel-sidecar.repl-api/start-figwheel!)
+           (figwheel-sidecar.repl-api/cljs-repl))"))
 
 (use-package clojure-mode
   :ensure t
