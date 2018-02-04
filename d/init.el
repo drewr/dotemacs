@@ -362,6 +362,7 @@
       org-agenda-files (quote ("~/.org/PERSONAL.org"
                                "~/.org/clients"
                                "~/.org/orgs/elastic/people"
+                               "~/.org/orgs/elastic/projects"
                                "~/.org/orgs/elastic/teams"))
       org-log-done t
       org-agenda-show-all-dates t
