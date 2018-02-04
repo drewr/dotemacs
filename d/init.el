@@ -208,7 +208,6 @@
   :ensure t
   :config
   (setq racer-cmd "~/.cargo/bin/racer")
-  (setq racer-rust-src-path "~/src/rust-lang/rust/src")
 
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
