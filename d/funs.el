@@ -166,3 +166,26 @@ Symbols matching the text at point are put first in the completion list."
   (save-excursion
     (search-backward-regexp "https?://" nil nil arg)
     (browse-url-at-point)))
+
+(defun aar/org-insert-github-link (link)
+  "Takes a link like:
+
+    https://github.com/org/project/issues/123
+
+and returns an org-formatted link:
+
+    \[\[https://github.com/org/project/issues/123\]\[project\#123\]\]
+"
+  (interactive "sGitHub link: ")
+  (let* ((xs (split-string link "/"))
+         (project (elt xs 4))
+         (link-type (elt xs 5))
+         (ordinal (elt xs 6))
+         (org-link (lambda (proj ord)
+                     (let* ((description (string-join (list proj ord) "#")))
+                       (format "[[%s][%s]]" link description)))))
+    (insert
+     (pcase link-type
+       ("issues" (apply org-link project (list ordinal)))
+       ("pull" (apply org-link project (list ordinal)))
+       (t link)))))

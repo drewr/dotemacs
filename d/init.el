@@ -147,7 +147,10 @@
 
 (use-package org
   :ensure org-plus-contrib
-  :pin "org")
+  :pin "org"
+  :bind
+  (:map org-mode-map
+        ("C-c C-g" . aar/org-insert-github-link)))
 
 (use-package org-journal
   :ensure t
