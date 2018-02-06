@@ -151,9 +151,9 @@ Symbols matching the text at point are put first in the completion list."
   (kmacro-exec-ring-item (quote ("13bES.org" 0 "%d")) arg))
 
 (defun aar/pretty-json (&optional arg) "Keyboard macro."
-  (interactive "p")
-  (kmacro-exec-ring-item
-   (quote ("|python -mjson.tool" 0 "%d")) arg))
+       (interactive "p")
+       (kmacro-exec-ring-item
+        (quote ("|python -mjson.tool" 0 "%d")) arg))
 
 (defun save-buffer-if-visiting-file (&optional args)
   "Save the current buffer only if it is visiting a file"
