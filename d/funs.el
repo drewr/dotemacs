@@ -167,6 +167,16 @@ Symbols matching the text at point are put first in the completion list."
     (search-backward-regexp "https?://" nil nil arg)
     (browse-url-at-point)))
 
+(defun take-string (n str)
+  (let* ()
+    (if (<= 0 n (string-bytes str))
+        (string-join
+         (subseq
+          (map 'list #'char-to-string (string-to-list str))
+          0 n)
+         "")
+      str)))
+
 (defun aar/org-insert-github-link (url)
   "Takes a link like:
 
@@ -183,10 +193,13 @@ and returns an org-formatted link:
          (link-type (elt file-parts 3))
          (ordinal (elt file-parts 4))
          (org-link (lambda (proj ord)
-                     (let* ((description (string-join (list proj ord) "#")))
-                       (format "[[%s][%s]]" url description)))))
+                     (let ((description (string-join (list proj ord) "#")))
+                       (format "[[%s][%s]]" url description))))
+         (short-sha (lambda (sha)
+                      (take-string 7 sha))))
     (insert
      (pcase link-type
        ("issues" (apply org-link project (list ordinal)))
        ("pull" (apply org-link project (list ordinal)))
-       (t link)))))
+       ("commit" (apply org-link project (list (apply short-sha ordinal nil))))
+       (_ url)))))
