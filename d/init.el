@@ -145,9 +145,11 @@
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
 
+(use-package org-agenda)
 (use-package org
   :ensure org-plus-contrib
   :pin "org"
+  :after (org-agenda)
   :bind
   (:map org-mode-map
         ("C-c C-g" . aar/org-insert-github-link)
