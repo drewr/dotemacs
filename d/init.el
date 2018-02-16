@@ -121,9 +121,16 @@
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
+
 (use-package haskell-emacs     :ensure t :pin "melpa")
-(use-package haskell-mode      :ensure t :pin "melpa")
-(use-package hindent           :ensure t :pin "melpa")
+(use-package hindent :ensure t :pin "melpa")
+(use-package haskell-mode
+  :ensure t
+  :after (hindent)
+  :pin "melpa"
+  :config
+  (add-hook 'haskell-mode-hook 'hindent-mode))
+
 (use-package ido-completing-read+ :ensure t :pin "melpa")
 (use-package idris-mode        :ensure t :pin "melpa")
 (use-package intero            :ensure t :pin "melpa")
@@ -322,16 +329,6 @@
 
 (add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
 (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
-
-;; haskell
-
-(require 'hindent)
-
-(defun aar/haskell-mode-hook ()
-  (intero-mode))
-
-(add-hook 'haskell-mode-hook 'aar/haskell-mode-hook)
-(add-hook 'haskell-mode-hook 'hindent-mode)
 
 ;; ocaml
 
