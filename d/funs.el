@@ -203,3 +203,8 @@ and returns an org-formatted link:
        ("pull" (apply org-link project (list ordinal)))
        ("commit" (apply org-link project (list (apply short-sha ordinal nil))))
        (_ url)))))
+
+(defun aar/org-agenda-save ()
+  (interactive)
+  (org-save-all-org-buffers)
+  (call-process "saveorg" nil "*saveorg*"))
