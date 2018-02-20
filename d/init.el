@@ -429,6 +429,7 @@
       erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
                                 "NAMES" "324" "329" "332" "333" "353" "477"
                                 "NOTICE")
+      erc-hide-list '("JOIN" "QUIT")
       erc-encoding-coding-alist '(("#emacs" . utf-8))
       erc-current-nick-highlight-type 'nick
       erc-max-buffer-size 100000
