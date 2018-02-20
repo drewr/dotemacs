@@ -89,6 +89,7 @@
 (use-package company           :ensure t :pin "melpa")
 (use-package company-cabal     :ensure t :pin "melpa")
 (use-package company-ghci      :ensure t :pin "melpa")
+
 (use-package deft              :ensure t :pin "melpa")
 (use-package erlang            :ensure t :pin "melpa")
 (use-package es-mode
@@ -122,14 +123,28 @@
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
 
+;; Haskell
+
+(use-package dante
+  :ensure t
+  :after haskell-mode
+  :commands 'dante-mode
+  :init
+  (add-hook 'haskell-mode-hook 'dante-mode)
+  (add-hook 'haskell-mode-hook 'flycheck-mode))
+
 (use-package haskell-emacs     :ensure t :pin "melpa")
+
 (use-package hindent :ensure t :pin "melpa")
+
 (use-package haskell-mode
   :ensure t
   :after (hindent)
   :pin "melpa"
   :config
   (add-hook 'haskell-mode-hook 'hindent-mode))
+
+;; ===================================================================
 
 (use-package ido-completing-read+ :ensure t :pin "melpa")
 (use-package idris-mode        :ensure t :pin "melpa")
