@@ -9,3 +9,4 @@
              '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 (package-refresh-contents)
+(package-install 'use-package)

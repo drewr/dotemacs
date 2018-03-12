@@ -20,9 +20,6 @@
 (load-custom "funs")
 (load-custom "sonian")
 
-(add-lisp-dir "use-package")
-(require 'use-package)
-
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
@@ -46,6 +43,7 @@
 (add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
+(require 'use-package)
 
 (use-package adoc-mode    :ensure t :pin "melpa")
 (use-package arduino-mode :ensure t :pin "melpa")
