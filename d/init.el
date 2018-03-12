@@ -177,39 +177,12 @@
    ("C-c C-g" . aar/org-insert-github-link)
    :map
    org-agenda-mode-map
-   ("s" . aar/org-agenda-save))
-  :config
-  ;; (add-hook 'org-mode-hook
-  ;;           (lambda ()
-  ;;             (setq fill-column 80)
-  ;;             (auto-fill-mode)
-  ;;             (remove-hook 'haskell-mode-hook 'flycheck-mode t)
-  ;;             ))
-  (setq org-publish-project-alist
-        '(("intro-to-infra-reveal"
-           :base-directory "~/.org/talks/intro-to-infra"
-           :recursive t
-           :publishing-directory "/tmp"
-           :publishing-function org-reveal-publish-to-reveal
-           :section-numbers nil
-           :with-toc nil
-           :html-head "<link href=\"https://fonts.googleapis.com/css\?family=Oswald|Rammetto+One|Roboto\" rel=\"stylesheet\">")
-          ("intro-to-infra-attach"
-           :base-directory "~/.org/talks/intro-to-infra"
-           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
-           :recursive t
-           :publishing-directory "/tmp"
-           :publishing-function org-publish-attachment
-           )
-          ("intro-to-infra" :components ("intro-to-infra-reveal"
-                                         "intro-to-infra-attach")))
-        org-reveal-title-slide "<h2>%t</h2>
-"))
+   ("s" . aar/org-agenda-save)))
 
 (use-package org-journal
   :ensure t
   :pin "melpa"
-  :config (setq org-journal-dir "~/src/org/journal/"))
+  :init (setq org-journal-dir "~/src/org/journal/"))
 
 (use-package paredit
   :ensure t
@@ -397,6 +370,11 @@
 
 ;; org
 
+;; Hack to fix the #+TITLE stuff with ox-publish
+;; https://github.com/yjwen/org-reveal/issues/171#issuecomment-168372894
+(let ((current-prefix-arg 1))
+  (call-interactively 'org-reload))
+
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cc" 'org-capture)
@@ -419,6 +397,27 @@
       org-clock-modeline-total 'current
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/.org/mobile-inbox.org")
+
+(setq org-publish-project-alist
+      '(("intro-to-infra-reveal"
+         :base-directory "~/.org/talks/intro-to-infra"
+         :recursive t
+         :publishing-directory "/tmp"
+         :publishing-function org-reveal-publish-to-reveal
+         :section-numbers nil
+         :with-toc nil
+         :html-head "<link href=\"https://fonts.googleapis.com/css\?family=Oswald|Rammetto+One|Roboto\" rel=\"stylesheet\">")
+        ("intro-to-infra-attach"
+         :base-directory "~/.org/talks/intro-to-infra"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
+         :recursive t
+         :publishing-directory "/tmp"
+         :publishing-function org-publish-attachment
+         )
+        ("intro-to-infra" :components ("intro-to-infra-reveal"
+                                       "intro-to-infra-attach")))
+      org-reveal-title-slide "<h1>%t</h1>")
+
 (setq org-todo-keywords
       '((sequence "TODO" "WAITING" "DEFERRED"
                   "|" "DONE" "DELEGATED" "CANCELED")))
@@ -442,6 +441,13 @@
         ("n" "Note" entry
          (file+headline "~/.org/notes.org" "Notes")
          "* %u %?" :prepend t)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq fill-column 80)
+            (auto-fill-mode)
+            (remove-hook 'haskell-mode-hook 'flycheck-mode t)
+            ))
 
 ;; erc
 
