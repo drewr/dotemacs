@@ -120,6 +120,7 @@
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
+(use-package htmlize           :ensure t :pin "melpa")
 
 ;; Haskell
 
@@ -127,7 +128,7 @@
   :ensure t
   :after haskell-mode
   :commands 'dante-mode
-  :init
+  :config
   (add-hook 'haskell-mode-hook 'dante-mode)
   (add-hook 'haskell-mode-hook 'flycheck-mode))
 
@@ -162,25 +163,53 @@
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
 
-(use-package org-agenda)
+(use-package ox-pandoc      :ensure t)
+
+(use-package ox-reveal      :ensure t :pin "melpa")
+
 (use-package org
   :ensure org-plus-contrib
   :pin "org"
   :after (org-agenda)
   :bind
-  (:map org-mode-map
-        ("C-c C-g" . aar/org-insert-github-link)
-   :map org-agenda-mode-map
-        ("s" . aar/org-agenda-save)))
+  (:map
+   org-mode-map
+   ("C-c C-g" . aar/org-insert-github-link)
+   :map
+   org-agenda-mode-map
+   ("s" . aar/org-agenda-save))
+  :config
+  ;; (add-hook 'org-mode-hook
+  ;;           (lambda ()
+  ;;             (setq fill-column 80)
+  ;;             (auto-fill-mode)
+  ;;             (remove-hook 'haskell-mode-hook 'flycheck-mode t)
+  ;;             ))
+  (setq org-publish-project-alist
+        '(("intro-to-infra-reveal"
+           :base-directory "~/.org/talks/intro-to-infra"
+           :recursive t
+           :publishing-directory "/tmp"
+           :publishing-function org-reveal-publish-to-reveal
+           :section-numbers nil
+           :with-toc nil
+           :html-head "<link href=\"https://fonts.googleapis.com/css\?family=Oswald|Rammetto+One|Roboto\" rel=\"stylesheet\">")
+          ("intro-to-infra-attach"
+           :base-directory "~/.org/talks/intro-to-infra"
+           :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
+           :recursive t
+           :publishing-directory "/tmp"
+           :publishing-function org-publish-attachment
+           )
+          ("intro-to-infra" :components ("intro-to-infra-reveal"
+                                         "intro-to-infra-attach")))
+        org-reveal-title-slide "<h2>%t</h2>
+"))
 
 (use-package org-journal
   :ensure t
   :pin "melpa"
-  :init (setq org-journal-dir "~/src/org/journal/"))
-;; this doesn't work with org 9
-;; (use-package ox-pandoc
-;;   :ensure t
-;;   :config (require 'ox-pandoc))
+  :config (setq org-journal-dir "~/src/org/journal/"))
 
 (use-package paredit
   :ensure t
@@ -413,9 +442,6 @@
         ("n" "Note" entry
          (file+headline "~/.org/notes.org" "Notes")
          "* %u %?" :prepend t)))
-
-(add-hook 'org-mode-hook (lambda () (setq fill-column 80)))
-(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;; erc
 

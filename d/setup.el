@@ -10,3 +10,6 @@
 (package-initialize)
 (package-refresh-contents)
 (package-install 'use-package)
+(package-install 'async)
+(require 'async)
+(async-bytecomp-package-mode 1)
