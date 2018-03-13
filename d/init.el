@@ -372,8 +372,14 @@
 
 ;; Hack to fix the #+TITLE stuff with ox-publish
 ;; https://github.com/yjwen/org-reveal/issues/171#issuecomment-168372894
-(let ((current-prefix-arg 1))
-  (call-interactively 'org-reload))
+;; ...except it started causing recursive loading, so you have to do
+;; it after Emacs starts.
+(defun aar/reload-org ()
+  (let ((current-prefix-arg 1))
+    (call-interactively 'org-reload)))
+
+;; Unfortunately this doesn't work on startup
+(add-hook 'compilation-finish-functions 'aar/reload-org)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
