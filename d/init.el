@@ -398,11 +398,18 @@
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/.org/mobile-inbox.org")
 
+;; To use reveal.js:
+;;
+;;   cd ~/tmp \
+;;     && git clone --depth=1 https://github.com/hakimel/reveal.js.git \
+;;     && cd reveal.js \
+;;     && npm install \
+;;     && http-server
 (setq org-publish-project-alist
       '(("intro-to-infra-reveal"
          :base-directory "~/.org/talks/intro-to-infra"
          :recursive t
-         :publishing-directory "/tmp"
+         :publishing-directory "~/tmp/reveal.js"
          :publishing-function org-reveal-publish-to-reveal
          :section-numbers nil
          :with-toc nil
@@ -411,7 +418,7 @@
          :base-directory "~/.org/talks/intro-to-infra"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf"
          :recursive t
-         :publishing-directory "/tmp"
+         :publishing-directory "~/tmp/reveal.js"
          :publishing-function org-publish-attachment
          )
         ("intro-to-infra" :components ("intro-to-infra-reveal"
