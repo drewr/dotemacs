@@ -458,7 +458,6 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (setq fill-column 80)
-            (auto-fill-mode)
             (remove-hook 'haskell-mode-hook 'flycheck-mode t)
             ))
 
