@@ -208,3 +208,19 @@ and returns an org-formatted link:
   (interactive)
   (org-save-all-org-buffers)
   (call-process "saveorg" nil "*saveorg*"))
+
+(defun aar/convert-org-buffer-to-gmail ()
+  (interactive)
+  (let ((md-buffer (concat (buffer-name) ".md")))
+    (shell-command-on-region
+     (point-min) (point-max)
+     (string-join ["pandoc"
+                   "-f org"
+                   "-t gfm"
+                   "--wrap=none"
+                   ]
+                  " ")
+     md-buffer)
+    (set-buffer md-buffer)
+    (normal-mode)
+    (kill-ring-save (point-min) (point-max))))
