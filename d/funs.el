@@ -224,3 +224,8 @@ and returns an org-formatted link:
     (set-buffer md-buffer)
     (normal-mode)
     (kill-ring-save (point-min) (point-max))))
+
+(defun aar/org-journal-today-start ()
+  (interactive)
+  (insert
+   (concat "** " (upcase (format-time-string "%Y-%m-%d %a")) "\n*** ")))
