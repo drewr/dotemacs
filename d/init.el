@@ -73,7 +73,10 @@
   :config
   (add-hook 'clojure-mode-hook 'aar/lispy-parens)
   (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
-  (add-hook 'clojure-mode-hook 'whitespace-mode))
+  (add-hook 'clojure-mode-hook 'whitespace-mode)
+  (put-clojure-indent 'assoc 1)
+  (put-clojure-indent 'assoc-in 1)
+  (put-clojure-indent 'match 1))
 
 (use-package inf-clojure
   :ensure t
