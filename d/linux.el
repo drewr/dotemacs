@@ -1,4 +1,6 @@
-(setenv "PATH" (concat (expand-file-name "~/bin") ":"
+(setenv "PATH" (concat (expand-file-name "~/.nix-profile/bin") ":"
+                       (expand-file-name "~/.local/bin") ":"
+                       (expand-file-name "~/bin") ":"
                        (getenv "PATH")))
 
 (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
