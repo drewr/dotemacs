@@ -400,7 +400,7 @@
       org-agenda-ndays 7
       org-agenda-start-on-weekday nil
       org-agenda-start-with-log-mode t
-      org-export-publishing-directory "~/.org/export"
+      org-export-publishing-directory "~/tmp/org/export"
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-reverse-note-order t
