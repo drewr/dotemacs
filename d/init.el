@@ -390,11 +390,7 @@
 (global-set-key "\C-cc" 'org-capture)
 
 (setq org-directory "~/.org"
-      org-agenda-files (quote ("~/.org/PERSONAL.org"
-                               "~/.org/clients"
-                               "~/.org/orgs/elastic/people"
-                               "~/.org/orgs/elastic/projects"
-                               "~/.org/orgs/elastic/teams"))
+      org-agenda-files "~/.org/agenda-files.txt"
       org-log-done t
       org-agenda-show-all-dates t
       org-agenda-ndays 7
