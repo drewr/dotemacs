@@ -391,6 +391,8 @@
 
 (setq org-directory "~/.org"
       org-agenda-files "~/.org/agenda-files.txt"
+      org-refile-targets (quote ((nil :maxlevel . 3)
+                                 (org-agenda-files :maxlevel . 2)))
       org-log-done t
       org-agenda-show-all-dates t
       org-agenda-ndays 7
