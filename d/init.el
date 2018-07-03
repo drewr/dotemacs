@@ -391,8 +391,10 @@
 
 (setq org-directory "~/.org"
       org-agenda-files "~/.org/agenda-files.txt"
-      org-refile-targets (quote ((nil :maxlevel . 3)
+      org-refile-targets (quote ((("ELASTIC.org") :maxlevel . 4)
+                                 (nil :maxlevel . 3)
                                  (org-agenda-files :maxlevel . 2)))
+      org-refile-use-outline-path t
       org-log-done t
       org-agenda-show-all-dates t
       org-agenda-ndays 7
@@ -448,11 +450,16 @@
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
-        ("e" "Elasticsearch" entry
-         (file+headline "clients/ES.org" "Tasks")
-         "* TODO %?\n  %u" :prepend t)
+        ("e" "Elastic" entry (file+olp+datetree "ELASTIC.org" "Journal")
+         "* %? %^G"
+         :jump-to-captured t
+         :empty-lines-after 0
+         :clock-in t
+         :clock-keep t
+         :tree-type week
+         )
         ("j" "Journal" entry (file+datetree "~/.org/notes.org")
-         "* %?\nEntered on %U")
+         "* %?\n  Entered on %T")
         ("n" "Note" entry
          (file+headline "~/.org/notes.org" "Notes")
          "* %u %?" :prepend t)))
