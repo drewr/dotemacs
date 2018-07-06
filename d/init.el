@@ -391,9 +391,7 @@
 
 (setq org-directory "~/.org"
       org-agenda-files "~/.org/agenda-files.txt"
-      org-refile-targets (quote ((("ELASTIC.org") :maxlevel . 4)
-                                 (nil :maxlevel . 3)
-                                 (org-agenda-files :maxlevel . 2)))
+      org-refile-targets (quote ((("ELASTIC.org") :maxlevel . 4)))
       org-refile-use-outline-path t
       org-log-done t
       org-agenda-show-all-dates t
