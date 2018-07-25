@@ -461,7 +461,7 @@
          "* TODO %? %^G"
          :tree-type week
          )
-        ("j" "Journal" entry (file+datetree "~/.org/notes.org")
+        ("j" "Journal" entry (file+datetree "~/.org/notes.org" "Journal")
          "* %?\n  Entered on %T")
         ("n" "Note" entry
          (file+headline "~/.org/notes.org" "Notes")
