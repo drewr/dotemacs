@@ -456,9 +456,9 @@
          :clock-keep t
          :tree-type week
          )
-        ("r" "Elastic meeting reminder"
+        ("r" "Elastic reminder"
          entry (file+olp+datetree "ELASTIC.org" "Journal")
-         "* TODO %? %^G"
+         "* TODO %? %^G\n  %T"
          :tree-type week
          )
         ("j" "Journal" entry (file+datetree "~/.org/notes.org" "Journal")
