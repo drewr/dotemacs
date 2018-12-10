@@ -441,9 +441,18 @@
 (setq org-default-notes-file "~/.org/notes.org")
 
 (setq org-capture-templates
-      '(("p" "Personal task" entry
+      '(("p" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
+        ("q" "Personal Task" entry
+         (file+headline "PERSONAL.org" "Tasks")
+         "* %? %^G"
+         :jump-to-captured t
+         :empty-lines-after 0
+         :clock-in t
+         :clock-keep t
+         :prepend t
+         )
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
