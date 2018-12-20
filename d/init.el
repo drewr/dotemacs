@@ -92,6 +92,7 @@
 (use-package company-ghci      :ensure t :pin "melpa")
 
 (use-package deft              :ensure t :pin "melpa")
+(use-package dhall-mode        :ensure t :mode "\\.dhall\\'")
 (use-package erlang            :ensure t :pin "melpa")
 (use-package es-mode
   :ensure t
