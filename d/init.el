@@ -442,34 +442,32 @@
 (setq org-default-notes-file "~/.org/notes.org")
 
 (setq org-capture-templates
-      '(("p" "Personal TODO" entry
-         (file+headline "PERSONAL.org" "Tasks")
-         "* TODO %?\n  %u" :prepend t)
-        ("q" "Personal Task" entry
+      '(("p" "Personal task - clocked-in" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* %? %^G"
          :jump-to-captured t
          :empty-lines-after 0
          :clock-in t
          :clock-keep t
-         :prepend t
-         )
+         :prepend t)
+        ("P" "Personal TODO" entry
+         (file+headline "PERSONAL.org" "Tasks")
+         "* TODO %?\n  %u" :prepend t)
+        ("e" "Elastic task - clocked-in" entry
+         (file+olp+datetree "ELASTIC.org" "Journal")
+         "* %? %^G"
+         :jump-to-captured t
+         :empty-lines-after 0
+         :clock-in t
+         :clock-keep t
+         :tree-type week)
+        ("E" "Elastic reminder"
+         entry (file+olp+datetree "ELASTIC.org" "Journal")
+         "* TODO %? %^G\n  %T"
+         :tree-type week)
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
-        ("e" "Elastic" entry (file+olp+datetree "ELASTIC.org" "Journal")
-         "* %? %^G"
-         :jump-to-captured t
-         :empty-lines-after 0
-         :clock-in t
-         :clock-keep t
-         :tree-type week
-         )
-        ("r" "Elastic reminder"
-         entry (file+olp+datetree "ELASTIC.org" "Journal")
-         "* TODO %? %^G\n  %T"
-         :tree-type week
-         )
         ("j" "Journal" entry (file+datetree "~/.org/notes.org" "Journal")
          "* %?\n  Entered on %T")
         ("n" "Note" entry
@@ -479,8 +477,7 @@
 (add-hook 'org-mode-hook
           (lambda ()
             (setq fill-column 80)
-            (remove-hook 'haskell-mode-hook 'flycheck-mode t)
-            ))
+            (remove-hook 'haskell-mode-hook 'flycheck-mode t)))
 
 ;; erc
 
