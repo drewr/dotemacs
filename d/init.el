@@ -444,7 +444,7 @@
 (setq org-capture-templates
       '(("p" "Personal task - clocked-in" entry
          (file+headline "PERSONAL.org" "Tasks")
-         "* %? %^G"
+         "* %? %^G\n"
          :jump-to-captured t
          :empty-lines-after 0
          :clock-in t
@@ -452,7 +452,7 @@
          :prepend t)
         ("P" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
-         "* TODO %?\n  %u" :prepend t)
+         "* TODO %?\n  %u\n" :prepend t)
         ("e" "Elastic task - clocked-in" entry
          (file+olp+datetree "ELASTIC.org" "Journal")
          "* %? %^G"
