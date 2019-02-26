@@ -390,17 +390,20 @@
 (global-set-key "\C-cc" 'org-capture)
 
 (setq org-directory "~/.org"
-      org-agenda-files "~/.org/agenda-files.txt"
       org-refile-targets (quote ((("ELASTIC.org") :maxlevel . 4)))
       org-refile-use-outline-path t
       org-log-done t
+      org-agenda-files "~/.org/agenda-files.txt"
+      org-agenda-span 'day
       org-agenda-show-all-dates t
       org-agenda-ndays 7
       org-agenda-start-on-weekday nil
       org-agenda-start-with-log-mode t
-      org-export-publishing-directory "~/tmp/org/export"
+      org-agenda-start-with-follow-mode t
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
+      org-agenda-start-with-clockreport-mode t
+      org-export-publishing-directory "~/tmp/org/export"
       org-reverse-note-order t
       org-clock-modeline-total 'current
       org-mobile-directory "~/Dropbox/MobileOrg"
