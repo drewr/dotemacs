@@ -161,7 +161,7 @@
 
 (use-package lua-mode       :ensure t :pin "melpa")
 (use-package magit          :ensure t :pin "melpa")
-(use-package magit-gh-pulls :ensure t :pin "melpa")
+;;(use-package magit-gh-pulls :ensure t :pin "melpa")
 (use-package markdown-mode  :ensure t :pin "melpa")
 (use-package mustache-mode  :ensure t :pin "melpa")
 (use-package nim-mode       :ensure t :pin "melpa")
