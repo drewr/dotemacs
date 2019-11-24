@@ -399,7 +399,7 @@
       org-agenda-ndays 7
       org-agenda-start-on-weekday nil
       org-agenda-start-with-log-mode t
-      org-agenda-start-with-follow-mode t
+      org-agenda-start-with-follow-mode nil
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-agenda-start-with-clockreport-mode t
