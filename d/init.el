@@ -251,6 +251,7 @@
 (use-package merlin         :ensure t :pin "melpa")
 (use-package yaml-mode      :ensure t :pin "melpa")
 (use-package yasnippet      :ensure t :pin "melpa")
+(use-package zig-mode       :ensure t :pin "melpa")
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
