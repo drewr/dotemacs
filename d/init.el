@@ -393,7 +393,7 @@
       org-agenda-start-with-follow-mode nil
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
-      org-agenda-start-with-clockreport-mode t
+      org-agenda-start-with-clockreport-mode nil
       org-export-publishing-directory "~/tmp/org/export"
       org-reverse-note-order t
       org-clock-modeline-total 'current
