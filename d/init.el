@@ -127,24 +127,14 @@
 
 ;; Haskell
 
-(use-package dante
-  :ensure t
-  :after haskell-mode
-  :commands 'dante-mode
-  :config
-  (add-hook 'haskell-mode-hook 'dante-mode)
-  (add-hook 'haskell-mode-hook 'flycheck-mode))
+(use-package lsp-mode
+  :hook (haskell-mode . lsp)
+  :commands lsp
+  :ensure t)
 
-(use-package haskell-emacs     :ensure t :pin "melpa")
+(use-package lsp-haskell  :ensure t)
 
-(use-package hindent :ensure t :pin "melpa")
-
-(use-package haskell-mode
-  :ensure t
-  :after (hindent)
-  :pin "melpa"
-  :config
-  (add-hook 'haskell-mode-hook 'hindent-mode))
+(use-package haskell-mode :ensure t)
 
 ;; ===================================================================
 
