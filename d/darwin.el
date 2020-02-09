@@ -5,6 +5,7 @@
 (add-to-list 'exec-path "/usr/local/bin")
 (add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
 (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
 
 ;; for M-x shell
 (setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
