@@ -374,7 +374,10 @@
     (call-interactively 'org-reload)))
 
 ;; Unfortunately this doesn't work on startup
-(add-hook 'compilation-finish-functions 'aar/reload-org)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (add-hook
+             'compilation-finish-functions 'aar/reload-org nil 'local)))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
