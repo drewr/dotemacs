@@ -401,7 +401,8 @@
       org-reverse-note-order t
       org-clock-modeline-total 'current
       org-mobile-directory "~/Dropbox/MobileOrg"
-      org-mobile-inbox-for-pull "~/.org/mobile-inbox.org")
+      org-mobile-inbox-for-pull "~/.org/mobile-inbox.org"
+      org-attach-use-inheritance t)
 
 ;; To use reveal.js:
 ;;
