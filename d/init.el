@@ -384,7 +384,8 @@
 (global-set-key "\C-cc" 'org-capture)
 
 (setq org-directory "~/.org"
-      org-refile-targets (quote ((("ELASTIC.org") :maxlevel . 4)))
+      org-refile-targets '((nil :maxlevel . 4)
+                           (org-agenda-files :maxlevel . 4))
       org-refile-use-outline-path t
       org-log-done t
       org-agenda-files "~/.org/agenda-files.txt"
