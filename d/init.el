@@ -52,7 +52,7 @@
 
 (use-package cider
   :ensure t
-  :pin "melpa-stable"
+  :pin "melpa"
   :bind
   (:map cider-mode-map
         ("C-c C-n" . nil)
