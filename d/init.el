@@ -176,7 +176,7 @@
 (use-package org-journal
   :ensure t
   :pin "melpa"
-  :init (setq org-journal-dir "~/src/org/journal/"))
+  :init (setq org-journal-dir "~/.org/journal/"))
 
 (use-package org-roam
   :ensure t
