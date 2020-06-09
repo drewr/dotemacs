@@ -71,12 +71,16 @@
   :ensure t
   :pin "melpa"
   :config
+  (require 'flycheck-clj-kondo)
   (add-hook 'clojure-mode-hook 'aar/lispy-parens)
   (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
   (add-hook 'clojure-mode-hook 'whitespace-mode)
   (put-clojure-indent 'assoc 1)
   (put-clojure-indent 'assoc-in 1)
   (put-clojure-indent 'match 1))
+
+(use-package flycheck-clj-kondo
+  :ensure t)
 
 (use-package inf-clojure
   :ensure t
