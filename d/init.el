@@ -47,6 +47,7 @@
 
 (use-package adoc-mode    :ensure t :pin "melpa")
 (use-package arduino-mode :ensure t :pin "melpa")
+(use-package async        :ensure t :pin "melpa")
 (use-package bbdb         :ensure t :pin "melpa")
 (use-package cargo        :ensure t :pin "melpa")
 
@@ -127,6 +128,14 @@
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
+
+(use-package helm
+  :ensure t
+  :pin "melpa"
+  :requires (async popup)
+  :bind (("M-x" . helm-M-x)
+         ("C-x C-f" . helm-find-files)))
+
 (use-package htmlize           :ensure t :pin "melpa")
 
 ;; Haskell
@@ -137,12 +146,8 @@
   :ensure t)
 
 (use-package lsp-haskell  :ensure t)
-
 (use-package haskell-mode :ensure t)
 
-;; ===================================================================
-
-(use-package ido-completing-read+ :ensure t :pin "melpa")
 (use-package idris-mode        :ensure t :pin "melpa")
 (use-package intero            :ensure t :pin "melpa")
 (use-package js2-mode          :ensure t :pin "melpa")
@@ -204,6 +209,10 @@
               ("M-)" . paredit-forward-slurp-sexp)
               ("M-(" . paredit-forward-barf-sexp)))
 
+(use-package popup
+  :ensure t
+  :pin "melpa")
+
 (use-package popwin
   :ensure t
   :pin "melpa"
@@ -257,8 +266,6 @@
 (setq uniquify-buffer-name-style 'forward)
 
 (recentf-mode 1)
-(ido-mode t)
-(setq ido-mode-everywhere t)
 (column-number-mode 1)
 (setq display-time t
       display-time-24hr-format t)
@@ -270,7 +277,6 @@
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "C-c C-n") 'clean-up-buffer)
 (global-set-key (kbd "C-c C-j") 'aar/pretty-json)
-(global-set-key (kbd "C-x f") 'recentf-ido-find-file)
 (global-set-key (kbd "C-x F") 'find-function)
 (global-set-key (kbd "C-M-h") 'backward-kill-word)
 (global-set-key (kbd "C-c y") 'bury-buffer)
