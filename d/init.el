@@ -140,6 +140,9 @@
   :bind (("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)))
 
+(use-package helm-info
+  :bind ("C-h r" . helm-info-emacs))
+
 (use-package htmlize           :ensure t :pin "melpa")
 
 (use-package lsp-mode
