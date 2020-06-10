@@ -135,6 +135,8 @@
   :ensure t
   :pin "melpa"
   :requires (async popup)
+  :config
+  (helm-mode 1)
   :bind (("M-x" . helm-M-x)
          ("C-x C-f" . helm-find-files)))
 
