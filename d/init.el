@@ -528,7 +528,8 @@
       erc-autojoin-channels-alist
       '(("freenode.net" "#emacs" "#84115" "#elasticsearch"
          "#purescript" "#haskell" "#haskell-beginners" "#s6"
-         "#nixos" "##rust" "#nim" "#fennel" "#zig")))
+         "#nixos" "##rust" "#nim" "#fennel" "#zig"
+         "#org-roam")))
 
 (define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
 
