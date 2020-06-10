@@ -135,7 +135,6 @@
 (use-package helm
   :ensure t
   :pin "melpa"
-  :requires (async popup)
   :config
   (helm-mode 1))
 
