@@ -32,7 +32,8 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
-
+(eval-after-load 'helm
+    '(require 'helm-config))
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -136,9 +137,13 @@
   :pin "melpa"
   :requires (async popup)
   :config
-  (helm-mode 1)
-  :bind (("M-x" . helm-M-x)
-         ("C-x C-f" . helm-find-files)))
+  (helm-mode 1))
+
+(use-package helm-command
+  :bind (("M-x" . helm-M-x)))
+
+(use-package helm-files
+  :bind (("C-x C-f" . helm-find-files)))
 
 (use-package helm-info
   :bind ("C-h r" . helm-info-emacs))
