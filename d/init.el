@@ -99,12 +99,14 @@
 (use-package deft              :ensure t :pin "melpa")
 (use-package dhall-mode        :ensure t :mode "\\.dhall\\'")
 (use-package erlang            :ensure t :pin "melpa")
+
 (use-package es-mode
   :ensure t
   :pin "melpa"
   :config
   (setq es-always-pretty-print t
         es-warn-on-delete-query nil))
+
 (use-package flycheck          :ensure t :pin "melpa")
 (use-package flycheck-haskell  :ensure t :pin "melpa")
 (use-package flycheck-rust     :ensure t :pin "melpa")
@@ -137,8 +139,6 @@
          ("C-x C-f" . helm-find-files)))
 
 (use-package htmlize           :ensure t :pin "melpa")
-
-;; Haskell
 
 (use-package lsp-mode
   :hook (haskell-mode . lsp)
