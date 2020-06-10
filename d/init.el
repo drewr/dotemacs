@@ -193,6 +193,7 @@
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory "~/Sync/Roam")
+  (org-roam-completion-system 'helm)
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
