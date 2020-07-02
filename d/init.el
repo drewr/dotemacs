@@ -32,8 +32,6 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
-(eval-after-load 'helm
-    '(require 'helm-config))
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -131,22 +129,6 @@
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
-
-(use-package helm
-  :ensure t
-  :pin "melpa"
-  :config
-  (helm-mode 1))
-
-(use-package helm-command
-  :bind (("M-x" . helm-M-x)))
-
-(use-package helm-files
-  :bind (("C-x C-f" . helm-find-files)))
-
-(use-package helm-info
-  :bind ("C-h r" . helm-info-emacs))
-
 (use-package htmlize           :ensure t :pin "melpa")
 
 (use-package lsp-mode
@@ -195,22 +177,6 @@
   :ensure t
   :pin "melpa"
   :init (setq org-journal-dir "~/.org/journal/"))
-
-(use-package org-roam
-  :ensure t
-  :hook
-  (after-init . org-roam-mode)
-  :custom
-  (org-roam-directory "~/Sync/Roam")
-  (org-roam-completion-system 'helm)
-  :bind (:map org-roam-mode-map
-              (("C-c n l" . org-roam)
-               ("C-c n f" . org-roam-find-file)
-               ("C-c n j" . org-roam-jump-to-index)
-               ("C-c n b" . org-roam-switch-to-buffer)
-               ("C-c n g" . org-roam-graph))
-              :map org-mode-map
-              (("C-c n i" . org-roam-insert))))
 
 (use-package paredit
   :ensure t
@@ -276,6 +242,9 @@
 (setq uniquify-buffer-name-style 'forward)
 
 (recentf-mode 1)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
 (column-number-mode 1)
 (setq display-time t
       display-time-24hr-format t)
@@ -544,8 +513,7 @@
       erc-autojoin-channels-alist
       '(("freenode.net" "#emacs" "#84115" "#elasticsearch"
          "#purescript" "#haskell" "#haskell-beginners" "#s6"
-         "#nixos" "##rust" "#nim" "#fennel" "#zig"
-         "#org-roam")))
+         "#nixos" "##rust" "#nim" "#fennel" "#zig")))
 
 (define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
 
