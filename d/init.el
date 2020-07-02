@@ -95,7 +95,29 @@
 (use-package company-cabal     :ensure t :pin "melpa")
 (use-package company-ghci      :ensure t :pin "melpa")
 
-(use-package deft              :ensure t :pin "melpa")
+(use-package deft
+  :ensure t
+  :pin "melpa"
+  :bind
+  ("C-x d" . deft)
+  :custom
+  (deft-extensions '("txt" "tex" "org" "md"))
+  (deft-directory "~/Sync/Notes")
+  (deft-org-mode-title-prefix t)
+  (deft-use-filename-as-title t)
+  (deft-default-extension "org")
+  (deft-file-naming-rules
+    '((noslash . "-")
+      (nospace . "-"))))
+
+(use-package zetteldeft
+  :ensure t
+  :after deft
+  :config (zetteldeft-set-classic-keybindings))
+
+(use-package avy  :ensure t)
+(use-package ace-window  :ensure t)
+
 (use-package dhall-mode        :ensure t :mode "\\.dhall\\'")
 (use-package erlang            :ensure t :pin "melpa")
 
