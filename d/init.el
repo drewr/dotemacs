@@ -48,7 +48,10 @@
 (use-package arduino-mode :ensure t :pin "melpa")
 (use-package async        :ensure t :pin "melpa")
 (use-package bbdb         :ensure t :pin "melpa")
-(use-package cargo        :ensure t :pin "melpa")
+(use-package cargo
+  :ensure t
+  :pin "melpa"
+  :hook (rust-mode . cargo-minor-mode))
 
 (use-package cider
   :ensure t
@@ -91,9 +94,18 @@
   :config
   (add-hook 'clojurescript-mode-hook 'inf-clojure-minor-mode))
 
-(use-package company           :ensure t :pin "melpa")
+(use-package company
+  :ensure t
+  :pin "melpa")
+
 (use-package company-cabal     :ensure t :pin "melpa")
 (use-package company-ghci      :ensure t :pin "melpa")
+
+(use-package company-lsp
+  :ensure t
+  :pin "melpa"
+  :config
+  (push 'company-lsp company-backends))
 
 (use-package deft
   :ensure t
@@ -154,9 +166,11 @@
 (use-package htmlize           :ensure t :pin "melpa")
 
 (use-package lsp-mode
-  :hook (haskell-mode . lsp)
+  :hook ((haskell-mode . lsp))
   :commands lsp
-  :ensure t)
+  :ensure t
+  :config
+  (require 'lsp-clients))
 
 (use-package lsp-haskell  :ensure t)
 (use-package haskell-mode :ensure t)
@@ -242,17 +256,19 @@
 (use-package rust-mode
   :ensure t
   :pin "melpa"
-  :config
-  (add-hook 'rust-mode-hook 'cargo-minor-mode)
-  (add-hook 'rust-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
-  (add-hook 'rust-mode-hook 'flycheck-mode))
+  :hook ((flycheck-mode . flycheck-rust-setup)
+         (rust-mode . (lambda ()
+                        (local-set-key (kbd "C-c TAB") #'rust-format-buffer)))
+         (rust-mode . flycheck-mode)
+         (rust-mode . company-mode))
+  :custom
+  (lsp-rust-server 'rust-analyzer)
+  (lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
 (use-package smex           :ensure t :pin "melpa")
 (use-package textile-mode   :ensure t :pin "melpa")
 (use-package terraform-mode :ensure t :pin "melpa")
+(use-package toml-mode      :ensure t :pin "melpa")
 (use-package tuareg         :ensure t :pin "melpa")
 (use-package utop           :ensure t :pin "melpa")
 (use-package merlin         :ensure t :pin "melpa")
