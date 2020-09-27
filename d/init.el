@@ -167,9 +167,7 @@
 (use-package lsp-mode
   :hook ((haskell-mode . lsp))
   :commands lsp
-  :ensure t
-  :config
-  (require 'lsp-clients))
+  :ensure t)
 
 (use-package lsp-haskell  :ensure t)
 (use-package haskell-mode :ensure t)
