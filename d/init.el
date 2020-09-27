@@ -11,9 +11,8 @@
 ;; For stack-installed utils
 (setenv "PATH" (concat (expand-file-name "~/.local/bin") ":" (getenv "PATH")))
 
-(require 'cl) ; need this for (case)
 (load-custom
- (case system-type
+ (cl-case system-type
    ('darwin "darwin")
    ('gnu/linux "linux")
    ('windows-nt "win32")))
