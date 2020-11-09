@@ -481,7 +481,7 @@
          :prepend t)
         ("P" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
-         "* TODO %?\n  %u\n" :prepend t)
+         "* TODO %?\n  %T\n" :prepend t)
         ("e" "Elastic task - clocked-in" entry
          (file+olp+datetree "ELASTIC.org" "Journal")
          "* %? %^G"
