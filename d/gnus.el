@@ -74,8 +74,7 @@
         ;; (nnimap "testdroid1000"
         ;;         (nnimap-address "imap.gmail.com")
         ;;         (nnimap-authenticator login))
-        (nnml "")
-        (nntp "news.gmane.org")))
+        (nnml "")))
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
