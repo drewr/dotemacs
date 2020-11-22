@@ -17,6 +17,7 @@ install:
 	bin/compile
 
 clean:
+	rm ~/.gnus.d # should just be a symlink
 	rm -rf ~/.emacs.d
 	find . -name \*.elc | xargs rm -f
 
