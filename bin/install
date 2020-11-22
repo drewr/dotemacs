@@ -14,3 +14,6 @@ else
   echo pointing ~/.gnus.d to $GNUS
   ln -snf $GNUS ~/.gnus.d
 fi
+
+echo linking .gnus.elc
+ln -sf ${EMACS}/gnus.elc $HOME/.gnus
