@@ -15,5 +15,5 @@ else
   ln -snf $GNUS ~/.gnus.d
 fi
 
-echo linking .gnus.elc
-ln -sf ${EMACS}/gnus.elc $HOME/.gnus
+echo install gnus.el to $GNUS
+cp $EMACS/gnus.elc $GNUS
