@@ -16,4 +16,4 @@ else
 fi
 
 echo install gnus.el to $GNUS
-cp $EMACS/gnus.elc $GNUS
+cp $EMACS/gnus.el $GNUS
