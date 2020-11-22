@@ -68,7 +68,7 @@
       '((nnimap "aaraines"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-authenticator login))
-        (nnimap "drewrelastic"
+        (nnimap "elastic"
                 (nnimap-address "imap.gmail.com")
                 (nnimap-authenticator login))
         ;; (nnimap "testdroid1000"
@@ -223,9 +223,9 @@ address if only it was present."
          (Face (gnus-face-from-file "~/.face-48.png"))
          (address "aaraines@gmail.com")
          ("X-MSMTP" "gmail"))
-        ("drewrelastic:.*"
+        ("elastic:.*"
          (address "drew@elastic.co")
-         ("X-MSMTP" "drewres"))))
+         ("X-MSMTP" "elastic"))))
 
 ;; format=flowed
 ;; http://article.gmane.org/gmane.emacs.gnus.user/14508
