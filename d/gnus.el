@@ -228,13 +228,7 @@ address if only it was present."
          ("X-MSMTP" "elastic"))))
 
 ;; format=flowed
-;; http://article.gmane.org/gmane.emacs.gnus.user/14508
-
-(defun harden-newlines ()
-  (save-excursion
-    (goto-char (point-min))
-    (while (search-forward "\n" nil t)
-      (put-text-property (1- (point)) (point) 'hard t))))
+;; http://article.gmane.org/gmane.emacs.gnus.user/14508 (now unreachable)
 
 (setq fill-flowed-display-column nil)
 
@@ -244,13 +238,7 @@ address if only it was present."
               (turn-off-auto-fill)
               (setq
                truncate-lines nil
-               word-wrap t
-               use-hard-newlines t))))
-
-(add-hook 'message-send-hook
-          (lambda ()
-            (when use-hard-newlines
-              (harden-newlines))))
+               word-wrap t))))
 
 (add-hook 'gnus-article-mode-hook
           (lambda ()
@@ -258,4 +246,3 @@ address if only it was present."
              truncate-lines nil
              word-wrap t)))
 
-;; -----------
