@@ -28,7 +28,6 @@
       gnus-auto-select-next t
       gnus-use-full-window t
       gnus-inhibit-mime-unbuttonizing t
-      gnus-use-cache t
       message-sendmail-envelope-from 'header
       gnus-visible-headers
       '("^From:" "^Newsgroups:" "^Subject:"
