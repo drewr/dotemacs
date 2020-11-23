@@ -44,11 +44,11 @@
         "^X-Bogosity:" "^X-Gnus-Delayed:"
         "^Content-Type:" "^Archived-At:")
       gnus-agent-directory "~/.gnus.agent"
-      gnus-agent-go-online t
+      gnus-agent-go-online 'ask
       gnus-agent-synchronize-flags t
       gnus-agent-long-article 2500
-      gnus-agent-short-article 1000
-      gnus-agent-max-fetch-size 1000000
+      gnus-agent-short-article 200
+      gnus-agent-max-fetch-size 100000
       mm-discouraged-alternatives '("text/html" "text/richtext"))
 
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
@@ -182,13 +182,6 @@ You need to add `Content-Type' to `nnmail-extra-headers' and
   (gnus-agent-toggle-plugged t)
   (gnus-group-send-queue)
   (gnus-agent-toggle-plugged nil))
-
-(add-hook 'gnus-group-mode-hook
-          '(lambda ()
-             (define-key gnus-group-mode-map "g"
-               'aar/get-new-news-and-disconnect)
-             (define-key gnus-group-mode-map "GG"
-               'aar/inject-queue)))
 
 (defun aar/message-from-only-name (fromline)
   "Return the name on a From: line, or the email
