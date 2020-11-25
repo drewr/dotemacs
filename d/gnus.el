@@ -61,19 +61,21 @@
 (setq message-send-mail-function 'message-send-mail-with-sendmail
       sendmail-program "~/bin/mail")
 
-(setq gnus-select-method '(nnnil ""))
+(setq gnus-select-method '(nnml "local"))
 
 (setq gnus-secondary-select-methods
       '((nnimap "aaraines"
-                (nnimap-address "imap.gmail.com")
-                (nnimap-authenticator login))
+                (nnimap-address "aaraines.imap")
+                (nnimap-authenticator login)
+                (nnimap-stream plain))
         (nnimap "elastic"
-                (nnimap-address "imap.gmail.com")
-                (nnimap-authenticator login))
-        ;; (nnimap "testdroid1000"
-        ;;         (nnimap-address "imap.gmail.com")
-        ;;         (nnimap-authenticator login))
-        (nnml "")))
+                (nnimap-address "elastic.imap")
+                (nnimap-authenticator login)
+                (nnimap-stream plain))
+        (nnimap "test"
+                (nnimap-address "test.imap")
+                (nnimap-authenticator login)
+                (nnimap-stream plain))))
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
