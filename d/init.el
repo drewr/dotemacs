@@ -190,9 +190,11 @@
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
 
+(use-package org-mime       :ensure t :pin "melpa")
 (use-package ox-pandoc      :ensure t)
-
 (use-package ox-reveal      :ensure t :pin "melpa")
+
+
 
 (use-package org
   :ensure org-plus-contrib
