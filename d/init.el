@@ -190,7 +190,15 @@
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
 
-(use-package org-mime       :ensure t :pin "melpa")
+(use-package org-mime
+  :ensure t
+  :pin "melpa"
+  :custom
+  (org-mime-export-options '(:section-numbers nil
+                                              :with-author nil
+                                              :with-toc nil))
+  (org-mime-export-ascii 'utf-8))
+
 (use-package ox-pandoc      :ensure t)
 (use-package ox-reveal      :ensure t :pin "melpa")
 
