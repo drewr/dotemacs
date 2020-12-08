@@ -79,7 +79,6 @@
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
-  (turn-on-auto-fill)
   (require 'footnote))
 
 (add-hook 'message-mode-hook 'aar/message-mode-setup)
