@@ -196,7 +196,7 @@ address if only it was present."
   (when message-reply-headers
     (insert
      (aar/message-from-only-name (mail-header-from message-reply-headers))
-     " wrote:\n\n")))
+     " writes:\n\n")))
 
 (setq message-citation-line-function 'aar/message-insert-citation-line)
 
