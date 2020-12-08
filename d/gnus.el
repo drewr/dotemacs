@@ -226,14 +226,6 @@ address if only it was present."
 
 (setq fill-flowed-display-column nil)
 
-(add-hook 'message-setup-hook
-          (lambda ()
-            (when message-this-is-mail
-              (turn-off-auto-fill)
-              (setq
-               truncate-lines nil
-               word-wrap t))))
-
 (add-hook 'gnus-article-mode-hook
           (lambda ()
             (setq
