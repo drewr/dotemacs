@@ -79,6 +79,12 @@
 
 (defun aar/message-mode-setup ()
   (setq fill-column 69)
+  (when message-this-is-mail
+    (message "I guess this is mail!")
+    ;;(turn-off-auto-fill)
+    (setq
+     truncate-lines nil
+     use-hard-newlines t))
   (require 'footnote))
 
 (add-hook 'message-mode-hook 'aar/message-mode-setup)
@@ -230,4 +236,3 @@ address if only it was present."
             (setq
              truncate-lines nil
              word-wrap t)))
-
