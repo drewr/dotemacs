@@ -84,8 +84,8 @@
     ;;(turn-off-auto-fill)
     (setq
      truncate-lines nil
-     use-hard-newlines t))
-  (require 'footnote))
+     use-hard-newlines t
+     word-wrap t)))
 
 (add-hook 'message-mode-hook 'aar/message-mode-setup)
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
