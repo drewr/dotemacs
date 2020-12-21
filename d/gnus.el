@@ -81,7 +81,7 @@
   (setq fill-column 69)
   (when message-this-is-mail
     (message "I guess this is mail!")
-    ;;(turn-off-auto-fill)
+    (turn-off-auto-fill)
     (setq
      truncate-lines nil
      use-hard-newlines nil
