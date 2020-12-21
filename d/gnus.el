@@ -84,8 +84,8 @@
     ;;(turn-off-auto-fill)
     (setq
      truncate-lines nil
-     use-hard-newlines t
-     word-wrap t)))
+     use-hard-newlines nil
+     word-wrap nil)))
 
 (add-hook 'message-mode-hook 'aar/message-mode-setup)
 (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
