@@ -48,7 +48,8 @@
       gnus-agent-long-article 2500
       gnus-agent-short-article 200
       gnus-agent-max-fetch-size 100000
-      mm-discouraged-alternatives '("text/html" "text/richtext"))
+      mm-discouraged-alternatives '("text/html" "text/richtext")
+      message-default-charset 'utf-8)
 
 (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
