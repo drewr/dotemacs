@@ -100,12 +100,6 @@
 (use-package company-cabal     :ensure t :pin "melpa")
 (use-package company-ghci      :ensure t :pin "melpa")
 
-(use-package company-lsp
-  :ensure t
-  :pin "melpa"
-  :config
-  (push 'company-lsp company-backends))
-
 (use-package deft
   :ensure t
   :pin "melpa"
@@ -173,7 +167,6 @@
 (use-package haskell-mode :ensure t)
 
 (use-package idris-mode        :ensure t :pin "melpa")
-(use-package intero            :ensure t :pin "melpa")
 (use-package js2-mode          :ensure t :pin "melpa")
 
 (use-package ledger-mode
