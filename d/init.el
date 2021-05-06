@@ -644,7 +644,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(circe-my-message-face ((t (:foreground "DarkRed"))))
- '(org-warning ((t (:foreground "dark red"))))
+ '(org-scheduled-previously ((t (:foreground "dark orchid"))))
+ '(org-warning ((t (:foreground "dark blue"))))
  '(org-upcoming-deadline ((t (:foreground "hot pink"))))
  '(org-upcoming-distant-deadline ((t (:foreground "light pink"))))
  '(variable-pitch ((t nil))))
