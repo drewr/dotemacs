@@ -518,7 +518,7 @@
 (add-to-list 'erc-modules 'log)
 (add-to-list 'erc-modules 'highlight-nicknames)
 
-(setq erc-server "irc.freenode.net"
+(setq erc-server "irc.libera.chat"
       erc-port 6697
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
