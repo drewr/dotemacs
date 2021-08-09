@@ -549,7 +549,7 @@
       erc-favorite-channel
       "\\(84115\\|elast\\|pallet\\|lein\\|nash\\)"
       erc-autojoin-channels-alist
-      '(("freenode.net" "#emacs" "#84115" "#elasticsearch"
+      '(("libera.chat" "#emacs" "#84115" "#elasticsearch"
          "#purescript" "#haskell" "#haskell-beginners" "#s6"
          "#nixos" "##rust" "#nim" "#fennel" "#zig")))
 
@@ -576,7 +576,7 @@
 
 (defun aar/erc ()
   (interactive)
-  (erc-tls :server "irc.freenode.net"
+  (erc-tls :server "irc.libera.chat"
            :port 6697
            :nick "drewr"))
 
