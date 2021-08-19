@@ -211,7 +211,7 @@ and returns an org-formatted link:
       (error "saveorg failed!!"))
     (message "no saveorg while clock running")))
 
-(defun aar/convert-org-buffer-to-gmail ()
+(defun aar/markdown-buffer ()
   (interactive)
   (let ((md-buffer (concat (buffer-name) ".md")))
     (shell-command-on-region
