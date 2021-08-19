@@ -136,6 +136,7 @@
 (use-package flycheck          :ensure t :pin "melpa")
 (use-package flycheck-haskell  :ensure t :pin "melpa")
 (use-package flycheck-rust     :ensure t :pin "melpa")
+(use-package fzf               :ensure t :pin "melpa")
 (use-package geiser            :ensure t :pin "melpa")
 (use-package gist              :ensure t :pin "melpa")
 (use-package gnuplot           :ensure t :pin "melpa")
