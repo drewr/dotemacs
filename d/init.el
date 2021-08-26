@@ -494,6 +494,14 @@
          :clock-in t
          :clock-keep t
          :tree-type week)
+        ("1" "Elastic 1-1" entry
+         (file+olp+datetree "ELASTIC.org" "Journal")
+         "* %? :1on1:"
+         :jump-to-captured t
+         :empty-lines-after 0
+         :clock-in t
+         :clock-keep t
+         :tree-type week)
         ("E" "Elastic reminder"
          entry (file+olp+datetree "ELASTIC.org" "Journal")
          "* TODO %? %^G\n  %T"
