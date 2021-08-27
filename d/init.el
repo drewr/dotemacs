@@ -437,7 +437,8 @@
       org-clock-modeline-total 'current
       org-mobile-directory "~/Dropbox/MobileOrg"
       org-mobile-inbox-for-pull "~/.org/mobile-inbox.org"
-      org-attach-use-inheritance t)
+      org-attach-use-inheritance t
+      org-adapt-indentation nil)
 
 ;; To use reveal.js:
 ;;
