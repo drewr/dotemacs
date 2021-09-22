@@ -480,7 +480,7 @@
          (file+headline "PERSONAL.org" "Tasks")
          "* %? %^G\n"
          :jump-to-captured t
-         :empty-lines-after 0
+         :empty-lines-after 1
          :clock-in t
          :clock-keep t
          :prepend t)
@@ -491,7 +491,7 @@
          (file+olp+datetree "ELASTIC.org" "Journal")
          "* %? %^G"
          :jump-to-captured t
-         :empty-lines-after 0
+         :empty-lines-after 1
          :clock-in t
          :clock-keep t
          :tree-type week)
@@ -499,7 +499,7 @@
          (file+olp+datetree "ELASTIC.org" "Journal")
          "* %? :1on1:"
          :jump-to-captured t
-         :empty-lines-after 0
+         :empty-lines-after 1
          :clock-in t
          :clock-keep t
          :tree-type week)
