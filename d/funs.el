@@ -206,8 +206,10 @@ and returns an org-formatted link:
 (defun aar/org-agenda-save ()
   (interactive)
   (org-save-all-org-buffers)
-  (when (> (call-process "saveorg" nil "*saveorg*") 0)
-    (error "saveorg failed!!")))
+  (if (not (org-clocking-p))
+    (when (> (call-process "saveorg" nil "*saveorg*") 0)
+      (error "saveorg failed!!"))
+    (message "no saveorg while clock running")))
 
 (defun aar/convert-org-buffer-to-gmail ()
   (interactive)
