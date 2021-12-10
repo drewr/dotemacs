@@ -20,5 +20,5 @@
  :width 'normal
  :weight 'normal)
 
-(setq browse-url-chromium-program "google-chrome")
+(setq browse-url-chromium-program "firefox")
 (setq browse-url-browser-function 'browse-url-chromium)
