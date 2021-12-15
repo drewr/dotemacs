@@ -205,6 +205,7 @@ and returns an org-formatted link:
 
 (defun aar/org-agenda-save ()
   (interactive)
+  (require 'org-clock)
   (org-save-all-org-buffers)
   (if (not (org-clocking-p))
     (when (> (call-process "saveorg" nil "*saveorg*") 0)
