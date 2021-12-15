@@ -37,6 +37,8 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives
+             '("nongnu" . "https://elpa.nongnu.org/packages/") t)
+(add-to-list 'package-archives
              '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 (require 'use-package)
@@ -194,11 +196,8 @@
 (use-package ox-pandoc      :ensure t)
 (use-package ox-reveal      :ensure t :pin "melpa")
 
-
-
 (use-package org
-  :ensure org-plus-contrib
-  :pin "org"
+  :pin gnu
   :after (org-agenda)
   :bind
   (:map
