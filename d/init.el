@@ -147,12 +147,13 @@
   (:map go-mode-map
         ("C-c C-n" . clean-up-golang-buffer)
         ("M-." . godef-jump))
+  :init
+  (setq gofmt-command "goimports")
   :config
   (add-hook 'go-mode-hook
             (lambda ()
               (setq tab-width 2)
-              ;; (add-hook 'before-save-hook #'gofmt-before-save)
-              )))
+              (add-hook 'before-save-hook 'gofmt-before-save))))
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
