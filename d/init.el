@@ -560,7 +560,8 @@
       erc-autojoin-channels-alist
       '(("libera.chat" "#emacs" "#84115" "#elasticsearch"
          "#purescript" "#haskell" "#haskell-beginners" "#s6"
-         "#nixos" "##rust" "#nim" "#fennel" "#zig")))
+         "#nixos" "##rust" "#nim" "#fennel" "#zig"
+         "#janet")))
 
 (define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
 
