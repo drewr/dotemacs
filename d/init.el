@@ -269,9 +269,6 @@
 (use-package textile-mode   :ensure t :pin "melpa")
 (use-package terraform-mode :ensure t :pin "melpa")
 (use-package toml-mode      :ensure t :pin "melpa")
-(use-package tuareg         :ensure t :pin "melpa")
-(use-package utop           :ensure t :pin "melpa")
-(use-package merlin         :ensure t :pin "melpa")
 (use-package yaml-mode      :ensure t :pin "melpa")
 (use-package yasnippet      :ensure t :pin "melpa")
 (use-package zig-mode       :ensure t :pin "melpa")
@@ -374,17 +371,29 @@
 (add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
 
 ;; ocaml
+(use-package tuareg         :ensure t :pin "melpa")
+(use-package utop           :ensure t :pin "melpa")
+(use-package merlin         :ensure t :pin "melpa")
 
-(add-hook 'tuareg-mode-hook 'tuareg-imenu-set-imenu)
+(let* ((ocaml-lisp "~/.opam/default/share/emacs/site-lisp")
+       (tuareg-site-file
+        (concat ocaml-lisp "/tuareg-site-file.el")))
+  (if (file-exists-p ocaml-lisp)
+      (progn
+        (add-to-list 'load-path ocaml-lisp)
+        (require 'ocamlformat)
+        (add-hook 'before-save-hook 'ocamlformat-before-save))
+    (message "opam site-lisp doesn't exist yet"))
+  (if (file-exists-p tuareg-site-file)
+      (progn
+        (load tuareg-site-file)
+        (add-hook 'tuareg-mode-hook 'merlin-mode))
+    (message "run `opam install tuareg`")))
+
 (setq auto-mode-alist
       (append '(("\\.ml[ily]?$" . tuareg-mode)
                 ("\\.topml$" . tuareg-mode))
               auto-mode-alist))
-(autoload 'utop-setup-ocaml-buffer "utop" "Toplevel for OCaml" t)
-(add-hook 'tuareg-mode-hook 'utop-setup-ocaml-buffer)
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-(setq merlin-use-auto-complete-mode t)
-(setq merlin-error-after-save nil)
 
 ;; nix
 (require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
