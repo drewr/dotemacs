@@ -532,6 +532,8 @@
 ;; erc
 
 (require 'erc)
+(require 'erc-backend)
+(require 'erc-sasl)
 
 ;; redefine after loading erc.el
 (defun erc-login ()
@@ -557,7 +559,6 @@ https://emacs.stackexchange.com/a/50160)"
            erc-session-user-full-name))
   (erc-update-mode-line))
 
-(require 'erc-sasl)
 (require 'erc-highlight-nicknames)
 (add-to-list 'erc-modules 'log)
 (add-to-list 'erc-modules 'highlight-nicknames)
