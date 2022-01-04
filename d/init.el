@@ -534,6 +534,7 @@
 (require 'erc)
 (require 'erc-backend)
 (require 'erc-sasl)
+(add-to-list 'erc-sasl-server-regexp-list "irc\\.libera\\.chat")
 
 ;; redefine after loading erc.el
 (defun erc-login ()
