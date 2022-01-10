@@ -154,6 +154,8 @@
               (setq tab-width 2)
               (add-hook 'before-save-hook 'gofmt-before-save))))
 
+(use-package go-playground)
+
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
 (use-package hamlet-mode       :ensure t :pin "melpa")
