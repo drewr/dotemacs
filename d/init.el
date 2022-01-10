@@ -273,6 +273,8 @@
   (lsp-rust-server 'rust-analyzer)
   (lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
+(use-package rust-playground)
+
 (use-package smex           :ensure t :pin "melpa")
 (use-package textile-mode   :ensure t :pin "melpa")
 (use-package terraform-mode :ensure t :pin "melpa")
