@@ -134,7 +134,6 @@
         es-warn-on-delete-query nil))
 
 (use-package flycheck          :ensure t :pin "melpa")
-(use-package flycheck-haskell  :ensure t :pin "melpa")
 (use-package flycheck-rust     :ensure t :pin "melpa")
 (use-package fzf               :ensure t :pin "melpa")
 (use-package geiser            :ensure t :pin "melpa")
@@ -161,12 +160,19 @@
 (use-package htmlize           :ensure t :pin "melpa")
 
 (use-package lsp-mode
-  :hook ((haskell-mode . lsp))
-  :commands lsp
-  :ensure t)
+  :init (setq lsp-keymap-prefix "C-c l")
+  :hook ((haskell-mode . lsp)
+         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 
+(use-package lsp-ui :commands lsp-ui-mode)
+
+;; Haskell
 (use-package lsp-haskell  :ensure t)
 (use-package haskell-mode :ensure t)
+(use-package flycheck-haskell  :ensure t :pin "melpa")
+
+
 
 (use-package idris-mode        :ensure t :pin "melpa")
 (use-package js2-mode          :ensure t :pin "melpa")
