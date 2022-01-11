@@ -528,8 +528,9 @@
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
-        ("j" "Journal" entry (file+datetree "~/.org/notes.org" "Journal")
-         "* %?\n  Entered on %T")
+        ("j" "Journal" entry (file+datetree "~/.org/journal.org")
+         "* %?\nEntered on %T"
+         :empty-lines-before 1)
         ("n" "Note" entry
          (file+headline "~/.org/notes.org" "Notes")
          "* %u %?" :prepend t)))
