@@ -487,7 +487,7 @@
 
 (setq org-todo-keywords
       '((sequence "TODO" "WAITING" "DEFERRED"
-                  "|" "DONE" "DELEGATED" "CANCELED")))
+                  "|" "DONE" "STALE" "DELEGATED" "CANCELED")))
 
 (setq org-export-html-postamble "<p class=\"postamble\">%d %a</p>")
 
