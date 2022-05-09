@@ -154,7 +154,7 @@
               (setq tab-width 2)
               (add-hook 'before-save-hook 'gofmt-before-save))))
 
-(use-package go-playground)
+(use-package go-playground     :ensure t :pin "melpa")
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
@@ -273,7 +273,7 @@
   (lsp-rust-server 'rust-analyzer)
   (lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
-(use-package rust-playground)
+(use-package rust-playground :ensure t :pin "melpa")
 
 (use-package smex           :ensure t :pin "melpa")
 (use-package textile-mode   :ensure t :pin "melpa")
