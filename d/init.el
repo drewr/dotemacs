@@ -581,7 +581,7 @@ https://emacs.stackexchange.com/a/50160)"
       erc-nick "drewr"
       erc-user-full-name "Drew Raines"
       erc-email-userid "drew"       ; for when ident is not activated
-      erc-fill-column 90
+      erc-fill-column 84
       erc-fill-prefix "   "
       erc-auto-query 'window-noselect
       erc-prompt-for-nickserv-password nil
@@ -590,6 +590,7 @@ https://emacs.stackexchange.com/a/50160)"
       erc-autoaway-idle-seconds 600
       erc-log-insert-log-on-open nil
       erc-log-channels-directory "~/tmp/irc/log"
+      erc-log-write-after-insert t
       erc-kill-queries-on-quit nil
       erc-track-exclude-types '("JOIN" "MODE" "NICK" "PART" "QUIT" "TOPIC"
                                 "NAMES" "324" "329" "332" "333" "353" "477"
