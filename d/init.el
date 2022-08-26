@@ -525,6 +525,14 @@
          entry (file+olp+datetree "ELASTIC.org" "Journal")
          "* TODO %? %^G\n  %T"
          :tree-type week)
+        ("k" "Elastic k8s task" entry
+         (file+olp+datetree "orgs/elastic/projects/k8s.org" "Journal")
+         "* %? %^G"
+         :jump-to-captured t
+         :empty-lines-before 1
+         :clock-in t
+         :clock-keep t
+         :tree-type week)
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
