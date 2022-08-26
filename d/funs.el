@@ -208,25 +208,35 @@ and returns an org-formatted link:
   (require 'org-clock)
   (org-save-all-org-buffers)
   (if (not (org-clocking-p))
-    (when (> (call-process "saveorg" nil "*saveorg*") 0)
-      (error "saveorg failed!!"))
+      (when (> (call-process "saveorg" nil "*saveorg*") 0)
+        (error "saveorg failed!!"))
     (message "no saveorg while clock running")))
+
+(defun buffer-links-ready-p (buf)
+  (when (not
+         (save-excursion
+           (set-buffer buf)
+           (goto-char 0)
+           (re-search-forward "fixme" nil t 1)))
+    t))
 
 (defun aar/markdown-buffer ()
   (interactive)
-  (let ((md-buffer (concat (buffer-name) ".md")))
-    (shell-command-on-region
-     (point-min) (point-max)
-     (string-join ["pandoc"
-                   "-f org"
-                   "-t gfm"
-                   "--wrap=none"
-                   ]
-                  " ")
-     md-buffer)
-    (set-buffer md-buffer)
-    (normal-mode)
-    (kill-ring-save (point-min) (point-max))))
+  (if (buffer-links-ready-p (buffer-name))
+      (let ((md-buffer (concat (buffer-name) ".md")))
+        (shell-command-on-region
+         (point-min) (point-max)
+         (string-join ["pandoc"
+                       "-f org"
+                       "-t gfm"
+                       "--wrap=none"
+                       ]
+                      " ")
+         md-buffer)
+        (set-buffer md-buffer)
+        (normal-mode)
+        (kill-ring-save (point-min) (point-max)))
+    (error "buffer has unfinished links")))
 
 (defun aar/org-journal-today-start ()
   (interactive)
