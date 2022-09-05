@@ -209,6 +209,8 @@
   :ensure org-contrib
   :pin gnu
   :after (org-agenda)
+  :config
+  (add-to-list 'org-modules 'org-habit)
   :bind
   (:map
    org-mode-map
