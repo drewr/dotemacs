@@ -230,6 +230,7 @@ and returns an org-formatted link:
                        "-f org"
                        "-t gfm"
                        "--wrap=none"
+                       "--shift-heading-level-by=2"
                        ]
                       " ")
          md-buffer)
