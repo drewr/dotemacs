@@ -283,6 +283,7 @@
 (use-package toml-mode      :ensure t :pin "melpa")
 (use-package yaml-mode      :ensure t :pin "melpa")
 (use-package yasnippet      :ensure t :pin "melpa")
+(use-package vundo          :ensure t :pin "melpa")
 (use-package zig-mode       :ensure t :pin "melpa")
 
 (require 'uniquify)
