@@ -128,7 +128,8 @@
 
 (defun stopwatch-restart ()
   (interactive)
-  (stopwatch-stop)
+  (when stopwatch--timer
+    (stopwatch-stop))
   (stopwatch-start))
 
 (defun stopwatch-pause ()
