@@ -497,7 +497,7 @@
 (setq org-default-notes-file "~/.org/notes.org")
 
 (setq org-capture-templates
-      '(("p" "Personal task - clocked-in" entry
+      `(("o" "Personal task - clocked-in" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* %? %^G\n"
          :jump-to-captured t
@@ -539,12 +539,23 @@
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
-        ("j" "Journal" entry (file+datetree "~/.org/journal.org")
+        ("j" "Journal" entry
+         (file+datetree "journal.org")
          "* %?\nEntered on %T"
          :empty-lines-before 1)
         ("n" "Note" entry
-         (file+headline "~/.org/notes.org" "Notes")
-         "* %u %?" :prepend t)))
+         (file+headline "notes.org" "Notes")
+         "* %u %?" :prepend t)
+        ;; For use with https://github.com/sprig/org-capture-extension
+        ("p" "Protocol" entry
+         (file+datetree "journal.org")
+         ,(concat "* %?\n%T\n[[%:link][%:description]]\n\n"
+                  "#+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n")
+         :empty-lines-before 1)
+        ("L" "Protocol Link" entry
+         (file+datetree "journal.org")
+         "* %? [[%:link][%:description]] \nCaptured: %T"
+         :empty-lines-before 1)))
 
 (add-hook 'org-mode-hook
           (lambda ()
