@@ -211,6 +211,7 @@
   :after (org-agenda)
   :config
   (add-to-list 'org-modules 'org-habit)
+  (require 'org-protocol)
   :bind
   (:map
    org-mode-map
