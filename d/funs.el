@@ -254,3 +254,17 @@ and returns an org-formatted link:
   (interactive)
   (let ((fill-column (point-max)))
     (fill-region (region-beginning) (region-end) nil)))
+
+(defun aar/org-capture-journal ()
+  (interactive)
+  (message
+   (concat
+    (if eww-data
+        (concat
+         "* "
+         (plist-get eww-data :title)
+         "\n"
+         (plist-get eww-data :url)
+         "\n")
+      "* %%?\n\n")
+    "\nEntered on %%T")))

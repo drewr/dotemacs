@@ -542,8 +542,9 @@
          "* TODO %?\n  %u" :prepend t)
         ("j" "Journal" entry
          (file+datetree "journal.org")
-         "* %?\nEntered on %T"
-         :empty-lines-before 1)
+         (function aar/org-capture-journal)
+         :empty-lines-before 1
+         :jump-to-captured t)
         ("n" "Note" entry
          (file+headline "notes.org" "Notes")
          "* %u %?" :prepend t)
