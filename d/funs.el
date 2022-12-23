@@ -268,3 +268,15 @@ and returns an org-formatted link:
          "\n")
       "* %%?\n\n")
     "\nEntered on %%T")))
+
+(defun aar/unfill-and-copy (beg end)
+  "Take region, unfill all the paragraphs, and put it in the kill
+ring.  Does not modify original text."
+  (interactive "r")
+  (copy-region-as-kill beg end)
+  (with-temp-buffer
+    (yank)
+    (goto-char 0)
+    (mark-whole-buffer)
+    (unfill-region)
+    (kill-region (point-min) (point-max))))
