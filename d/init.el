@@ -498,7 +498,8 @@
 (setq org-default-notes-file "~/.org/notes.org")
 
 (setq org-capture-templates
-      `(("o" "Personal task - clocked-in" entry
+      `(("p" "Personal tasks")
+        ("pp" "Personal task - clocked-in" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* %? %^G\n"
          :jump-to-captured t
@@ -506,36 +507,29 @@
          :clock-in t
          :clock-keep t
          :prepend t)
-        ("P" "Personal TODO" entry
+        ("pt" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* TODO %?\n  %T\n" :prepend t)
-        ("e" "Elastic task - clocked-in" entry
-         (file+olp+datetree "ELASTIC.org" "Journal")
+        ("e" "Equinix")
+        ("ee" "Equinix task - clocked-in" entry
+         (file+olp+datetree "EQUINIX.org" "Journal")
          "* %? %^G"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
          :tree-type week)
-        ("1" "Elastic 1-1" entry
-         (file+olp+datetree "ELASTIC.org" "Journal")
+        ("e1" "Equinix 1-1" entry
+         (file+olp+datetree "EQUINIX.org" "Journal")
          "* %? :1on1:"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
          :tree-type week)
-        ("E" "Elastic reminder"
-         entry (file+olp+datetree "ELASTIC.org" "Journal")
+        ("et" "Equinix TODO"
+         entry (file+olp+datetree "EQUINIX.org" "Journal")
          "* TODO %? %^G\n  %T"
-         :tree-type week)
-        ("k" "Elastic k8s task" entry
-         (file+olp+datetree "orgs/elastic/projects/k8s.org" "Journal")
-         "* %? %^G"
-         :jump-to-captured t
-         :empty-lines-before 1
-         :clock-in t
-         :clock-keep t
          :tree-type week)
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
