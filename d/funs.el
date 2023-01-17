@@ -176,7 +176,7 @@ Symbols matching the text at point are put first in the completion list."
          "")
       str)))
 
-(defun aar/org-insert-github-link (url)
+(defun aar/org-github-link (url)
   "Takes a link like:
 
     https://github.com/org/project/issues/123
@@ -185,7 +185,6 @@ and returns an org-formatted link:
 
     \[\[https://github.com/org/project/issues/123\]\[project\#123\]\]
 "
-  (interactive "sGitHub link: ")
   (let* ((parsed-url (url-generic-parse-url url))
          (file-parts (split-string (url-filename parsed-url) "/"))
          (project (elt file-parts 2))
@@ -196,12 +195,31 @@ and returns an org-formatted link:
                        (format "[[%s][%s]]" url description))))
          (short-sha (lambda (sha)
                       (take-string 7 sha))))
-    (insert
-     (pcase link-type
-       ("issues" (apply org-link project (list ordinal)))
-       ("pull" (apply org-link project (list ordinal)))
-       ("commit" (apply org-link project (list (apply short-sha ordinal nil))))
-       (_ url)))))
+    (pcase link-type
+      ("issues" (apply org-link project (list ordinal)))
+      ("pull" (apply org-link project (list ordinal)))
+      ("commit" (apply org-link project (list (apply short-sha ordinal nil))))
+      (_ url))))
+
+(defun aar/org-jira-link (url)
+  "Takes a link like:
+
+    https://org.atlassian.net/browse/PROJ-9876
+
+and returns an org-formatted link:
+
+    \[\[https://org.atlassian.net/browse/PROJ-9876\]\[PROJ-9876\]\]
+"
+  (let* ((parsed-url (url-generic-parse-url url))
+         (file-parts (split-string (url-filename parsed-url) "/")))
+    (format "[[%s][%s]]" url (elt file-parts 2))))
+
+(defun aar/org-link (url)
+  (interactive "sGitHub/JIRA Link: ")
+  (when (string-match "atlassian\.net/browse" url)
+    (insert (aar/org-jira-link url)))
+  (when (string-match "github\.com" url)
+    (insert (aar/org-github-link url))))
 
 (defun aar/org-agenda-save ()
   (interactive)
