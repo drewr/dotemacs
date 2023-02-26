@@ -462,6 +462,14 @@
       org-attach-use-inheritance t
       org-adapt-indentation nil)
 
+;; Adapted from https://emacs.stackexchange.com/a/71951
+(defun aar/org-attach (f &rest args)
+  (if (string-match "EQUINIX.org" (buffer-file-name))
+      (let ((org-attach-id-dir "orgs/equinix/data/"))
+        (funcall f))
+    (funcall f)))
+(advice-add 'org-attach :around #'aar/org-attach)
+
 ;; To use reveal.js:
 ;;
 ;;   cd ~/tmp \
