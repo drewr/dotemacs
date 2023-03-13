@@ -31,6 +31,8 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
+(require 'keychain-environment)
+(keychain-refresh-environment)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
