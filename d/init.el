@@ -217,7 +217,7 @@
   :bind
   (:map
    org-mode-map
-   ("C-c C-g" . aar/org-insert-github-link)
+   ("C-c C-g" . aar/org-link)
    :map
    org-agenda-mode-map
    ("s" . aar/org-agenda-save)))
