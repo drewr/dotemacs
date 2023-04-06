@@ -109,7 +109,7 @@ Symbols matching the text at point are put first in the completion list."
                  message))
 
 (defun notify (title message)
-  (case system-type
+  (cl-case system-type
     ('darwin (growl title message))
     ('gnu/linux (notify-send title message))
     ('windows-nt 'wtf)))
