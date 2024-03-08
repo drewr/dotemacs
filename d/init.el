@@ -541,6 +541,12 @@
          entry (file+olp+datetree "EQUINIX.org" "Journal")
          "* TODO %? %^G\n  %T"
          :tree-type week)
+        ("ej" "Equinix Journal" entry
+         (file+olp+datetree "EQUINIX.org" "Journal")
+         (function aar/org-capture-journal)
+         :empty-lines-before 1
+         :jump-to-captured t
+         :tree-type week)
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
          "* TODO %?\n  %u" :prepend t)
