@@ -122,6 +122,14 @@
   :after deft
   :config (zetteldeft-set-classic-keybindings))
 
+(use-package denote
+  :ensure t
+  :custom
+  (denote-directory "~/Sync/Notes"))
+
+(use-package denote-org-extras
+  :requires denote)
+
 (use-package avy  :ensure t)
 (use-package ace-window  :ensure t)
 
