@@ -563,9 +563,13 @@
          (function aar/org-capture-journal)
          :empty-lines-before 1
          :jump-to-captured t)
-        ("n" "Note" entry
-         (file+headline "notes.org" "Notes")
-         "* %u %?" :prepend t)
+        ("n" "New note" plain
+         (file denote-last-path)
+         #'denote-org-capture
+         :no-save t
+         :immediate-finish nil
+         :kill-buffer t
+         :jump-to-captured t)
         ;; For use with https://github.com/sprig/org-capture-extension
         ("p" "Protocol" entry
          (file+datetree "journal.org")
