@@ -557,7 +557,9 @@
          :tree-type week)
         ("t" "Trinity" entry
          (file+headline "clients/TRINITY.org" "Tasks")
-         "* TODO %?\n  %u" :prepend t)
+         "* TODO %?\n  %u"
+         :empty-lines-before 1
+         :prepend t)
         ("j" "Journal" entry
          (file+datetree "journal.org")
          (function aar/org-capture-journal)
