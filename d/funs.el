@@ -298,3 +298,12 @@ ring.  Does not modify original text."
     (mark-whole-buffer)
     (unfill-region)
     (kill-region (point-min) (point-max))))
+
+(defun aar/org-copy-heading ()
+  (interactive)
+  (let ((heading (org-get-heading t t)))
+    (with-temp-buffer
+      (insert heading)
+      (goto-char 0)
+      (mark-whole-buffer)
+      (kill-region (point-min) (point-max)))))
