@@ -177,7 +177,7 @@
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
-(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
 
 ;; Haskell
 (use-package lsp-haskell  :ensure t)
@@ -202,6 +202,27 @@
 (use-package mustache-mode  :ensure t :pin "melpa")
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
+
+;; only available from https://github.com/mattt-b/odin-mode/blob/master/odin-mode.el
+(require 'odin-mode)
+(use-package odin-mode
+  :mode ("\\.odin\\'" . odin-mode)
+  :hook (odin-mode . lsp))
+
+;; Set up OLS as the language server for Odin, ensuring lsp-mode is loaded first
+(with-eval-after-load 'lsp-mode
+  ;; Helps find the ols.json file with Projectile or project.el
+  (setq-default lsp-auto-guess-root t)
+  (setq lsp-language-id-configuration
+        (cons '(odin-mode . "odin") lsp-language-id-configuration))
+
+  (lsp-register-client
+   ;; Install manually after building https://github.com/DanielGavin/ols
+   (make-lsp-client :new-connection (lsp-stdio-connection "/usr/local/bin/ols")
+                    :major-modes '(odin-mode)
+                    :server-id 'ols
+                    ;; Ensures lsp-mode sends "workspaceFolders" to the server
+                    :multi-root t)))
 
 (use-package org-mime
   :ensure t
@@ -295,6 +316,7 @@
 (use-package yaml-mode      :ensure t :pin "melpa")
 (use-package yasnippet      :ensure t :pin "melpa")
 (use-package vundo          :ensure t :pin "gnu")
+(use-package which-key      :ensure t)
 (use-package zig-mode       :ensure t :pin "melpa")
 
 (require 'uniquify)
