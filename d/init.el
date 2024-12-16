@@ -561,7 +561,7 @@
          :tree-type week)
         ("e1" "Equinix 1-1" entry
          (file+olp+datetree "EQUINIX.org" "Journal")
-         "* %? :1on1:"
+         "* %? (%(format-time-string \"%Y%m%d\")) :1on1:"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
