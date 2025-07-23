@@ -45,6 +45,32 @@
 (package-initialize)
 (require 'use-package)
 
+;; https://github.com/jwiegley/use-package/issues/768#issuecomment-1918158963
+(defun use-package-require (name &optional no-require body)
+  (if use-package-expand-minimally
+      (use-package-concat
+       (unless no-require
+         (list (use-package-load-name name)))
+       body)
+    (if no-require
+        body
+      (use-package-with-elapsed-timer
+          (format "Loading package %s" name)
+        `((if (not ,(use-package-load-name name))
+              (display-warning 'use-package
+                               (format "Cannot load %s" ',name)
+                               :error)
+            ,@body))))))
+
+;; https://github.com/jwiegley/use-package/issues/768#issuecomment-1229781184
+(if init-file-debug
+    (setq use-package-verbose t
+          use-package-expand-minimally nil
+          use-package-compute-statistics t
+          debug-on-error t)
+  (setq use-package-verbose nil
+        use-package-expand-minimally t))
+
 (use-package adoc-mode    :ensure t :pin "melpa")
 (use-package arduino-mode :ensure t :pin "melpa")
 (use-package async        :ensure t :pin "melpa")
