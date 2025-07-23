@@ -126,9 +126,10 @@
   :ensure t
   :custom
   (denote-directory "~/Sync/Notes"))
-
-(use-package denote-org-extras
-  :requires denote)
+(use-package denote-agenda  :ensure t)
+(use-package denote-explore :ensure t)
+(use-package denote-journal :ensure t)
+(use-package denote-org     :ensure t)
 
 (use-package avy  :ensure t)
 (use-package ace-window  :ensure t)
