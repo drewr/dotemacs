@@ -100,6 +100,7 @@
 (use-package clojure-mode
   :ensure t
   :pin "melpa"
+  :after (flycheck-clj-kondo)
   :config
   (require 'flycheck-clj-kondo)
   (add-hook 'clojure-mode-hook 'aar/lispy-parens)
