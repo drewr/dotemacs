@@ -17,3 +17,5 @@ fi
 
 echo install gnus.el to $GNUS
 cp $EMACS/gnus.el $GNUS/.gnus.el
+
+cp bin/compile $EMACS

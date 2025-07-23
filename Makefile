@@ -1,20 +1,20 @@
 default:
 	@echo you should make clean install
 
+# Compile LOCALLY
 compile:
 	bin/compile
 
-gnus:
-	cp d/gnus.el ~/.emacs.d/gnus.el
-
 install:
-	#emacs -Q --batch --eval '(setq package-user-dir "~/.emacs.d-build/elpa")' -l d/setup.el
-	#mkdir ~/.emacs.d-build
-	#mv ~/.emacs.d ~/.emacs.d.$(shell date -u +%s)
-	#mv ~/.emacs.d-build ~/.emacs.d
 	bin/install
+
+# This has side effects in ~/.emacs.d from the package installations
+load:
 	emacs --batch --eval '(message "----> running init")' -l d/setup.el -l d/init.el
-	bin/compile
+
+# Copy everything and build it
+install-and-compile: install load
+	cd ~/.emacs.d && ./compile
 
 clean:
 	rm -rf ~/.emacs.d
