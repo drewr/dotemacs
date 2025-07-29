@@ -224,6 +224,7 @@
               ("C-c C-n" . ledger-clean-up-transaction)
               ("C-c C-b" . ledger-bal-region)))
 
+(use-package fennel-mode    :ensure t)
 (use-package lua-mode       :ensure t :pin "melpa")
 (use-package magit          :ensure t :pin "melpa")
 ;;(use-package magit-gh-pulls :ensure t :pin "melpa")
