@@ -113,15 +113,6 @@
 (use-package flycheck-clj-kondo
   :ensure t)
 
-(use-package inf-clojure
-  :ensure t
-  :init
-  (defun figwheel ()
-    (interactive)
-    (run-clojure "lein figwheel"))
-  :config
-  (add-hook 'clojurescript-mode-hook 'inf-clojure-minor-mode))
-
 (use-package company
   :ensure t
   :pin "melpa")
