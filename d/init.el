@@ -577,29 +577,29 @@
         ("pt" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* TODO %?\n  %T\n" :prepend t)
-        ("e" "Equinix")
-        ("ee" "Equinix task - clocked-in" entry
-         (file+olp+datetree "EQUINIX.org" "Journal")
+        ("d" "Datum")
+        ("dd" "Datum task - clocked-in" entry
+         (file+olp+datetree "clients/DATUM.org" "Journal")
          "* %? %^G"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
          :tree-type week)
-        ("e1" "Equinix 1-1" entry
-         (file+olp+datetree "EQUINIX.org" "Journal")
+        ("d1" "Datum 1-1" entry
+         (file+olp+datetree "clients/DATUM.org" "Journal")
          "* %? (%(format-time-string \"%Y%m%d\")) :1on1:"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
          :tree-type week)
-        ("et" "Equinix TODO"
-         entry (file+olp+datetree "EQUINIX.org" "Journal")
+        ("dt" "Datum TODO"
+         entry (file+olp+datetree "clients/DATUM.org" "Journal")
          "* TODO %? %^G\n  %T"
          :tree-type week)
-        ("ej" "Equinix Journal" entry
-         (file+olp+datetree "EQUINIX.org" "Journal")
+        ("dj" "Datum Journal" entry
+         (file+datetree "clients/DATUM.org" "Journal")
          (function aar/org-capture-journal)
          :empty-lines-before 1
          :jump-to-captured t
