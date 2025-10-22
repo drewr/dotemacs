@@ -257,6 +257,31 @@ and returns an org-formatted link:
         (kill-ring-save (point-min) (point-max)))
     (error "buffer has unfinished links")))
 
+;; works for now, refactor the duplication out of this pair
+(defun aar/markdown-region ()
+  (interactive)
+  (let ((src (if (region-active-p)
+                 (buffer-substring (region-beginning) (region-end))
+               (buffer-substring (point-min) (point-max)))))
+    (if (string-match "fixme" src)
+        (error "region has unfinished links")
+      (progn
+        (with-temp-buffer
+          (insert src)
+          (shell-command-on-region
+           (point-min) (point-max)
+           (string-join ["pandoc"
+                         "-f org"
+                         "-t gfm"
+                         "--wrap=none"
+                         "--shift-heading-level-by=2"
+                         ]
+                        " ")
+           (current-buffer))
+          (normal-mode)
+          (kill-ring-save (point-min) (point-max)))
+        (delete-other-windows)))))
+
 (defun aar/org-journal-today-start ()
   (interactive)
   (insert
