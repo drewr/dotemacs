@@ -478,6 +478,19 @@
 ;; javascript
 (setq js-indent-level 2)
 
+(use-package tree-sitter :ensure t
+  :config
+  (setq treesit-language-source-alist
+        '((typescript "https://github.com/tree-sitter/tree-sitter-typescript"
+                      "master" "typescript/src")
+          (tsx "https://github.com/tree-sitter/tree-sitter-typescript"
+               "master" "tsx/src")
+          (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+          (json "https://github.com/tree-sitter/tree-sitter-json" "master" "src")
+          ;;(css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
+          ;;(go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
+          (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml" "master" "src")))  )
+
 ;; org
 
 ;; Hack to fix the #+TITLE stuff with ox-publish
