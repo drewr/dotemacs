@@ -332,3 +332,16 @@ ring.  Does not modify original text."
       (goto-char 0)
       (mark-whole-buffer)
       (kill-region (point-min) (point-max)))))
+
+(defun aar/eval-url (url)
+  "Download an elisp file from URL, strip headers, and evaluate it."
+  (interactive "sURL: ")
+  (let ((temp-buffer (generate-new-buffer " *elisp-from-url*")))
+    (with-temp-buffer
+      (url-insert-file-contents url)
+      (goto-char (point-min))
+      (when (re-search-forward "^\r?$" nil t)
+        (delete-region (point-min) (match-end 0)))
+      (eval-buffer)
+      (message (concat "loaded " url)))))
+
