@@ -480,6 +480,11 @@
   :config
   (add-to-list 'org-modules 'org-habit 'org-babel)
   (require 'org-protocol)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((shell . t)
+     (emacs-lisp . t)
+     (clojure . t)))
   :bind
   (:map
    org-mode-map
