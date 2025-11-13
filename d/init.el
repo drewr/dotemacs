@@ -471,7 +471,7 @@
   (org-mime-export-ascii 'utf-8))
 
 (use-package ox-pandoc      :ensure t)
-(use-package ox-reveal      :ensure t :pin "")
+(use-package ox-reveal      :ensure t)
 
 (use-package org
   :ensure org-contrib
