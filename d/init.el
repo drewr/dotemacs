@@ -251,38 +251,6 @@
                     ;; Ensures lsp-mode sends "workspaceFolders" to the server
                     :multi-root t)))
 
-(use-package org-mime
-  :ensure t
-  :pin "melpa"
-  :custom
-  (org-mime-export-options '(:section-numbers nil
-                                              :with-author nil
-                                              :with-toc nil))
-  (org-mime-export-ascii 'utf-8))
-
-(use-package ox-pandoc      :ensure t)
-(use-package ox-reveal      :ensure t :pin "melpa")
-
-(use-package org
-  :ensure org-contrib
-  :pin gnu
-  :after (org-agenda)
-  :config
-  (add-to-list 'org-modules 'org-habit)
-  (require 'org-protocol)
-  :bind
-  (:map
-   org-mode-map
-   ("C-c C-g" . aar/org-link)
-   :map
-   org-agenda-mode-map
-   ("s" . aar/org-agenda-save)))
-
-(use-package org-journal
-  :ensure t
-  :pin "melpa"
-  :init (setq org-journal-dir "~/.org/journal/"))
-
 (use-package paredit
   :ensure t
   :pin "melpa"
@@ -493,6 +461,38 @@
 
 ;; org
 
+(use-package org-mime
+  :ensure t
+  :pin "melpa"
+  :custom
+  (org-mime-export-options '(:section-numbers nil
+                                              :with-author nil
+                                              :with-toc nil))
+  (org-mime-export-ascii 'utf-8))
+
+(use-package ox-pandoc      :ensure t)
+(use-package ox-reveal      :ensure t :pin "")
+
+(use-package org
+  :ensure org-contrib
+  :pin gnu
+  :after (org-agenda)
+  :config
+  (add-to-list 'org-modules 'org-habit 'org-babel)
+  (require 'org-protocol)
+  :bind
+  (:map
+   org-mode-map
+   ("C-c C-g" . aar/org-link)
+   :map
+   org-agenda-mode-map
+   ("s" . aar/org-agenda-save)))
+
+(use-package org-journal
+  :ensure t
+  :pin "melpa"
+  :init (setq org-journal-dir "~/.org/journal/"))
+
 ;; Hack to fix the #+TITLE stuff with ox-publish
 ;; https://github.com/yjwen/org-reveal/issues/171#issuecomment-168372894
 ;; ...except it started causing recursive loading, so you have to do
@@ -506,6 +506,11 @@
           (lambda ()
             (add-hook
              'compilation-finish-functions 'aar/reload-org nil 'local)))
+
+(add-hook 'org-mode-hook
+          (lambda ()
+            (setq fill-column 80)
+            (remove-hook 'haskell-mode-hook 'flycheck-mode t)))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -644,11 +649,6 @@
          (file+datetree "journal.org")
          "* %? [[%:link][%:description]] \nCaptured: %T"
          :empty-lines-before 1)))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq fill-column 80)
-            (remove-hook 'haskell-mode-hook 'flycheck-mode t)))
 
 ;; erc
 
