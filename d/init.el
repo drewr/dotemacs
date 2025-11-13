@@ -132,8 +132,8 @@
   (deft-use-filename-as-title t)
   (deft-default-extension "org")
   (deft-file-naming-rules
-    '((noslash . "-")
-      (nospace . "-"))))
+   '((noslash . "-")
+     (nospace . "-"))))
 
 (use-package zetteldeft
   :ensure t
