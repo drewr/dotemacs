@@ -391,7 +391,7 @@
 ;; magit
 
 (use-package magit :ensure t)
-(use-package forge :after magit)
+(use-package forge :ensure t :after (magit))
 (global-set-key "\C-xg" 'magit-status)
 
 ;; lisp
