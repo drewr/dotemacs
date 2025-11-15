@@ -217,8 +217,6 @@
 
 (use-package fennel-mode    :ensure t)
 (use-package lua-mode       :ensure t :pin "melpa")
-(use-package magit          :ensure t :pin "melpa")
-;;(use-package magit-gh-pulls :ensure t :pin "melpa")
 
 (use-package markdown-mode
   :ensure t
@@ -392,8 +390,9 @@
 
 ;; magit
 
+(use-package magit :ensure t)
+(use-package forge :after magit)
 (global-set-key "\C-xg" 'magit-status)
-(setq magit-last-seen-setup-instructions "1.4.0")
 
 ;; lisp
 
