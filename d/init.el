@@ -256,6 +256,13 @@
               ("M-)" . paredit-forward-slurp-sexp)
               ("M-(" . paredit-forward-barf-sexp)))
 
+(use-package pomodoro
+  :ensure t
+  :pin "melpa"
+  :config
+  (setq pomodoro-sound-player "mpv")
+  (pomodoro-add-to-mode-line))
+
 (use-package popup
   :ensure t
   :pin "melpa")
