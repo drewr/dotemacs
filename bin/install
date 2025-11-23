@@ -8,7 +8,7 @@ GNUS=$HOME/Sync/Gnus
     cd $EMACS; \
     tar xvf - )
 
-if [[ -e ~/.gnus.d ]]; then
+if [ -e ~/.gnus.d ]; then
   echo ~/.gnus.d already exists, not overwriting
 else
   echo pointing ~/.gnus.d to $GNUS
