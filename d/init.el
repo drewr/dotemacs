@@ -31,8 +31,6 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
-(require 'keychain-environment)
-(keychain-refresh-environment)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
@@ -44,6 +42,11 @@
              '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 (require 'use-package)
+
+(use-package keychain-environment
+  :ensure t
+  :config
+  (keychain-refresh-environment))
 
 ;; https://github.com/jwiegley/use-package/issues/768#issuecomment-1918158963
 (defun use-package-require (name &optional no-require body)
