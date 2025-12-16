@@ -1,19 +1,3 @@
-(add-to-list 'exec-path "/opt/local/bin")
-(add-to-list 'exec-path "/opt/local/sbin")
-(add-to-list 'exec-path "/sw/bin")
-(add-to-list 'exec-path "/sw/sbin")
-(add-to-list 'exec-path "/usr/local/bin")
-(add-to-list 'exec-path (expand-file-name "~/.nix-profile/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.local/bin"))
-(add-to-list 'exec-path (expand-file-name "~/.cargo/bin"))
-
-;; for M-x shell
-(setenv "PATH" (concat "/usr/local/bin" ":" (getenv "PATH")))
-(setenv "PATH" (concat "/opt/local/bin" ":" (getenv "PATH")))
-(setenv "PATH" (concat (expand-file-name "~/.nix-profile/bin") ":" (getenv "PATH")))
-(setenv "PATH" (concat (expand-file-name "~/.local/bin") ":" (getenv "PATH")))
-(setenv "PATH" (concat (expand-file-name "~/bin") ":" (getenv "PATH")))
-
 (setq shell-file-name "zsh")
 
 (when (>= emacs-major-version 23)
