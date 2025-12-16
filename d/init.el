@@ -1,5 +1,6 @@
-;; startup
+(require 'cl-lib)
 
+;; startup
 (defmacro load-custom (f)
   "Load a local configuration file in ~/.emacs.d/."
   `(load (concat ,(expand-file-name "~/.emacs.d/") ,f)))

@@ -384,7 +384,7 @@ for the gist."
           (forward-line 1))))))
 
 (defun gist-list-db-get-gist (id)
-  (loop for gist in gist-list-db if (string= (oref gist :id) id)
+  (cl-loop for gist in gist-list-db if (string= (oref gist :id) id)
         return gist))
 
 ;;; Gist minor mode
