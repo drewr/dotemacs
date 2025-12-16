@@ -9,9 +9,6 @@
   "Add dir to load-path."
   `(add-to-list 'load-path (concat ,(expand-file-name "~/.emacs.d/lisp/") ,d)))
 
-;; For stack-installed utils
-(setenv "PATH" (concat (expand-file-name "~/.local/bin") ":" (getenv "PATH")))
-
 (load-custom
  (cl-case system-type
    (darwin "darwin")
