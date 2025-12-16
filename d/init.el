@@ -14,11 +14,9 @@
 
 (load-custom
  (cl-case system-type
-   ('darwin "darwin")
-   ('gnu/linux "linux")
-   ('windows-nt "win32")))
-(load-custom "funs")
-(load-custom "sonian")
+   (darwin "darwin")
+   (gnu/linux "linux")
+   (windows-nt "win32")))
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -811,3 +809,7 @@
 
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+
+(load-custom "funs")
+(load-custom "sonian")
+
