@@ -17,7 +17,7 @@ install-and-compile: install load
 	cd ~/.emacs.d && ./compile
 
 clean:
-	rm -rf ~/.emacs.d
+	rm -rf ~/.emacs ~/.emacs~ ~/.emacs.d
 	find . -name \*.elc | xargs rm -f
 
 publish:
