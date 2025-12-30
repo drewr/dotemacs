@@ -10,7 +10,7 @@ install:
 
 # This has side effects in ~/.emacs.d from the package installations
 load:
-	emacs --batch --eval '(message "----> running init")' -l d/setup.el -l d/init.el
+	emacs --batch --eval '(message "----> running init")' -l d/init.el
 
 # Copy everything and build it
 install-and-compile: install load

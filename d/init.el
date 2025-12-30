@@ -27,6 +27,8 @@
   (server-start))
 (require 'ffap)
 (require 'saveplace)
+
+;; Package management setup (consolidates former setup.el)
 (require 'package)
 (add-to-list 'package-archives
              '("melpa-stable" . "https://stable.melpa.org/packages/"))
@@ -38,6 +40,12 @@
              '("gnu" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 (require 'use-package)
+
+;; Enable async bytecompilation for faster package operations
+(use-package async
+  :ensure t
+  :config
+  (async-bytecomp-package-mode 1))
 
 (use-package exec-path-from-shell
   :ensure t
