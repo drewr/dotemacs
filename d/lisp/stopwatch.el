@@ -33,7 +33,7 @@
      (insert
       (format "display notification \"%s\" with title \"%s\""
 	      msg notification-center-title)))
-   (unless (zerop (call-process "osascript" tmpfile))
+   (unless (= 0 (call-process "osascript" tmpfile))
      (message "Failed: Call AppleScript"))
    (delete-file tmpfile)))
 

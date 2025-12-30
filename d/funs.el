@@ -58,18 +58,6 @@ Symbols matching the text at point are put first in the completion list."
     (when file
       (find-file file))))
 
-(defun transpose-windows (arg)
-  "Transpose the buffers shown in two windows."
-  (interactive "p")
-  (let ((selector (if (>= arg 0) 'next-window 'previous-window)))
-    (while (/= arg 0)
-      (let ((this-win (window-buffer))
-            (next-win (window-buffer (funcall selector))))
-        (set-window-buffer (selected-window) next-win)
-        (set-window-buffer (funcall selector) this-win)
-        (select-window (funcall selector)))
-      (setq arg (if (plusp arg) (1- arg) (1+ arg))))))
-
 (defun aar/transpose-windows (arg)
   "Transpose the buffers shown in two windows."
   (interactive "p")
@@ -109,7 +97,7 @@ Symbols matching the text at point are put first in the completion list."
                  message))
 
 (defun notify (title message)
-  (cl-case system-type
+  (pcase system-type
     ('darwin (growl title message))
     ('gnu/linux (notify-send title message))
     ('windows-nt 'wtf)))
@@ -238,26 +226,28 @@ and returns an org-formatted link:
            (re-search-forward "fixme" nil t 1)))
     t))
 
+(defun aar/org-to-markdown-convert (beg end output-buffer)
+  "Convert org text from BEG to END to GFM, writing to OUTPUT-BUFFER."
+  (shell-command-on-region
+   beg end
+   (string-join ["pandoc"
+                 "-f org"
+                 "-t gfm"
+                 "--wrap=none"
+                 "--shift-heading-level-by=2"]
+                " ")
+   output-buffer))
+
 (defun aar/markdown-buffer ()
   (interactive)
   (if (buffer-links-ready-p (buffer-name))
       (let ((md-buffer (concat (buffer-name) ".md")))
-        (shell-command-on-region
-         (point-min) (point-max)
-         (string-join ["pandoc"
-                       "-f org"
-                       "-t gfm"
-                       "--wrap=none"
-                       "--shift-heading-level-by=2"
-                       ]
-                      " ")
-         md-buffer)
+        (aar/org-to-markdown-convert (point-min) (point-max) md-buffer)
         (set-buffer md-buffer)
         (normal-mode)
         (kill-ring-save (point-min) (point-max)))
     (error "buffer has unfinished links")))
 
-;; works for now, refactor the duplication out of this pair
 (defun aar/markdown-region ()
   (interactive)
   (let ((src (if (region-active-p)
@@ -265,21 +255,11 @@ and returns an org-formatted link:
                (buffer-substring (point-min) (point-max)))))
     (if (string-match "fixme" src)
         (error "region has unfinished links")
-      (progn
-        (with-temp-buffer
-          (insert src)
-          (shell-command-on-region
-           (point-min) (point-max)
-           (string-join ["pandoc"
-                         "-f org"
-                         "-t gfm"
-                         "--wrap=none"
-                         "--shift-heading-level-by=2"
-                         ]
-                        " ")
-           (current-buffer))
-          (normal-mode)
-          (kill-ring-save (point-min) (point-max)))
+      (with-temp-buffer
+        (insert src)
+        (aar/org-to-markdown-convert (point-min) (point-max) (current-buffer))
+        (normal-mode)
+        (kill-ring-save (point-min) (point-max))
         (delete-other-windows)))))
 
 (defun aar/org-journal-today-start ()

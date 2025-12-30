@@ -414,9 +414,7 @@ operators."
 ;;----------------------------------------------------------------------------
 ;;;###autoload (add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
 
-;; For compatibility with Emacs < 24
-(defalias 'd-parent-mode
-  (if (fboundp 'prog-mode) 'prog-mode 'fundamental-mode))
+(defalias 'd-parent-mode 'prog-mode)
 
 ;;;###autoload
 (define-derived-mode d-mode d-parent-mode "D"

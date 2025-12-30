@@ -10,10 +10,11 @@
   `(add-to-list 'load-path (concat ,(expand-file-name "~/.emacs.d/lisp/") ,d)))
 
 (load-custom
- (cl-case system-type
-   (darwin "darwin")
-   (gnu/linux "linux")
-   (windows-nt "win32")))
+ (pcase system-type
+   ('darwin "darwin")
+   ('gnu/linux "linux")
+   ('windows-nt "win32")
+   (_ "darwin")))
 
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -22,20 +23,19 @@
   (when (file-exists-p d)
     (add-to-list 'load-path d)))
 
-(when (and (>= (string-to-number emacs-version) 23)
-           (fboundp 'server-running-p))
+(when (fboundp 'server-running-p)
   (server-start))
 (require 'ffap)
 (require 'saveplace)
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/"))
+             '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives
              '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (add-to-list 'package-archives
-             '("gnu" . "http://elpa.gnu.org/packages/"))
+             '("gnu" . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 (require 'use-package)
 
@@ -106,11 +106,11 @@
   :ensure t
   :pin "melpa"
   :after (flycheck-clj-kondo)
+  :hook ((clojure-mode . aar/lispy-parens)
+         (clojure-mode . aar/massage-nrepl-bindings)
+         (clojure-mode . whitespace-mode))
   :config
   (require 'flycheck-clj-kondo)
-  (add-hook 'clojure-mode-hook 'aar/lispy-parens)
-  (add-hook 'clojure-mode-hook 'aar/massage-nrepl-bindings)
-  (add-hook 'clojure-mode-hook 'whitespace-mode)
   (put-clojure-indent 'assoc 1)
   (put-clojure-indent 'assoc-in 1)
   (put-clojure-indent 'match 1))
@@ -182,11 +182,9 @@
         ("M-." . godef-jump))
   :init
   (setq gofmt-command "goimports")
-  :config
-  (add-hook 'go-mode-hook
-            (lambda ()
-              (setq tab-width 2)
-              (add-hook 'before-save-hook 'gofmt-before-save))))
+  :hook (go-mode . (lambda ()
+                     (setq tab-width 2)
+                     (add-hook 'before-save-hook 'gofmt-before-save))))
 
 (use-package go-playground     :ensure t :pin "melpa")
 
@@ -226,16 +224,15 @@
 (use-package markdown-mode
   :ensure t
   :pin "melpa"
-  :config
-  (add-hook 'markdown-mode-hook 'visual-line-mode))
+  :hook (markdown-mode . visual-line-mode))
 
 (use-package mustache-mode  :ensure t :pin "melpa")
 (use-package nim-mode       :ensure t :pin "melpa")
 (use-package nix-mode       :ensure t :pin "melpa")
 
-;; only available from https://github.com/mattt-b/odin-mode/blob/master/odin-mode.el
-(require 'odin-mode)
+;; manually installed from https://github.com/mattt-b/odin-mode/blob/master/odin-mode.el
 (use-package odin-mode
+  :ensure nil
   :mode ("\\.odin\\'" . odin-mode)
   :hook (odin-mode . lsp))
 
@@ -289,13 +286,11 @@
 (use-package psc-ide
   :ensure t
   :pin "melpa"
-  :config
-  (add-hook 'purescript-mode-hook
-            '(lambda ()
-               (psc-ide-mode)
-               (company-mode)
-               (flycheck-mode)
-               (turn-on-purescript-indentation))))
+  :hook (purescript-mode . (lambda ()
+                             (psc-ide-mode)
+                             (company-mode)
+                             (flycheck-mode)
+                             (turn-on-purescript-indentation))))
 
 (use-package rainbow-delimiters  :ensure t :pin "melpa")
 (use-package rainbow-identifiers :ensure t :pin "melpa")
@@ -362,12 +357,12 @@
 (global-set-key (kbd "C-=") 'text-scale-increase)
 (global-set-key (kbd "C--") 'text-scale-decrease)
 
-(when (equalp "DUMB" (getenv "TERM"))
+(when (equal "DUMB" (getenv "TERM"))
   (setenv "PAGER" "cat"))
 
-(eval-after-load 'diff-mode
-  '(progn (set-face-foreground 'diff-added "green4")
-          (set-face-foreground 'diff-removed "red3")))
+(with-eval-after-load 'diff-mode
+  (set-face-foreground 'diff-added "green4")
+  (set-face-foreground 'diff-removed "red3"))
 
 ;; bbdb
 
@@ -377,28 +372,33 @@
 (setq bbdb-complete-name-allow-cycling t)
 (setq bbdb-use-pop-up nil)
 
-;; pre-gnus
-;;(add-to-list 'load-path (expand-file-name "~/src/gnus/lisp"))
-;;(add-to-list 'Info-default-directory-list
-;;     (expand-file-name "~/src/gnus/texi/"))
+(use-package gnus
+  :ensure nil
+  :commands gnus
+  :config
+  (setq gnus-home-directory "~/.gnus.d/")
+  (setq gnus-directory (concat gnus-home-directory "News/"))
+  (setq message-directory (concat gnus-home-directory "Mail/")))
 
-(setq gnus-home-directory "~/.gnus.d/")
-(setq gnus-directory (concat gnus-home-directory "News/"))
-(setq message-directory (concat gnus-home-directory "Mail/"))
-(require 'gnus)
-(require 'info)
+(use-package info
+  :ensure nil)
 
 ;; elmer
 
-(require 'elmer)
-(setq elmer-paste-bin "zsh <(curl -s p.draines.com/sh)")
-(global-set-key (kbd "C-c C-e") 'elmer)
+(use-package elmer
+  :ensure nil
+  :bind ("C-c C-e" . elmer)
+  :config
+  (setq elmer-paste-bin "zsh <(curl -s p.draines.com/sh)"))
 
 ;; scpaste
 
-(autoload 'scpaste "scpaste" "Paste the current buffer." t nil)
-(setq scpaste-http-destination "http://draines.com/tmp"
-      scpaste-scp-destination "draines:/www/htdocs/draines/tmp")
+(use-package scpaste
+  :ensure t
+  :commands scpaste
+  :config
+  (setq scpaste-http-destination "http://draines.com/tmp"
+        scpaste-scp-destination "draines:/www/htdocs/draines/tmp"))
 
 ;; magit
 
@@ -419,8 +419,10 @@
 (defun aar/massage-nrepl-bindings ()
   (define-key paredit-mode-map (kbd "C-c C-n") 'clean-up-buffer))
 
-(add-hook 'emacs-lisp-mode-hook 'aar/lispy-parens)
-(add-hook 'emacs-lisp-mode-hook 'whitespace-mode)
+(use-package emacs-lisp-mode
+  :ensure nil
+  :hook ((emacs-lisp-mode . aar/lispy-parens)
+         (emacs-lisp-mode . whitespace-mode)))
 
 ;; ocaml
 (use-package tuareg         :ensure t :pin "melpa")
@@ -447,12 +449,9 @@
                 ("\\.topml$" . tuareg-mode))
               auto-mode-alist))
 
-;; nix
-(require 'nix-mode)  ;; from ~/.nix-profile/.../site-lisp above
-;; (nix-env -i emacs)
-
 ;; python
-(require 'python)
+(use-package python
+  :ensure nil)
 
 ;; javascript
 (setq js-indent-level 2)
@@ -488,6 +487,10 @@
   :ensure org-contrib
   :pin gnu
   :after (org-agenda)
+  :hook (org-mode . (lambda ()
+                      (add-hook 'compilation-finish-functions 'aar/reload-org nil 'local)
+                      (setq fill-column 80)
+                      (remove-hook 'haskell-mode-hook 'flycheck-mode t)))
   :config
   (add-to-list 'org-modules 'org-habit 'org-babel)
   (require 'org-protocol)
@@ -517,16 +520,6 @@
   (let ((current-prefix-arg 1))
     (call-interactively 'org-reload)))
 
-;; Unfortunately this doesn't work on startup
-(add-hook 'org-mode-hook
-          (lambda ()
-            (add-hook
-             'compilation-finish-functions 'aar/reload-org nil 'local)))
-
-(add-hook 'org-mode-hook
-          (lambda ()
-            (setq fill-column 80)
-            (remove-hook 'haskell-mode-hook 'flycheck-mode t)))
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -668,13 +661,21 @@
 
 ;; erc
 
-(require 'erc)
-(require 'erc-sasl)
-(add-to-list 'erc-sasl-server-regexp-list "irc\\.libera\\.chat")
+(use-package erc
+  :ensure nil
+  :config
+  (add-to-list 'erc-modules 'log)
+  (add-to-list 'erc-modules 'highlight-nicknames))
 
-(require 'erc-highlight-nicknames)
-(add-to-list 'erc-modules 'log)
-(add-to-list 'erc-modules 'highlight-nicknames)
+(use-package erc-sasl
+  :ensure nil
+  :after erc
+  :config
+  (add-to-list 'erc-sasl-server-regexp-list "irc\\.libera\\.chat"))
+
+(use-package erc-highlight-nicknames
+  :ensure nil
+  :after erc)
 
 (setq erc-server "irc.libera.chat"
       erc-port 6697
@@ -741,21 +742,25 @@
            :nick "drewr"))
 
 ;; puppet
-(eval-after-load 'puppet-mode
-  '(define-key puppet-mode-map (kbd "$") 'self-insert-command))
+(with-eval-after-load 'puppet-mode
+  (define-key puppet-mode-map (kbd "$") 'self-insert-command))
 
 ;; edit-server
-(require 'edit-server)
+(use-package edit-server
+  :ensure nil)
 
 ;; demo slides
-(require 'demo)
+(use-package demo
+  :ensure nil)
 
 ;; D
-(autoload 'd-mode "d-mode" "Major mode for editing D code." t)
-(add-to-list 'auto-mode-alist '("\\.d[i]?\\'" . d-mode))
+(use-package d-mode
+  :ensure nil
+  :mode "\\.d[i]?\\'")
 
 ;; Stopwatch
-(require 'stopwatch)
+(use-package stopwatch
+  :ensure nil)
 
 ;; Customize
 
