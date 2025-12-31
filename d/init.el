@@ -38,14 +38,16 @@
              '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (add-to-list 'package-archives
              '("gnu" . "https://elpa.gnu.org/packages/"))
-(package-initialize)
-(require 'use-package)
 
-;; Enable async bytecompilation for faster package operations
-(use-package async
-  :ensure t
-  :config
-  (async-bytecomp-package-mode 1))
+;; Don't do this in batch mode
+(unless noninteractive
+  (package-initialize)
+  (use-package async
+    :ensure t
+    :config
+    (async-bytecomp-package-mode 1)))
+
+(require 'use-package)
 
 (use-package exec-path-from-shell
   :ensure t
@@ -828,4 +830,3 @@
 
 (load-custom "funs")
 (load-custom "sonian")
-
