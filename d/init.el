@@ -39,6 +39,8 @@
 (add-to-list 'package-archives
              '("gnu" . "https://elpa.gnu.org/packages/"))
 
+(setq package-install-upgrade-built-in t)
+
 ;; Don't do this in batch mode
 (unless noninteractive
   (package-initialize)
@@ -197,6 +199,16 @@
                      (add-hook 'before-save-hook 'gofmt-before-save))))
 
 (use-package go-playground     :ensure t :pin "melpa")
+
+(use-package gptel
+  :ensure t
+  :config
+  (defvar aar/claude-sonnet
+    (gptel-make-anthropic "Claude Sonnet"
+      :stream t
+      :key gptel-api-key
+      :models '("claude-sonnet-4-5-20250929")))
+  (setq gptel-backend aar/claude-sonnet))
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
