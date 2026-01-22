@@ -203,12 +203,20 @@
 (use-package gptel
   :ensure t
   :config
-  (defvar aar/claude-sonnet
-    (gptel-make-anthropic "Claude Sonnet"
+  (defvar aar/claude
+    (gptel-make-anthropic "Claude"
       :stream t
       :key gptel-api-key
-      :models '("claude-sonnet-4-5-20250929")))
-  (setq gptel-backend aar/claude-sonnet))
+      :models '("claude-haiku-4-5"
+                "claude-sonnet-4-5"
+                "claude-opus-4-5")))
+  (defvar aar/gemini
+    (gptel-make-gemini "Gemini"
+      :key gptel-api-key
+      :stream t
+      :models '("gemini-2.5-flash"
+                "gemini-2.5-pro")))
+  (setq gptel-backend aar/gemini))
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
