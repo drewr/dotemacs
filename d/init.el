@@ -631,6 +631,22 @@
          :clock-in t
          :clock-keep t
          :prepend t)
+        ("pm" "Personal meeting with denote note" entry
+         (file+headline "PERSONAL.org" "Tasks")
+         "* %? %^G\n"
+         :jump-to-captured t
+         :empty-lines-before 1
+         :clock-in t
+         :clock-keep t
+         :prepend t)
+        ("p1" "Personal 1-on-1 with denote note" entry
+         (file+headline "PERSONAL.org" "Tasks")
+         "* %^{Person} (%(format-time-string \"%Y%m%d\")) :1on1:\n"
+         :jump-to-captured t
+         :empty-lines-before 1
+         :clock-in t
+         :clock-keep t
+         :prepend t)
         ("pt" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* TODO %?\n  %T\n" :prepend t)
@@ -643,9 +659,17 @@
          :clock-in t
          :clock-keep t
          :tree-type week)
-        ("d1" "Datum 1-1" entry
+        ("dm" "Datum meeting with denote note" entry
          (file+olp+datetree "clients/DATUM.org" "Journal")
-         "* %? (%(format-time-string \"%Y%m%d\")) :1on1:"
+         "* %? %^G"
+         :jump-to-captured t
+         :empty-lines-before 1
+         :clock-in t
+         :clock-keep t
+         :tree-type week)
+        ("d1" "Datum 1-on-1 with denote note" entry
+         (file+olp+datetree "clients/DATUM.org" "Journal")
+         "* %^{Person} (%(format-time-string \"%Y%m%d\")) :1on1:"
          :jump-to-captured t
          :empty-lines-before 1
          :clock-in t
