@@ -638,7 +638,8 @@
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
-         :prepend t)
+         :prepend t
+         :denote t)
         ("p1" "Personal 1-on-1 with denote note" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* %^{Person} (%(format-time-string \"%Y%m%d\")) :1on1:\n"
@@ -646,7 +647,8 @@
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
-         :prepend t)
+         :prepend t
+         :denote t)
         ("pt" "Personal TODO" entry
          (file+headline "PERSONAL.org" "Tasks")
          "* TODO %?\n  %T\n" :prepend t)
@@ -666,7 +668,8 @@
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
-         :tree-type week)
+         :tree-type week
+         :denote t)
         ("d1" "Datum 1-on-1 with denote note" entry
          (file+olp+datetree "clients/DATUM.org" "Journal")
          "* %^{Person} (%(format-time-string \"%Y%m%d\")) :1on1:"
@@ -674,7 +677,8 @@
          :empty-lines-before 1
          :clock-in t
          :clock-keep t
-         :tree-type week)
+         :tree-type week
+         :denote t)
         ("dt" "Datum TODO"
          entry (file+olp+datetree "clients/DATUM.org" "Journal")
          "* TODO %? %^G\n  %T"

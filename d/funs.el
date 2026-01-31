@@ -325,46 +325,29 @@ ring.  Does not modify original text."
       (eval-buffer)
       (message (concat "loaded " url)))))
 
-(defvar aar/org-capture-denote-templates nil
-  "List of org-capture template keys that should create denote notes.")
-(setq aar/org-capture-denote-templates '("pm" "dm" "p1" "d1"))
-
 (defvar aar/org-capture-denote-file nil
   "Temporary storage for denote file path during capture.")
 
 (defun aar/org-capture-before-finalize-create-denote ()
   "Before capture finalization, create and attach denote note if using denote template."
-  (message "DEBUG: Hook called! org-note-abort=%s plist=%s key=%s"
-           org-note-abort
-           org-capture-plist
-           (when org-capture-plist (plist-get org-capture-plist :key)))
-  (message "DEBUG: Templates list: %s" aar/org-capture-denote-templates)
   (when (and (not org-note-abort)
              org-capture-plist
-             (member (plist-get org-capture-plist :key) aar/org-capture-denote-templates))
-    (message "DEBUG: Creating denote note for template: %s" (plist-get org-capture-plist :key))
+             (plist-get org-capture-plist :denote))
     (save-excursion
       (org-back-to-heading t)
       (let* ((heading (org-get-heading t t t t))
-             (org-tags (org-get-tags))
-             (keywords org-tags))
-        (message "DEBUG: heading=%s tags=%s" heading org-tags)
-        (let ((denote-file (denote heading keywords nil nil nil)))
-          ;; Save and close denote buffer
-          (save-buffer)
-          (kill-buffer)
-          ;; Attach to org entry
-          (org-attach-attach denote-file nil 'mv)
-          ;; Store the attached file path to open after finalization
-          (setq aar/org-capture-denote-file
-                (expand-file-name
-                 (file-name-nondirectory denote-file)
-                 (org-attach-dir)))
-          (message "DEBUG: Created and attached: %s" aar/org-capture-denote-file))))))
+             (keywords (org-get-tags))
+             (denote-file (denote heading keywords nil nil nil)))
+        (save-buffer)
+        (kill-buffer)
+        (org-attach-attach denote-file nil 'mv)
+        (setq aar/org-capture-denote-file
+              (expand-file-name
+               (file-name-nondirectory denote-file)
+               (org-attach-dir)))))))
 
 (defun aar/org-capture-after-finalize-open-denote ()
   "After capture finalization, open the denote note if one was created."
-  (message "DEBUG: After finalize hook called, file=%s" aar/org-capture-denote-file)
   (when aar/org-capture-denote-file
     (let ((file aar/org-capture-denote-file))
       (setq aar/org-capture-denote-file nil)
