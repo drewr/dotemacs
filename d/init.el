@@ -38,12 +38,12 @@
              '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (add-to-list 'package-archives
              '("gnu" . "https://elpa.gnu.org/packages/"))
+(package-initialize)
 
 (setq package-install-upgrade-built-in t)
 
 ;; Don't do this in batch mode
 (unless noninteractive
-  (package-initialize)
   (use-package async
     :ensure t
     :config
