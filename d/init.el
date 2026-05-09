@@ -16,6 +16,8 @@
    ('windows-nt "win32")
    (_ "darwin")))
 
+(load-custom "agents")
+
 (add-to-list 'exec-path (expand-file-name "~/bin"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
@@ -168,6 +170,7 @@
 
 (use-package avy  :ensure t)
 (use-package ace-window  :ensure t)
+(use-package acp :ensure t :pin "melpa")
 
 (use-package dhall-mode        :ensure t :mode "\\.dhall\\'")
 (use-package erlang            :ensure t :pin "melpa")
@@ -200,23 +203,18 @@
 
 (use-package go-playground     :ensure t :pin "melpa")
 
+(use-package agent-shell
+  :ensure t
+  :pin "melpa"
+  :after acp
+  :bind (("C-x M-a" . agent-shell))
+  :config
+  (aar/agents-setup-agent-shell))
+
 (use-package gptel
   :ensure t
   :config
-  (defvar aar/claude
-    (gptel-make-anthropic "Claude"
-      :stream t
-      :key gptel-api-key
-      :models '("claude-haiku-4-5"
-                "claude-sonnet-4-5"
-                "claude-opus-4-5")))
-  (defvar aar/gemini
-    (gptel-make-gemini "Gemini"
-      :key gptel-api-key
-      :stream t
-      :models '("gemini-2.5-flash"
-                "gemini-2.5-pro")))
-  (setq gptel-backend aar/gemini))
+  (aar/agents-setup-gptel))
 
 (use-package graphviz-dot-mode :ensure t :pin "melpa")
 (use-package groovy-mode       :ensure t :pin "melpa")
