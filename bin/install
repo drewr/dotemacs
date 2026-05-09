@@ -3,6 +3,8 @@
 EMACS=$HOME/.emacs.d
 GNUS=$HOME/Sync/Gnus
 
+mkdir -p $GNUS
+
 ( cd d; tar cf - . ) \
 | ( mkdir -p $EMACS; \
     cd $EMACS; \
