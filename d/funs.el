@@ -381,7 +381,7 @@ TITLE in the interactive prompt."
 Runs for the plain \"New note\" template that uses `aar/denote-org-capture'."
   (when-let* ((file denote-last-path)
               ((file-regular-p file))
-              (original-buffer org-capture-original-buffer)
+              (original-buffer (bound-and-true-p org-capture-original-buffer))
               ((buffer-live-p original-buffer))
               (attach-dir (with-current-buffer original-buffer
                             (when (org-at-heading-p)
