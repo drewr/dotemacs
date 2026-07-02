@@ -341,7 +341,8 @@ Use this as the capture function in `org-capture-templates' instead of
 `denote-org-capture' to have the heading at point serve as the default
 TITLE in the interactive prompt."
   (let ((denote-title-prompt-current-default
-         (with-current-buffer (or org-capture-original-buffer (current-buffer))
+         (with-current-buffer (or (bound-and-true-p org-capture-original-buffer)
+                                  (current-buffer))
            (org-get-heading t t t t))))
     (denote-org-capture)))
 
