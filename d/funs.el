@@ -115,7 +115,11 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "p")
   (kmacro-exec-ring-item
    (quote
-    ("1b#search32b#84115oo2b#safeob#devopsoo" 0 "%d"))
+    ("1b#search
+32b#84115
+oo2b#safe
+ob#devops
+oo" 0 "%d"))
    arg))
 
 (defun aar/irc-home (&optional arg)
@@ -123,7 +127,11 @@ Symbols matching the text at point are put first in the completion list."
   (interactive "p")
   (kmacro-exec-ring-item
    (quote
-    ("1b#elasticsearch32b#84115oo2b#clojureob#nashdloo" 0 "%d"))
+    ("1b#elasticsearch
+32b#84115
+oo2b#clojure
+ob#nashdl
+oo" 0 "%d"))
    arg))
 
 (defun aar/irc-go-to-balls (&optional arg)
@@ -135,12 +143,14 @@ Symbols matching the text at point are put first in the completion list."
 (defun aar/irc-go-to-notes (&optional arg)
   "Keyboard macro."
   (interactive "p")
-  (kmacro-exec-ring-item (quote ("13bES.org" 0 "%d")) arg))
+  (kmacro-exec-ring-item (quote ("13bES.org
+" 0 "%d")) arg))
 
 (defun aar/pretty-json (&optional arg) "Keyboard macro."
        (interactive "p")
        (kmacro-exec-ring-item
-        (quote ("|python -mjson.tool" 0 "%d")) arg))
+        (quote ("|python -mjson.tool
+" 0 "%d")) arg))
 
 (defun save-buffer-if-visiting-file (&optional args)
   "Save the current buffer only if it is visiting a file"
@@ -325,6 +335,16 @@ ring.  Does not modify original text."
       (eval-buffer)
       (message (concat "loaded " url)))))
 
+(defun aar/denote-org-capture ()
+  "Like `denote-org-capture' but pre-populates the title prompt with the current Org heading.
+Use this as the capture function in `org-capture-templates' instead of
+`denote-org-capture' to have the heading at point serve as the default
+TITLE in the interactive prompt."
+  (let ((denote-title-prompt-current-default
+         (with-current-buffer (or org-capture-original-buffer (current-buffer))
+           (org-get-heading t t t t))))
+    (denote-org-capture)))
+
 (defvar aar/org-capture-denote-file nil
   "Temporary storage for denote file path during capture.")
 
@@ -355,10 +375,31 @@ ring.  Does not modify original text."
       (goto-char (point-max))
       (message "Opened denote note for meeting"))))
 
+(defun aar/org-capture-after-finalize-move-denote-to-attach ()
+  "After capture, move a denote-org-capture note into the original heading's attach dir.
+Runs for the plain \"New note\" template that uses `aar/denote-org-capture'."
+  (when-let* ((file denote-last-path)
+              ((file-regular-p file))
+              (original-buffer org-capture-original-buffer)
+              ((buffer-live-p original-buffer))
+              (attach-dir (with-current-buffer original-buffer
+                            (when (org-at-heading-p)
+                              (org-attach-dir 'create)))))
+    (org-attach-attach file nil 'mv)
+    (setq denote-last-path nil)
+    (let ((moved (expand-file-name
+                  (file-name-nondirectory file)
+                  attach-dir)))
+      (when (file-regular-p moved)
+        (find-file moved)
+        (goto-char (point-max))))))
+
 ;; Remove old hooks first to avoid duplicates
 (remove-hook 'org-capture-before-finalize-hook #'aar/org-capture-before-finalize-create-denote)
 (remove-hook 'org-capture-after-finalize-hook #'aar/org-capture-after-finalize-open-denote)
+(remove-hook 'org-capture-after-finalize-hook #'aar/org-capture-after-finalize-move-denote-to-attach)
 ;; Add hooks
 (add-hook 'org-capture-before-finalize-hook #'aar/org-capture-before-finalize-create-denote)
 (add-hook 'org-capture-after-finalize-hook #'aar/org-capture-after-finalize-open-denote)
+(add-hook 'org-capture-after-finalize-hook #'aar/org-capture-after-finalize-move-denote-to-attach)
 
