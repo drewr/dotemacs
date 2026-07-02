@@ -340,14 +340,17 @@ ring.  Does not modify original text."
 Use this as the capture function in `org-capture-templates' instead of
 `denote-org-capture' to have the heading at point serve as the default
 TITLE in the interactive prompt."
+  (setq aar/org-capture-denote-original-buffer (current-buffer))
   (let ((denote-title-prompt-current-default
          (with-current-buffer (or (bound-and-true-p org-capture-original-buffer)
-                                  (current-buffer))
+                                  aar/org-capture-denote-original-buffer)
            (org-get-heading t t t t))))
     (denote-org-capture)))
 
 (defvar aar/org-capture-denote-file nil
   "Temporary storage for denote file path during capture.")
+(defvar aar/org-capture-denote-original-buffer nil
+  "Original buffer saved by `aar/denote-org-capture' for the after-finalize hook.")
 
 (defun aar/org-capture-before-finalize-create-denote ()
   "Before capture finalization, create and attach denote note if using denote template."
@@ -381,7 +384,7 @@ TITLE in the interactive prompt."
 Runs for the plain \"New note\" template that uses `aar/denote-org-capture'."
   (when-let* ((file denote-last-path)
               ((file-regular-p file))
-              (original-buffer (bound-and-true-p org-capture-original-buffer))
+              (original-buffer aar/org-capture-denote-original-buffer)
               ((buffer-live-p original-buffer))
               (attach-dir (with-current-buffer original-buffer
                             (when (org-at-heading-p)
