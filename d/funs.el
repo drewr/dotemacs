@@ -382,13 +382,17 @@ TITLE in the interactive prompt."
 (defun aar/org-capture-after-finalize-move-denote-to-attach ()
   "After capture, move a denote-org-capture note into the original heading's attach dir.
 Runs for the plain \"New note\" template that uses `aar/denote-org-capture'."
+  (message "aar: after-finalize hook running, denote-last-path=%s" denote-last-path)
+  (message "aar: original-buffer=%s" aar/org-capture-denote-original-buffer)
   (when-let* ((file denote-last-path)
               ((file-regular-p file))
               (original-buffer aar/org-capture-denote-original-buffer)
               ((buffer-live-p original-buffer))
               (attach-dir (with-current-buffer original-buffer
+                            (message "aar: at-heading=%s" (org-at-heading-p))
                             (when (org-at-heading-p)
                               (org-attach-dir 'create)))))
+    (message "aar: moving %s to %s" file attach-dir)
     (org-attach-attach file nil 'mv)
     (setq denote-last-path nil)
     (let ((moved (expand-file-name
