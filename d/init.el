@@ -59,10 +59,13 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(use-package keychain-environment
-  :ensure t
-  :config
-  (keychain-refresh-environment))
+;; Use stable symlink maintained by ~/.ssh/rc (inbound SSH connections) and
+;; update_auth_sock (interactive shells) to avoid spawning a second ssh-agent.
+;; ~/.ssh/ssh_auth_sock is kept current by ~/.ssh/rc on each inbound SSH
+;; connection, so GUI Emacs always picks up the right agent.
+(when-let ((sock (expand-file-name "~/.ssh/ssh_auth_sock")))
+  (when (file-exists-p sock)
+    (setenv "SSH_AUTH_SOCK" sock)))
 
 ;; https://github.com/jwiegley/use-package/issues/768#issuecomment-1918158963
 (defun use-package-require (name &optional no-require body)
