@@ -10,11 +10,17 @@
 (defvar aar/default-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 
+;; Restore normal file handling, and GC settings tuned for Emacs 31's
+;; native-comp runtime.  The stock 32 MB threshold caused a noticeable
+;; ~50-100 ms garbage-collect hitch roughly every second while typing;
+;; with native-compiled bytecode churning allocations faster, full GCs
+;; fired too often.  256 MB keeps the stall rare while staying within
+;; sane memory use.
 (defun aar/restore-startup-tuning ()
   "Restore normal GC and file handling after startup."
   (run-at-time 5 nil
                (lambda ()
-                 (setq gc-cons-threshold 33554432
+                 (setq gc-cons-threshold (* 256 1024 1024)
                        gc-cons-percentage 0.1
                        file-name-handler-alist aar/default-file-name-handler-alist))))
 
