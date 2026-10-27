@@ -2,6 +2,12 @@
 
 (require 'cl-lib)
 
+;; Quiet native-compiler warnings for functions defined elsewhere.
+(declare-function notify "funs")
+(declare-function aar/agents-setup-gptel "agents")
+(declare-function paredit-mode "paredit")
+(declare-function async-bytecomp-package-mode "async-bytecomp")
+
 ;; startup
 (defmacro load-custom (f)
   "Load a local configuration file in ~/.emacs.d/."
@@ -58,7 +64,6 @@
 (use-package exec-path-from-shell
   :ensure t
   :if (memq window-system '(mac ns x))
-  :defer t
   :config
   (exec-path-from-shell-initialize))
 
@@ -467,19 +472,22 @@
 (use-package merlin         :ensure t :pin "melpa" :defer t)
 
 (let* ((ocaml-lisp "~/.opam/default/share/emacs/site-lisp")
-       (tuareg-site-file
-        (concat ocaml-lisp "/tuareg-site-file.el")))
+       (site-file (concat ocaml-lisp "/tuareg-site-file.el"))
+       (tuareg-site-file site-file))
   (if (file-exists-p ocaml-lisp)
       (progn
         (add-to-list 'load-path ocaml-lisp)
-        (require 'ocamlformat)
-        (add-hook 'before-save-hook 'ocamlformat-before-save))
+        (if (file-exists-p site-file)
+            ;; Load lazily with tuareg; loading it eagerly here triggers
+            ;; a lexical-binding cookie warning at startup.
+            (with-eval-after-load 'tuareg
+              (load tuareg-site-file)
+              (require 'ocamlformat)
+              (add-hook 'before-save-hook 'ocamlformat-before-save))
+          (message "run `opam install tuareg`")))
     (message "opam site-lisp doesn't exist yet"))
-  (if (file-exists-p tuareg-site-file)
-      (progn
-        (load tuareg-site-file)
-        (add-hook 'tuareg-mode-hook 'merlin-mode))
-    (message "run `opam install tuareg`")))
+  (when (file-exists-p site-file)
+    (add-hook 'tuareg-mode-hook 'merlin-mode)))
 
 (setq auto-mode-alist
       (append '(("\\.ml[ily]?$" . tuareg-mode)
