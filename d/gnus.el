@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (setq user-full-name "Drew Raines"
       user-mail-address "drew@raines.me"
       message-user-fqdn "mid.raines.me"

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (let ((f (expand-file-name "~/src/sa-safe/.elisp/sonian-navigation.el")))
   (when (file-exists-p f)
     (load-file f)

@@ -10,7 +10,7 @@ install:
 
 # This has side effects in ~/.emacs.d from the package installations
 load:
-	cd ~/.emacs.d && emacs --batch --eval '(message "----> running init")' -l setup-package.el -l init.el
+	cd ~/.emacs.d && emacs --batch --eval '(message "----> running init")' -l setup-package.el -l init.el --eval '(when (and (file-exists-p (expand-file-name "early-init.el")) (fboundp (quote package-quickstart-refresh))) (package-quickstart-refresh))'
 
 # Copy everything and build it
 install-and-compile: install load

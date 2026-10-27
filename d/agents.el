@@ -2,6 +2,12 @@
 
 (require 'cl-lib)
 
+;; Defined in the gptel package, which is loaded after startup.
+(declare-function gptel "gptel")
+(declare-function gptel-make-openai "gptel-openai")
+(declare-function gptel-make-anthropic "gptel-anthropic")
+(declare-function gptel-make-ollama "gptel-ollama")
+
 (defun aar/llm-command-available-p (command)
   "Return non-nil when COMMAND is available on this machine."
   (and command (executable-find command)))

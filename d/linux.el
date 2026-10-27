@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (setenv "PATH" (concat (expand-file-name "~/.nix-profile/bin") ":"
                        (expand-file-name "~/.local/bin") ":"
                        (expand-file-name "~/bin") ":"

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; scpaste.el --- Paste to the web via scp.
 
 ;; Copyright (C) 2008 Phil Hagelberg

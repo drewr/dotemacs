@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; elmer.el --- Code for use with elmer paste service
 
 ;; Copyright (C) 2011-2012 Drew Raines (drew AT raines DOT me)

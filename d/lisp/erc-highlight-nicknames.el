@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; erc-highlight-nicknames.el --- Highlights nicknames
 
 ;; Copyright (C) 2007  André Riemann

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; odin-mode.el --- A minor mode for odin
 
 ;; Author: Ethan Morgan

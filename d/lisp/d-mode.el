@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; d-mode.el --- D Programming Language mode for (X)Emacs
 ;;;               Requires a cc-mode of version 5.30 or greater
 

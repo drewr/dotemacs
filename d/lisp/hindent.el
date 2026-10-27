@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; hindent.el --- Indent haskell code using the "hindent" program
 
 ;; Copyright (c) 2014 Chris Done. All rights reserved.

@@ -1,3 +1,5 @@
+;;; init.el --- Drew's emacs configuration -*- lexical-binding: t; -*-
+
 (require 'cl-lib)
 
 ;; startup
@@ -55,15 +57,16 @@
 
 (use-package exec-path-from-shell
   :ensure t
+  :if (memq window-system '(mac ns x))
+  :defer t
   :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)))
+  (exec-path-from-shell-initialize))
 
 ;; Use stable symlink maintained by ~/.ssh/rc (inbound SSH connections) and
 ;; update_auth_sock (interactive shells) to avoid spawning a second ssh-agent.
 ;; ~/.ssh/ssh_auth_sock is kept current by ~/.ssh/rc on each inbound SSH
 ;; connection, so GUI Emacs always picks up the right agent.
-(when-let ((sock (expand-file-name "~/.ssh/ssh_auth_sock")))
+(when-let* ((sock (expand-file-name "~/.ssh/ssh_auth_sock")))
   (when (file-exists-p sock)
     (setenv "SSH_AUTH_SOCK" sock)))
 
@@ -91,12 +94,12 @@
           use-package-compute-statistics t
           debug-on-error t)
   (setq use-package-verbose nil
-        use-package-expand-minimally t))
+        use-package-expand-minimally nil))
 
-(use-package adoc-mode    :ensure t :pin "melpa")
-(use-package arduino-mode :ensure t :pin "melpa")
-(use-package async        :ensure t :pin "melpa")
-(use-package bbdb         :ensure t :pin "melpa")
+(use-package adoc-mode    :ensure t :pin "melpa" :defer t)
+(use-package arduino-mode :ensure t :pin "melpa" :defer t)
+(use-package async        :ensure t :pin "melpa" :defer t)
+(use-package bbdb         :ensure t :pin "melpa" :defer t)
 (use-package cargo
   :ensure t
   :pin "melpa"
@@ -133,14 +136,14 @@
   (put-clojure-indent 'match 1))
 
 (use-package flycheck-clj-kondo
-  :ensure t)
+  :ensure t :defer t)
 
 (use-package company
   :ensure t
-  :pin "melpa")
+  :pin "melpa" :defer t)
 
-(use-package company-cabal     :ensure t :pin "melpa")
-(use-package company-ghci      :ensure t :pin "melpa")
+(use-package company-cabal     :ensure t :pin "melpa" :defer t)
+(use-package company-ghci      :ensure t :pin "melpa" :defer t)
 
 (use-package deft
   :ensure t
@@ -164,33 +167,35 @@
 
 (use-package denote
   :ensure t
+  :defer t
   :custom
   (denote-directory "~/Sync/Notes"))
-(use-package denote-agenda  :ensure t)
-(use-package denote-explore :ensure t)
-(use-package denote-journal :ensure t)
-(use-package denote-org     :ensure t)
+(use-package denote-agenda  :ensure t :defer t)
+(use-package denote-explore :ensure t :defer t)
+(use-package denote-journal :ensure t :defer t)
+(use-package denote-org     :ensure t :defer t)
 
-(use-package avy  :ensure t)
-(use-package ace-window  :ensure t)
-(use-package acp :ensure t :pin "melpa")
+(use-package avy  :ensure t :defer t)
+(use-package ace-window  :ensure t :defer t)
+(use-package acp :ensure t :pin "melpa" :defer t)
 
 (use-package dhall-mode        :ensure t :mode "\\.dhall\\'")
-(use-package erlang            :ensure t :pin "melpa")
+(use-package erlang            :ensure t :pin "melpa" :defer t)
 
 (use-package es-mode
   :ensure t
   :pin "melpa"
+  :mode ("\\.es\\'" . es-mode)
   :config
   (setq es-always-pretty-print t
         es-warn-on-delete-query nil))
 
-(use-package flycheck          :ensure t :pin "melpa")
-(use-package flycheck-rust     :ensure t :pin "melpa")
-(use-package fzf               :ensure t :pin "melpa")
-(use-package geiser            :ensure t :pin "melpa")
-(use-package gist              :ensure t :pin "melpa")
-(use-package gnuplot           :ensure t :pin "melpa")
+(use-package flycheck          :ensure t :pin "melpa" :defer t)
+(use-package flycheck-rust     :ensure t :pin "melpa" :defer t)
+(use-package fzf               :ensure t :pin "melpa" :defer t)
+(use-package geiser            :ensure t :pin "melpa" :defer t)
+(use-package gist              :ensure t :pin "melpa" :defer t)
+(use-package gnuplot           :ensure t :pin "melpa" :defer t)
 
 (use-package go-mode
   :ensure t
@@ -204,25 +209,26 @@
                      (setq tab-width 2)
                      (add-hook 'before-save-hook 'gofmt-before-save))))
 
-(use-package go-playground     :ensure t :pin "melpa")
+(use-package go-playground     :ensure t :pin "melpa" :defer t)
 
 (use-package agent-shell
   :ensure t
   :pin "melpa"
-  :after acp
+  :defer t
   :bind (("C-x M-a" . agent-shell))
   :config
   (aar/agents-setup-agent-shell))
 
 (use-package gptel
   :ensure t
+  :commands (gptel)
   :config
   (aar/agents-setup-gptel))
 
-(use-package graphviz-dot-mode :ensure t :pin "melpa")
-(use-package groovy-mode       :ensure t :pin "melpa")
-(use-package hamlet-mode       :ensure t :pin "melpa")
-(use-package htmlize           :ensure t :pin "melpa")
+(use-package graphviz-dot-mode :ensure t :pin "melpa" :defer t)
+(use-package groovy-mode       :ensure t :pin "melpa" :defer t)
+(use-package hamlet-mode       :ensure t :pin "melpa" :defer t)
+(use-package htmlize           :ensure t :pin "melpa" :defer t)
 
 (use-package lsp-mode
   :init (setq lsp-keymap-prefix "C-c l")
@@ -234,14 +240,14 @@
 (use-package lsp-ui :ensure t :commands lsp-ui-mode)
 
 ;; Haskell
-(use-package lsp-haskell  :ensure t)
-(use-package haskell-mode :ensure t)
-(use-package flycheck-haskell  :ensure t :pin "melpa")
+(use-package lsp-haskell  :ensure t :defer t)
+(use-package haskell-mode :ensure t :defer t)
+(use-package flycheck-haskell  :ensure t :pin "melpa" :defer t)
 
 
 
-(use-package idris-mode        :ensure t :pin "melpa")
-(use-package js2-mode          :ensure t :pin "melpa")
+(use-package idris-mode        :ensure t :pin "melpa" :defer t)
+(use-package js2-mode          :ensure t :pin "melpa" :defer t)
 
 (use-package ledger-mode
   :ensure t
@@ -249,17 +255,17 @@
               ("C-c C-n" . ledger-clean-up-transaction)
               ("C-c C-b" . ledger-bal-region)))
 
-(use-package fennel-mode    :ensure t)
-(use-package lua-mode       :ensure t :pin "melpa")
+(use-package fennel-mode    :ensure t :defer t)
+(use-package lua-mode       :ensure t :pin "melpa" :defer t)
 
 (use-package markdown-mode
   :ensure t
   :pin "melpa"
   :hook (markdown-mode . visual-line-mode))
 
-(use-package mustache-mode  :ensure t :pin "melpa")
-(use-package nim-mode       :ensure t :pin "melpa")
-(use-package nix-mode       :ensure t :pin "melpa")
+(use-package mustache-mode  :ensure t :pin "melpa" :defer t)
+(use-package nim-mode       :ensure t :pin "melpa" :defer t)
+(use-package nix-mode       :ensure t :pin "melpa" :defer t)
 
 ;; manually installed from https://github.com/mattt-b/odin-mode/blob/master/odin-mode.el
 (use-package odin-mode
@@ -298,7 +304,7 @@
 
 (use-package popup
   :ensure t
-  :pin "melpa")
+  :pin "melpa" :defer t)
 
 (use-package popwin
   :ensure t
@@ -311,8 +317,8 @@
           :stick t
           :width 80) popwin:special-display-config))
 
-(use-package puppet-mode     :ensure t :pin "melpa")
-(use-package purescript-mode :ensure t :pin "melpa")
+(use-package puppet-mode     :ensure t :pin "melpa" :defer t)
+(use-package purescript-mode :ensure t :pin "melpa" :defer t)
 
 (use-package psc-ide
   :ensure t
@@ -323,8 +329,8 @@
                              (flycheck-mode)
                              (turn-on-purescript-indentation))))
 
-(use-package rainbow-delimiters  :ensure t :pin "melpa")
-(use-package rainbow-identifiers :ensure t :pin "melpa")
+(use-package rainbow-delimiters  :ensure t :pin "melpa" :defer t)
+(use-package rainbow-identifiers :ensure t :pin "melpa" :defer t)
 
 (use-package rust-mode
   :ensure t
@@ -338,17 +344,17 @@
   (lsp-rust-server 'rust-analyzer)
   (lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
-(use-package rust-playground :ensure t :pin "melpa")
+(use-package rust-playground :ensure t :pin "melpa" :defer t)
 
-(use-package smex           :ensure t :pin "melpa")
-(use-package textile-mode   :ensure t :pin "melpa")
-(use-package terraform-mode :ensure t :pin "melpa")
-(use-package toml-mode      :ensure t :pin "melpa")
-(use-package yaml-mode      :ensure t :pin "melpa")
-(use-package yasnippet      :ensure t :pin "melpa")
-(use-package vundo          :ensure t :pin "gnu")
-(use-package which-key      :ensure t)
-(use-package zig-mode       :ensure t :pin "melpa")
+(use-package smex           :ensure t :pin "melpa" :defer t)
+(use-package textile-mode   :ensure t :pin "melpa" :defer t)
+(use-package terraform-mode :ensure t :pin "melpa" :defer t)
+(use-package toml-mode      :ensure t :pin "melpa" :defer t)
+(use-package yaml-mode      :ensure t :pin "melpa" :defer t)
+(use-package yasnippet      :ensure t :pin "melpa" :defer t)
+(use-package vundo          :ensure t :pin "gnu" :defer t)
+(use-package which-key      :ensure t :defer t)
+(use-package zig-mode       :ensure t :pin "melpa" :defer t)
 
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
@@ -412,7 +418,7 @@
   (setq message-directory (concat gnus-home-directory "Mail/")))
 
 (use-package info
-  :ensure nil)
+  :ensure nil :defer t)
 
 ;; elmer
 
@@ -433,7 +439,7 @@
 
 ;; magit
 
-(use-package magit :ensure t)
+(use-package magit :ensure t :defer t)
 (use-package forge :ensure t :after (magit))
 (global-set-key "\C-xg" 'magit-status)
 
@@ -456,9 +462,9 @@
          (emacs-lisp-mode . whitespace-mode)))
 
 ;; ocaml
-(use-package tuareg         :ensure t :pin "melpa")
-(use-package utop           :ensure t :pin "melpa")
-(use-package merlin         :ensure t :pin "melpa")
+(use-package tuareg         :ensure t :pin "melpa" :defer t)
+(use-package utop           :ensure t :pin "melpa" :defer t)
+(use-package merlin         :ensure t :pin "melpa" :defer t)
 
 (let* ((ocaml-lisp "~/.opam/default/share/emacs/site-lisp")
        (tuareg-site-file
@@ -482,13 +488,14 @@
 
 ;; python
 (use-package python
-  :ensure nil)
+  :ensure nil :defer t)
 
 ;; javascript
 (setq js-indent-level 2)
 
 (use-package tree-sitter :ensure t
-  :config
+  :commands (tree-sitter-mode)
+  :init
   (setq treesit-language-source-alist
         '((typescript "https://github.com/tree-sitter/tree-sitter-typescript"
                       "master" "typescript/src")
@@ -498,21 +505,22 @@
           (json "https://github.com/tree-sitter/tree-sitter-json" "master" "src")
           ;;(css "https://github.com/tree-sitter/tree-sitter-css" "master" "src")
           ;;(go "https://github.com/tree-sitter/tree-sitter-go" "master" "src")
-          (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml" "master" "src")))  )
+          (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml" "master" "src"))))
 
 ;; org
 
 (use-package org-mime
   :ensure t
   :pin "melpa"
+  :commands (org-mime-htmlize org-mime-compose-org-html)
   :custom
   (org-mime-export-options '(:section-numbers nil
                                               :with-author nil
                                               :with-toc nil))
   (org-mime-export-ascii 'utf-8))
 
-(use-package ox-pandoc      :ensure t)
-(use-package ox-reveal      :ensure t)
+(use-package ox-pandoc      :ensure t :defer t)
+(use-package ox-reveal      :ensure t :defer t)
 
 (use-package org
   :ensure org-contrib
@@ -541,6 +549,7 @@
 (use-package org-journal
   :ensure t
   :pin "melpa"
+  :defer t
   :init (setq org-journal-dir "~/.org/journal/"))
 
 ;; Hack to fix the #+TITLE stuff with ox-publish
@@ -721,6 +730,7 @@
 
 (use-package erc
   :ensure nil
+  :defer t
   :config
   (add-to-list 'erc-modules 'log)
   (add-to-list 'erc-modules 'highlight-nicknames))
@@ -772,7 +782,8 @@
          "#nixos" "##rust" "#nim" "#fennel" "#zig"
          "#janet")))
 
-(define-key erc-mode-map (kbd "<f2>") 'browse-latest-url)
+(with-eval-after-load 'erc
+  (define-key erc-mode-map (kbd "<f2>") 'browse-latest-url))
 
 (defun aar/you-rang? (mat nick message)
   (let ((buf (buffer-name (current-buffer)))
@@ -805,11 +816,11 @@
 
 ;; edit-server
 (use-package edit-server
-  :ensure nil)
+  :ensure nil :defer t)
 
 ;; demo slides
 (use-package demo
-  :ensure nil)
+  :ensure nil :defer t)
 
 ;; D
 (use-package d-mode
@@ -818,7 +829,7 @@
 
 ;; Stopwatch
 (use-package stopwatch
-  :ensure nil)
+  :ensure nil :defer t)
 
 ;; Customize
 

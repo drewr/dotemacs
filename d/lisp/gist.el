@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; gist.el --- Emacs integration for gist.github.com
 
 ;; Author: Christian Neukirchen <purl.org/net/chneukirchen>

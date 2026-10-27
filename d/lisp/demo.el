@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (defvar demo-slide-separator "^=-= ")
 
 (defun demo-current-slide-number ()

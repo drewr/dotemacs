@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; hpaste.el -- Integration with hpaste: http://hpaste.org.
 
 ;; Authors: David House <dmhouse@gmail.com>,

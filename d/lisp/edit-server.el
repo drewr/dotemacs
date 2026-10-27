@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; -*- tab-width:2; indent-tabs-mode:t -*- vim: set noet ts=2:
 ;;
 ;; Emacs edit-server

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (setq shell-file-name "zsh")
 
 (when (>= emacs-major-version 23)

@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;;; durendal.el --- A bucket of tricks for Clojure and Slime.
 
 ;; Copyright (C) 2010 Phil Hagelberg

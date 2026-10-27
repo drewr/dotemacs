@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; downloaded from https://gitlab.com/psachin/erc-sasl/-/blob/master/erc-sasl.el
 
 ;; erc-sasl.el -- handle SASL PLAIN authentication
