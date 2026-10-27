@@ -541,6 +541,9 @@
   :config
   (add-to-list 'org-modules 'org-habit 'org-babel)
   (require 'org-protocol)
+  ;; Org 9.5+ no longer loads org-attach via the default org-modules,
+  ;; so commands like org-attach-attach don't exist until it's required.
+  (require 'org-attach)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((shell . t)
