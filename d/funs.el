@@ -1,4 +1,9 @@
 ;;; -*- lexical-binding: t; -*-
+
+;; Defined in org-attach.el, loaded lazily; keep byte-compile/ncomp quiet.
+(declare-function org-attach-attach "org-attach")
+(declare-function org-attach-dir "org-attach")
+
 (defun ido-imenu ()
   "Update the imenu index and then use ido to select a symbol to navigate to.
 Symbols matching the text at point are put first in the completion list."
@@ -358,6 +363,7 @@ TITLE in the interactive prompt."
   (when (and (not org-note-abort)
              org-capture-plist
              (plist-get org-capture-plist :denote))
+    (require 'org-attach)
     (save-excursion
       (org-back-to-heading t)
       (let* ((heading (org-get-heading t t t t))
@@ -392,6 +398,7 @@ Runs for the plain \"New note\" template that uses `aar/denote-org-capture'."
               (attach-dir (with-current-buffer original-buffer
                             (message "aar: at-heading=%s" (org-at-heading-p))
                             (when (org-at-heading-p)
+                              (require 'org-attach)
                               (org-attach-dir 'create)))))
     (message "aar: moving %s to %s" file attach-dir)
     (org-attach-attach file nil 'mv)
