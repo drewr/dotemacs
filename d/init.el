@@ -39,16 +39,23 @@
 (require 'saveplace)
 
 ;; Package management setup (consolidates former setup.el)
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives
-             '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
-(add-to-list 'package-archives
-             '("gnu" . "https://elpa.gnu.org/packages/"))
-(package-initialize)
+;;
+;; `eval-and-compile' matters: `use-package' expands `:pin' and `:ensure'
+;; at byte-compile time and needs the archives and installed packages
+;; then.  Without it, `bin/compile' (a bare `emacs --batch') sees no
+;; "melpa" archive, and every `:pin "melpa"' form compiles to nothing --
+;; its `:bind', `:mode', `:hook' and `:config' silently disappear.
+(eval-and-compile
+  (require 'package)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives
+               '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+  (add-to-list 'package-archives
+               '("gnu" . "https://elpa.gnu.org/packages/"))
+  (package-initialize))
 
 (setq package-install-upgrade-built-in t)
 
