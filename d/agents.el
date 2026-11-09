@@ -1,12 +1,24 @@
 ;;; agents.el --- LLM helpers for gptel and agent-shell -*- lexical-binding: t; -*-
 
 (require 'cl-lib)
+(require 'seq)
+
+;; Defined in the agent-shell package, which is loaded on first use
+;; (and which pulls in `map' itself).
+(declare-function map-elt "map")
+(declare-function agent-shell-default-agent-config-makers "agent-shell")
+(defvar agent-shell-agent-configs)
+(defvar agent-shell-preferred-agent-config)
+(defvar agent-shell-google-gemini-acp-command)
 
 ;; Defined in the gptel package, which is loaded after startup.
 (declare-function gptel "gptel")
 (declare-function gptel-make-openai "gptel-openai")
 (declare-function gptel-make-anthropic "gptel-anthropic")
 (declare-function gptel-make-ollama "gptel-ollama")
+(declare-function gptel-backend-models "gptel-request")
+(defvar gptel-backend)
+(defvar gptel-model)
 
 (defun aar/llm-command-available-p (command)
   "Return non-nil when COMMAND is available on this machine."
@@ -30,18 +42,51 @@
    ((aar/llm-command-available-p "codex-acp") 'codex)
    (t nil)))
 
+(defun aar/agent-shell-installed-agents ()
+  "Return the default agent config makers whose ACP command is installed.
+Building a client does not start a process, so this only inspects
+the command each agent would run."
+  (seq-filter
+   (lambda (maker)
+     (when-let* ((config (ignore-errors (funcall maker)))
+                 (client-maker (map-elt config :client-maker))
+                 (client (ignore-errors (funcall client-maker (current-buffer))))
+                 (command (map-elt client :command)))
+       (executable-find command)))
+   (agent-shell-default-agent-config-makers)))
+
 (defun aar/agents-setup-agent-shell ()
-  "Configure `agent-shell' defaults for the current machine."
-  (setq agent-shell-preferred-agent-config (aar/agent-shell-default-agent)))
+  "Configure `agent-shell' defaults for the current machine.
+Only installed agents appear in the picker, with the preferred one
+preselected; `C-x M-a' still prompts so any installed harness is
+one keystroke away."
+  ;; The default `--experimental-acp' flag is deprecated in gemini-cli.
+  (setq agent-shell-google-gemini-acp-command '("gemini" "--acp"))
+  (setq agent-shell-agent-configs #'aar/agent-shell-installed-agents)
+  (setq agent-shell-preferred-agent-config
+        (when-let* ((agent (aar/agent-shell-default-agent)))
+          (cons 'preselect agent))))
 
 (defvar aar/gptel-openai-backend nil)
 (defvar aar/gptel-anthropic-backend nil)
 (defvar aar/gptel-ollama-backend nil)
 
 (defun aar/gptel-with-backend (backend)
-  "Open gptel with BACKEND selected."
-  (let ((gptel-backend backend))
-    (call-interactively #'gptel)))
+  "Open gptel with BACKEND selected.
+`gptel-backend' is only read when a request is sent, so binding it
+around `gptel' is not enough: pin it buffer-locally in the chat."
+  (require 'gptel)
+  (unless backend
+    (user-error "That gptel backend is not configured"))
+  (let* ((models (gptel-backend-models backend))
+         (model (if (memq gptel-model models) gptel-model (car models)))
+         (buf (let ((gptel-backend backend)
+                    (gptel-model model))
+                (call-interactively #'gptel))))
+    (with-current-buffer buf
+      (setq-local gptel-backend backend
+                  gptel-model model))
+    buf))
 
 (defun aar/gptel-anthropic-chat ()
   "Open gptel using the Anthropic backend."
