@@ -10,6 +10,7 @@
 (defvar agent-shell-agent-configs)
 (defvar agent-shell-preferred-agent-config)
 (defvar agent-shell-google-gemini-acp-command)
+(defvar agent-shell-opencode-default-config-options)
 
 ;; Defined in the gptel package, which is loaded after startup.
 (declare-function gptel "gptel")
@@ -62,6 +63,10 @@ preselected; `C-x M-a' still prompts so any installed harness is
 one keystroke away."
   ;; The default `--experimental-acp' flag is deprecated in gemini-cli.
   (setq agent-shell-google-gemini-acp-command '("gemini" "--acp"))
+  ;; OpenCode's ACP server ignores the TUI's model history and starts on
+  ;; its own default, a paid model this account has no credits for.
+  (setq agent-shell-opencode-default-config-options
+        '(("model" . "opencode/deepseek-v4.1-flash-free")))
   (setq agent-shell-agent-configs #'aar/agent-shell-installed-agents)
   (setq agent-shell-preferred-agent-config
         (when-let* ((agent (aar/agent-shell-default-agent)))
