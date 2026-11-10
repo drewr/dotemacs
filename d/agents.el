@@ -11,6 +11,7 @@
 (defvar agent-shell-preferred-agent-config)
 (defvar agent-shell-google-gemini-acp-command)
 (defvar agent-shell-opencode-default-config-options)
+(defvar agent-shell-inhibit-system-sleep)
 
 ;; Defined in the gptel package, which is loaded after startup.
 (declare-function gptel "gptel")
@@ -67,6 +68,12 @@ one keystroke away."
   ;; its own default, a paid model this account has no credits for.
   (setq agent-shell-opencode-default-config-options
         '(("model" . "opencode/deepseek-v4.1-flash-free")))
+  ;; Blocking sleep goes through logind, and polkit refuses sleep blocks to
+  ;; remote sessions, so every turn printed "Sleep inhibit unavailable
+  ;; (... AccessDenied ...)".  Keeping a remote host awake is not this
+  ;; Emacs's job anyway; keep the feature for local Linux and macOS.
+  (when (and (eq system-type 'gnu/linux) (getenv "SSH_CONNECTION"))
+    (setq agent-shell-inhibit-system-sleep nil))
   (setq agent-shell-agent-configs #'aar/agent-shell-installed-agents)
   (setq agent-shell-preferred-agent-config
         (when-let* ((agent (aar/agent-shell-default-agent)))
